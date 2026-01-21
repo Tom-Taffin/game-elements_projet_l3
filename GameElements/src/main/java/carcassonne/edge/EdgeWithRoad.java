@@ -18,7 +18,7 @@ public class EdgeWithRoad implements Edge {
     }
 
     @Override
-    public boolean isCompatible(Edge other) {
+    public boolean isCompatibleWith(Edge other) {
         return other.accept(new EdgeWithRoadVisitor(this));
     }
 

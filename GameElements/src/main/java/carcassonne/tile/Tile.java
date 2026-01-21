@@ -46,18 +46,18 @@ public class Tile {
      * @param location
      * @return true if the other tile can connect to the edge location of this tile based on their direction
      */
-    public boolean canConnectTo(Tile other, Location location){
+    public boolean isCompatibleWith(Tile other, Location location){
         if (this.direction == other.getDirection()){
-            return this.getEdge(location).isCompatible(other.getEdge(location.toOpposite()));
+            return this.getEdge(location).isCompatibleWith(other.getEdge(location.toOpposite()));
         }
         else if (this.direction == other.getDirection().rotateLeft()){
-            return this.getEdge(location).isCompatible(other.getEdge(location.toRigth()));
+            return this.getEdge(location).isCompatibleWith(other.getEdge(location.toRigth()));
         }
         else if (this.direction == other.getDirection().rotateRight()){
-            return this.getEdge(location).isCompatible(other.getEdge(location.toLeft()));
+            return this.getEdge(location).isCompatibleWith(other.getEdge(location.toLeft()));
         }
         else {
-            return this.getEdge(location).isCompatible(other.getEdge(location));
+            return this.getEdge(location).isCompatibleWith(other.getEdge(location));
         }
     }
 }

@@ -10,7 +10,7 @@ public class EdgeTest {
         Edge noRoadEdge1 = new EdgeNoRoad(Zone.FIELD);
         Edge noRoadEdge2 = new EdgeNoRoad(Zone.FIELD);
 
-        assertTrue(noRoadEdge1.isCompatible(noRoadEdge2));
+        assertTrue(noRoadEdge1.isCompatibleWith(noRoadEdge2));
     }
 
     @Test
@@ -18,7 +18,7 @@ public class EdgeTest {
         Edge noRoadEdge1 = new EdgeNoRoad(Zone.FIELD);
         Edge noRoadEdge2 = new EdgeNoRoad(Zone.CITY);
 
-        assertFalse(noRoadEdge1.isCompatible(noRoadEdge2));
+        assertFalse(noRoadEdge1.isCompatibleWith(noRoadEdge2));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class EdgeTest {
         Edge edgeWithRoad1 = new EdgeWithRoad(Zone.FIELD, Zone.CITY);
         Edge edgeWithRoad2 = new EdgeWithRoad(Zone.CITY, Zone.FIELD);
 
-        assertTrue(edgeWithRoad1.isCompatible(edgeWithRoad2));
+        assertTrue(edgeWithRoad1.isCompatibleWith(edgeWithRoad2));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class EdgeTest {
         Edge edgeWithRoad1 = new EdgeWithRoad(Zone.FIELD, Zone.CITY);
         Edge edgeWithRoad2 = new EdgeWithRoad(Zone.FIELD, Zone.CITY);
 
-        assertFalse(edgeWithRoad1.isCompatible(edgeWithRoad2));
+        assertFalse(edgeWithRoad1.isCompatibleWith(edgeWithRoad2));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class EdgeTest {
         Edge edgeWithRoad = new EdgeWithRoad(Zone.FIELD, Zone.FIELD);
         Edge noRoadEdge = new EdgeNoRoad(Zone.FIELD);
 
-        assertFalse(edgeWithRoad.isCompatible(noRoadEdge));
+        assertFalse(edgeWithRoad.isCompatibleWith(noRoadEdge));
     }
 
     @Test
@@ -50,6 +50,6 @@ public class EdgeTest {
         Edge edgeWithRoad = new EdgeWithRoad(Zone.FIELD, Zone.FIELD);
         Edge noRoadEdge = new EdgeNoRoad(Zone.FIELD);
 
-        assertFalse(noRoadEdge.isCompatible(edgeWithRoad));
+        assertFalse(noRoadEdge.isCompatibleWith(edgeWithRoad));
     }
 }

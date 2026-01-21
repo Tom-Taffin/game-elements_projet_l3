@@ -12,7 +12,7 @@ public class EdgeNoRoad implements Edge {
     }
 
     @Override
-    public boolean isCompatible(Edge other) {
+    public boolean isCompatibleWith(Edge other) {
         return other.accept(new EdgeNoRoadVisitor(this));
     }
 
