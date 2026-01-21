@@ -1,7 +1,6 @@
 package carcassonne.tile;
 
 import carcassonne.edge.Edge;
-import carcassonne.edge.EdgeWithRoad;
 
 import java.util.HashMap;
 
@@ -30,6 +29,13 @@ public class Tile {
         return roadConnections;
     }
 
+    /**
+     * Creates a connection between the two given edges, based on the given locations.
+     * Creates 2 entries in the roadConnections dictionary, in both ways.
+     * @param location1
+     * @param location2
+     * @throws ConnectionRoadToEdgeWithNoRoadException If one of the given locations gives an edge without a road.
+     */
     public void connectRoad(Location location1, Location location2) throws ConnectionRoadToEdgeWithNoRoadException {
         if (!this.getEdge(location1).hasRoad() || !this.getEdge(location2).hasRoad()){
             throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
@@ -39,6 +45,12 @@ public class Tile {
         this.roadConnections.put(location2, location1);
     }
 
+    /**
+     * Terminates a road's edge based on the location.
+     * Creates entry in the dictionary, where the value is null.
+     * @param location
+     * @throws ConnectionRoadToEdgeWithNoRoadException If the edge based on the location doesn't have a road.
+     */
     public void terminateRoad(Location location) throws ConnectionRoadToEdgeWithNoRoadException {
         if (!this.getEdge(location).hasRoad()){
             throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
@@ -55,6 +67,11 @@ public class Tile {
         this.direction = direction;
     }
 
+    /**
+     * Returns the tile's edge based on the given location.
+     * @param location
+     * @return the tile's edge based on the given location.
+     */
     public Edge getEdge(Location location) {
         switch (location) {
             case TOP:
@@ -69,9 +86,9 @@ public class Tile {
     }
 
     /**
-     * @param other
-     * @param location
-     * @return true if the other tile can connect to the edge location of this tile based on their direction
+     * @param other the other tile
+     * @param location the location where you
+     * @return true if the other tile is compatible to the edge location of this tile based on their direction
      */
     public boolean isCompatibleWith(Tile other, Location location){
         if (this.direction == other.getDirection()){
