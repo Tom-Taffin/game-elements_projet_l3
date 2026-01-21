@@ -1,5 +1,6 @@
 package carcassonne.edge;
 
-public class Edge {
-
+public interface Edge {
+    boolean isCompatible(Edge other);
+    boolean accept(EdgeVisitor visitor);
 }

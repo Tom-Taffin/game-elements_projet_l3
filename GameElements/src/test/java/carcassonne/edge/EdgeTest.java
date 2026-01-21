@@ -1,0 +1,55 @@
+package carcassonne.edge;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class EdgeTest {
+    @Test
+    public void testEdgeNoRoadConnectEdgeNoRoadSameZone(){
+        Edge noRoadEdge1 = new EdgeNoRoad(Zone.FIELD);
+        Edge noRoadEdge2 = new EdgeNoRoad(Zone.FIELD);
+
+        assertTrue(noRoadEdge1.isCompatible(noRoadEdge2));
+    }
+
+    @Test
+    public void testEdgeNoRoadConnectEdgeNoRoadDifferentZone(){
+        Edge noRoadEdge1 = new EdgeNoRoad(Zone.FIELD);
+        Edge noRoadEdge2 = new EdgeNoRoad(Zone.CITY);
+
+        assertFalse(noRoadEdge1.isCompatible(noRoadEdge2));
+    }
+
+    @Test
+    public void testEdgeWithRoadConnectEdgeWithRoadSameZones(){
+        Edge edgeWithRoad1 = new EdgeWithRoad(Zone.FIELD, Zone.CITY);
+        Edge edgeWithRoad2 = new EdgeWithRoad(Zone.CITY, Zone.FIELD);
+
+        assertTrue(edgeWithRoad1.isCompatible(edgeWithRoad2));
+    }
+
+    @Test
+    public void testEdgeWithRoadConnectEdgeWithRoadDifferentZones(){
+        Edge edgeWithRoad1 = new EdgeWithRoad(Zone.FIELD, Zone.CITY);
+        Edge edgeWithRoad2 = new EdgeWithRoad(Zone.FIELD, Zone.CITY);
+
+        assertFalse(edgeWithRoad1.isCompatible(edgeWithRoad2));
+    }
+
+    @Test
+    public void testEdgeWithRoadConnectEdgeNoRoad(){
+        Edge edgeWithRoad = new EdgeWithRoad(Zone.FIELD, Zone.FIELD);
+        Edge noRoadEdge = new EdgeNoRoad(Zone.FIELD);
+
+        assertFalse(edgeWithRoad.isCompatible(noRoadEdge));
+    }
+
+    @Test
+    public void testEdgeNoRoadConnectEdgeWithRoad(){
+        Edge edgeWithRoad = new EdgeWithRoad(Zone.FIELD, Zone.FIELD);
+        Edge noRoadEdge = new EdgeNoRoad(Zone.FIELD);
+
+        assertFalse(noRoadEdge.isCompatible(edgeWithRoad));
+    }
+}

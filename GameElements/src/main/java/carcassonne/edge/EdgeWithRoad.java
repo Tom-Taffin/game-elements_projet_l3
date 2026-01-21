@@ -1,6 +1,6 @@
 package carcassonne.edge;
 
-public class EdgeWithRoad extends Edge {
+public class EdgeWithRoad implements Edge {
     private Zone zone1;
     private Zone zone2;
 
@@ -15,5 +15,15 @@ public class EdgeWithRoad extends Edge {
 
     public Zone getZone2() {
         return zone2;
+    }
+
+    @Override
+    public boolean isCompatible(Edge other) {
+        return other.accept(new EdgeWithRoadVisitor(this));
+    }
+
+    @Override
+    public boolean accept(EdgeVisitor visitor) {
+        return visitor.visit(this);
     }
 }
