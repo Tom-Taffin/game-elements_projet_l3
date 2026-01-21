@@ -20,4 +20,9 @@ public class EdgeNoRoad implements Edge {
     public boolean accept(EdgeVisitor visitor) {
         return visitor.visit(this);
     }
+
+    @Override
+    public boolean hasRoad() {
+        return false;
+    }
 }

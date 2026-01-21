@@ -26,4 +26,9 @@ public class EdgeWithRoad implements Edge {
     public boolean accept(EdgeVisitor visitor) {
         return visitor.visit(this);
     }
+
+    @Override
+    public boolean hasRoad() {
+        return true;
+    }
 }

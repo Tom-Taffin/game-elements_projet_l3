@@ -1,12 +1,17 @@
 package carcassonne.tile;
 
 import carcassonne.edge.Edge;
+import carcassonne.edge.EdgeWithRoad;
+
+import java.util.HashMap;
 
 public class Tile {
     private Edge topEdge;
     private Edge rightEdge;
     private Edge bottomEdge;
     private Edge leftEdge;
+
+    private final HashMap<Location, Location> roadConnections;
 
     private Direction direction;
     // Direction where the TOP Edge of the tile is.
@@ -18,6 +23,24 @@ public class Tile {
         this.bottomEdge = bottomEdge;
         this.leftEdge = leftEdge;
         this.direction = Direction.NORTH;
+        this.roadConnections = new HashMap<>();
+    }
+
+    public void connectRoad(Location location1, Location location2) throws ConnectionRoadToEdgeWithNoRoadException {
+        if (!this.getEdge(location1).hasRoad() || !this.getEdge(location2).hasRoad()){
+            throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
+        }
+
+        this.roadConnections.put(location1, location2);
+        this.roadConnections.put(location2, location1);
+    }
+
+    public void terminateRoad(Location location) throws ConnectionRoadToEdgeWithNoRoadException {
+        if (!this.getEdge(location).hasRoad()){
+            throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
+        }
+
+        this.roadConnections.put(location, null);
     }
 
     public Direction getDirection() {
