@@ -26,6 +26,10 @@ public class Tile {
         this.roadConnections = new HashMap<>();
     }
 
+    public HashMap<Location, Location> getRoadConnections() {
+        return roadConnections;
+    }
+
     public void connectRoad(Location location1, Location location2) throws ConnectionRoadToEdgeWithNoRoadException {
         if (!this.getEdge(location1).hasRoad() || !this.getEdge(location2).hasRoad()){
             throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
