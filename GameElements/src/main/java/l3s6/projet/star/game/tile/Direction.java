@@ -1,4 +1,4 @@
-package carcassonne.tile;
+package l3s6.projet.star.game.tile;
 
 public enum Direction {
     /* Represents the direction of the tile. */

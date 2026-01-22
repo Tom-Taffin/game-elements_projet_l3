@@ -1,6 +1,6 @@
-package carcassonne.tile;
+package l3s6.projet.star.game.tile;
 
-import carcassonne.edge.Edge;
+import l3s6.projet.star.game.edge.Edge;
 
 import java.util.HashMap;
 

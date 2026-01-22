@@ -1,4 +1,4 @@
-package carcassonne.edge;
+package l3s6.projet.star.game.edge;
 
 public class EdgeNoRoadVisitor implements EdgeVisitor{
 

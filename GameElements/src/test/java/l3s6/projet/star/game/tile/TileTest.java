@@ -1,6 +1,6 @@
-package carcassonne.tile;
+package l3s6.projet.star.game.tile;
 
-import carcassonne.edge.*;
+import l3s6.projet.star.game.edge.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

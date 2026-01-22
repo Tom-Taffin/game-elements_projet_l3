@@ -1,4 +1,4 @@
-package carcassonne.edge;
+package l3s6.projet.star.game.edge;
 
 public class EdgeWithRoad implements Edge {
     private Zone zone1;
