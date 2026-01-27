@@ -31,4 +31,13 @@ public class Board {
     public Tile getTileAt(Coordinates coord){
         return null;
     }
+
+    /**
+     * Remove the tile at the given coordinates, then returns it.
+     * @param coord
+     * @return the removed tile
+     */
+    public Tile removeTileFrom(Coordinates coord){
+        return null;
+    }
 }
