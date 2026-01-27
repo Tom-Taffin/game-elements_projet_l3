@@ -22,4 +22,19 @@ public class BoardTest {
 
         assertEquals(tile, board.getTileAt(coordinates));
     }
+
+    @Test
+    public void testRemoveTileFrom(){
+        Board board = new Board();
+        Tile tile = new Tile(new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD));
+        Coordinates coordinates = new Coordinates();
+
+        board.putTileAt(tile, coordinates);
+
+        Tile removedTile = board.removeTileFrom(coordinates);
+
+        assertFalse(board.hasTile(coordinates));
+
+        assertEquals(tile, removedTile);
+    }
 }
