@@ -51,4 +51,21 @@ public class TileBuilderTest {
         assertEquals(Topology.CITY, ((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZoneTopology());
     }
 
+    @Test
+    public void testBuildTileInCorrectTopologySyntaxe(){
+        String expString = "c-t-c1-f";
+        assertThrows(WrongTileSyntaxException.class, () -> {
+            this.tileBuilder.buildTile(expString);
+        });
+    }
+
+    @Test
+    public void testBuildTileInCorrectFormSyntaxe(){
+        String expString = "c-fc1-f";
+        assertThrows(WrongTileSyntaxException.class, () -> {
+            this.tileBuilder.buildTile(expString);
+        });
+    }
+    
+
 }
