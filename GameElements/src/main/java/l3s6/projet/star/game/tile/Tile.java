@@ -25,8 +25,49 @@ public class Tile {
         this.roadConnections = new HashMap<>();
     }
 
+
     public HashMap<Location, Location> getRoadConnections() {
         return roadConnections;
+    }
+
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void changeDirection(Direction direction){
+        this.direction = direction;
+    }
+
+    /**
+     * @param location
+     * @return the tile's edge based on the given location.
+     */
+    public Edge getEdge(Location location) {
+        switch (location) {
+            case TOP:
+                return topEdge;
+            case RIGHT:
+                return rightEdge;
+            case BOTTOM:
+                return bottomEdge;
+            default:
+                return leftEdge;
+        }
+    }
+
+    public boolean isRoadFinished(Location location){
+        return this.roadConnections.containsKey(location) && this.roadConnections.get(location) == null;
+    }
+
+    public Location getExitRoadLocation(Location enterLocation) throws NoExitRoadException{
+        if(!this.getEdge(enterLocation).hasRoad()){
+            throw new NoExitRoadException("There is no road at the enterLocation");
+        }
+        if(this.isRoadFinished(enterLocation)){
+            throw new NoExitRoadException("The road at the enterLocation is not connected");
+        }
+        return this.roadConnections.get(enterLocation);
     }
 
     /**
@@ -57,32 +98,6 @@ public class Tile {
         }
 
         this.roadConnections.put(location, null);
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public void changeDirection(Direction direction){
-        this.direction = direction;
-    }
-
-    /**
-     * Returns the tile's edge based on the given location.
-     * @param location
-     * @return the tile's edge based on the given location.
-     */
-    public Edge getEdge(Location location) {
-        switch (location) {
-            case TOP:
-                return topEdge;
-            case RIGHT:
-                return rightEdge;
-            case BOTTOM:
-                return bottomEdge;
-            default:
-                return leftEdge;
-        }
     }
 
     /**

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TileTest {
     @Test
-    public void testConnectTwoCompatibleTilesNoRoads(){
+    public void testCompatibilityOfTwoCompatibleTilesNoRoads(){
         Tile tile1 = new Tile(new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD));
         Tile tile2 = new Tile(new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD));
 
@@ -15,7 +15,7 @@ public class TileTest {
     }
 
     @Test
-    public void testConnectTwoIncompatibleTilesNoRoads(){
+    public void testCompatibilityOfTwoIncompatibleTilesNoRoads(){
         Tile tile1 = new Tile(new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD));
         Tile tile2 = new Tile(new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.CITY));
 
@@ -23,7 +23,7 @@ public class TileTest {
     }
 
     @Test
-    public void testConnectTwoCompatibleTilesWithRoads(){
+    public void testCompatibilityOfTwoCompatibleTilesWithRoads(){
         Tile tile1 = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.CITY),
                               new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD));
 
@@ -34,7 +34,7 @@ public class TileTest {
     }
 
     @Test
-    public void testConnectTwoIncompatibleTilesWithRoads(){
+    public void testCompatibilityOfTwoIncompatibleTilesWithRoads(){
         Tile tile1 = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.CITY),
                               new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD));
 
@@ -45,7 +45,7 @@ public class TileTest {
     }
 
     @Test
-    public void testConnectTwoIncompatibleTilesWithAndWithoutRoad(){
+    public void testCompatibilityOfTwoIncompatibleTilesWithAndWithoutRoad(){
         Tile tile1 = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.CITY),
                 new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD));
 
@@ -56,14 +56,14 @@ public class TileTest {
     }
 
     @Test
-    public void testConnectTwoRoadsEdgesWithRoads(){
+    public void testConnectTwoRoadsEdgesWithRoads() throws ConnectionRoadToEdgeWithNoRoadException, NoExitRoadException{
         Tile tile = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD),
                 new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD));
 
         tile.connectRoad(Location.TOP, Location.BOTTOM);
 
-        assertEquals(Location.BOTTOM, tile.getRoadConnections().get(Location.TOP));
-        assertEquals(Location.TOP, tile.getRoadConnections().get(Location.BOTTOM));
+        assertEquals(Location.BOTTOM, tile.getExitRoadLocation(Location.TOP));
+        assertEquals(Location.TOP, tile.getExitRoadLocation(Location.BOTTOM));
 
     }
 
@@ -76,13 +76,13 @@ public class TileTest {
     }
 
     @Test
-    public void testTerminateRoadWithEdgeWithRoad(){
+    public void testTerminateRoadWithEdgeWithRoad() throws ConnectionRoadToEdgeWithNoRoadException{
         Tile tile = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD),
                 new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD));
 
         tile.terminateRoad(Location.TOP);
 
-        assertNull(tile.getRoadConnections().get(Location.TOP));
+        assertTrue(tile.isRoadFinished(Location.TOP));
     }
 
     @Test
