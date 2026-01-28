@@ -8,7 +8,11 @@ public class EdgeNoRoad implements Edge {
     }
 
     public Zone getZone() {
-        return zone;
+        return this.zone;
+    }
+
+    public Topology getZoneTopology(){
+        return this.zone.getTopology();
     }
 
     @Override
