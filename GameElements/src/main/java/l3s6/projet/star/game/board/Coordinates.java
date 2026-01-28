@@ -1,8 +1,14 @@
 package l3s6.projet.star.game.board;
 
 public class Coordinates {
-    int x;
-    int y;
+    /**
+     * Positive is to the top.
+     */
+    private final int x;
+    private final int y;
 
-
+    public Coordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }

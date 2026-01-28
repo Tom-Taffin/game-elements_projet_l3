@@ -13,7 +13,7 @@ public class BoardTest {
     public void testPutTileAt(){
         Board board = new Board();
         Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
-        Coordinates coordinates = new Coordinates();
+        Coordinates coordinates = new Coordinates(0, 0);
 
         assertFalse(board.hasTile(coordinates));
 
@@ -28,7 +28,7 @@ public class BoardTest {
     public void testRemoveTileFrom(){
         Board board = new Board();
         Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
-        Coordinates coordinates = new Coordinates();
+        Coordinates coordinates = new Coordinates(0, 0);
 
         board.putTileAt(tile, coordinates);
 
