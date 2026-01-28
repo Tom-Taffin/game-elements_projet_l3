@@ -2,8 +2,15 @@ package l3s6.projet.star.game.board;
 
 import l3s6.projet.star.game.tile.*;
 
-public class Board {
+import java.util.HashMap;
+import java.util.Map;
 
+public class Board {
+    private Map<Coordinates, Tile> tiles;
+
+    public Board(){
+        this.tiles = new HashMap<>();
+    }
 
     /**
      * Puts the given tile at the given coordinates.
@@ -11,7 +18,7 @@ public class Board {
      * @param coord
      */
     public void putTileAt(Tile tile, Coordinates coord){
-
+        this.tiles.put(coord, tile);
     }
 
     /**
@@ -20,7 +27,7 @@ public class Board {
      * @return true if there is a tile at the given coordinates.
      */
     public boolean hasTile(Coordinates coord){
-        return false;
+        return this.tiles.containsKey(coord);
     }
 
     /**
@@ -29,7 +36,7 @@ public class Board {
      * @return
      */
     public Tile getTileAt(Coordinates coord){
-        return null;
+        return this.tiles.get(coord);
     }
 
     /**
@@ -38,6 +45,6 @@ public class Board {
      * @return the removed tile
      */
     public Tile removeTileFrom(Coordinates coord){
-        return null;
+        return this.tiles.remove(coord);
     }
 }
