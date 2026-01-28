@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    private Map<Coordinates, Tile> tiles;
+    private final Map<Coordinates, Tile> tiles;
 
     public Board(){
         this.tiles = new HashMap<>();
