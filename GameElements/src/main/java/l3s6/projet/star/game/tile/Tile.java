@@ -11,11 +11,11 @@ public class Tile {
     private Edge bottomEdge;
     private Edge leftEdge;
 
-    private final HashMap<Location, Location> roadConnections;
-    private final HashSet<Location> finishingRoads;
+    private final HashMap<Direction, Direction> roadConnections;
+    private final HashSet<Direction> finishingRoads;
 
-    private Direction direction;
-    // Direction where the TOP Edge of the tile is.
+    private Orientation orientation;
+    // Orientation where the TOP Edge of the tile is.
     // By default, it's on NORTH.
 
     public Tile(Edge topEdge, Edge rightEdge, Edge bottomEdge, Edge leftEdge) {
@@ -23,31 +23,31 @@ public class Tile {
         this.rightEdge = rightEdge;
         this.bottomEdge = bottomEdge;
         this.leftEdge = leftEdge;
-        this.direction = Direction.NORTH;
+        this.orientation = Orientation.NORTH;
         this.roadConnections = new HashMap<>();
         this.finishingRoads = new HashSet<>();
     }
 
 
-    public HashMap<Location, Location> getRoadConnections() {
+    public HashMap<Direction, Direction> getRoadConnections() {
         return roadConnections;
     }
 
 
-    public Direction getDirection() {
-        return direction;
+    public Orientation getOrientation() {
+        return orientation;
     }
 
-    public void changeDirection(Direction direction){
-        this.direction = direction;
+    public void changeOrientation(Orientation orientation){
+        this.orientation = orientation;
     }
 
     /**
-     * @param location
-     * @return the tile's edge based on the given location.
+     * @param direction
+     * @return the tile's edge based on the given direction.
      */
-    public Edge getEdge(Location location) {
-        switch (location) {
+    public Edge getEdge(Direction direction) {
+        switch (direction) {
             case TOP:
                 return topEdge;
             case RIGHT:
@@ -59,66 +59,66 @@ public class Tile {
         }
     }
 
-    public boolean isRoadFinished(Location location){
-        return this.finishingRoads.contains(location);
+    public boolean isRoadFinished(Direction direction){
+        return this.finishingRoads.contains(direction);
     }
 
-    public Location getExitRoadLocation(Location enterLocation) throws NoExitRoadException{
-        if(!this.getEdge(enterLocation).hasRoad()){
-            throw new NoExitRoadException("There is no road at the enterLocation");
+    public Direction getExitRoadDirection(Direction enterDirection) throws NoExitRoadException{
+        if(!this.getEdge(enterDirection).hasRoad()){
+            throw new NoExitRoadException("There is no road at the enterDirection");
         }
-        if(this.isRoadFinished(enterLocation)){
-            throw new NoExitRoadException("The road at the enterLocation is not connected");
+        if(this.isRoadFinished(enterDirection)){
+            throw new NoExitRoadException("The road at the enterDirection is not connected");
         }
-        return this.roadConnections.get(enterLocation);
+        return this.roadConnections.get(enterDirection);
     }
 
     /**
-     * Creates a connection between the two given edges, based on the given locations.
+     * Creates a connection between the two given edges, based on the given directions.
      * Creates 2 entries in the roadConnections dictionary, in both ways.
-     * @param location1
-     * @param location2
-     * @throws ConnectionRoadToEdgeWithNoRoadException If one of the given locations gives an edge without a road.
+     * @param direction1
+     * @param direction2
+     * @throws ConnectionRoadToEdgeWithNoRoadException If one of the given directions gives an edge without a road.
      */
-    public void connectRoad(Location location1, Location location2) throws ConnectionRoadToEdgeWithNoRoadException {
-        if (!this.getEdge(location1).hasRoad() || !this.getEdge(location2).hasRoad()){
+    public void connectRoad(Direction direction1, Direction direction2) throws ConnectionRoadToEdgeWithNoRoadException {
+        if (!this.getEdge(direction1).hasRoad() || !this.getEdge(direction2).hasRoad()){
             throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
         }
 
-        this.roadConnections.put(location1, location2);
-        this.roadConnections.put(location2, location1);
+        this.roadConnections.put(direction1, direction2);
+        this.roadConnections.put(direction2, direction1);
     }
 
     /**
-     * Terminates a road's edge based on the location.
-     * @param location
-     * @throws ConnectionRoadToEdgeWithNoRoadException If the edge based on the location doesn't have a road.
+     * Terminates a road's edge based on the direction.
+     * @param direction
+     * @throws ConnectionRoadToEdgeWithNoRoadException If the edge based on the direction doesn't have a road.
      */
-    public void terminateRoad(Location location) throws ConnectionRoadToEdgeWithNoRoadException {
-        if (!this.getEdge(location).hasRoad()){
+    public void terminateRoad(Direction direction) throws ConnectionRoadToEdgeWithNoRoadException {
+        if (!this.getEdge(direction).hasRoad()){
             throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
         }
 
-        this.finishingRoads.add(location);
+        this.finishingRoads.add(direction);
     }
 
     /**
      * @param other the other tile
-     * @param location the location where you
-     * @return true if the other tile is compatible to the edge location of this tile based on their direction
+     * @param direction the direction where you
+     * @return true if the other tile is compatible to the edge direction of this tile based on their orientation
      */
-    public boolean isCompatibleWith(Tile other, Location location){
-        if (this.direction == other.getDirection()){
-            return this.getEdge(location).isCompatibleWith(other.getEdge(location.toOpposite()));
+    public boolean isCompatibleWith(Tile other, Direction direction){
+        if (this.orientation == other.getOrientation()){
+            return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toOpposite()));
         }
-        else if (this.direction == other.getDirection().rotateLeft()){
-            return this.getEdge(location).isCompatibleWith(other.getEdge(location.toRigth()));
+        else if (this.orientation == other.getOrientation().rotateLeft()){
+            return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toRigth()));
         }
-        else if (this.direction == other.getDirection().rotateRight()){
-            return this.getEdge(location).isCompatibleWith(other.getEdge(location.toLeft()));
+        else if (this.orientation == other.getOrientation().rotateRight()){
+            return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toLeft()));
         }
         else {
-            return this.getEdge(location).isCompatibleWith(other.getEdge(location));
+            return this.getEdge(direction).isCompatibleWith(other.getEdge(direction));
         }
     }
 }

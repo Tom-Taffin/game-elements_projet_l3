@@ -11,7 +11,7 @@ public class TileTest {
         Tile tile1 = new Tile(new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD));
         Tile tile2 = new Tile(new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD));
 
-        assertTrue(tile1.isCompatibleWith(tile2, Location.TOP));
+        assertTrue(tile1.isCompatibleWith(tile2, Direction.TOP));
     }
 
     @Test
@@ -19,7 +19,7 @@ public class TileTest {
         Tile tile1 = new Tile(new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD));
         Tile tile2 = new Tile(new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.CITY));
 
-        assertFalse(tile1.isCompatibleWith(tile2, Location.TOP));
+        assertFalse(tile1.isCompatibleWith(tile2, Direction.TOP));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class TileTest {
         Tile tile2 = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD),
                               new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.CITY, Zone.FIELD));
 
-        assertTrue(tile1.isCompatibleWith(tile2, Location.RIGHT));
+        assertTrue(tile1.isCompatibleWith(tile2, Direction.RIGHT));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class TileTest {
         Tile tile2 = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD),
                               new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD));
 
-        assertFalse(tile1.isCompatibleWith(tile2, Location.RIGHT));
+        assertFalse(tile1.isCompatibleWith(tile2, Direction.RIGHT));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class TileTest {
         Tile tile2 = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeNoRoad(Zone.FIELD),
                 new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD));
 
-        assertFalse(tile1.isCompatibleWith(tile2, Location.LEFT));
+        assertFalse(tile1.isCompatibleWith(tile2, Direction.LEFT));
     }
 
     @Test
@@ -60,12 +60,12 @@ public class TileTest {
         Tile tile = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD),
                 new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD));
 
-        tile.connectRoad(Location.TOP, Location.BOTTOM);
+        tile.connectRoad(Direction.TOP, Direction.BOTTOM);
 
-        assertFalse(tile.isRoadFinished(Location.TOP));
-        assertFalse(tile.isRoadFinished(Location.BOTTOM));
-        assertEquals(Location.BOTTOM, tile.getExitRoadLocation(Location.TOP));
-        assertEquals(Location.TOP, tile.getExitRoadLocation(Location.BOTTOM));
+        assertFalse(tile.isRoadFinished(Direction.TOP));
+        assertFalse(tile.isRoadFinished(Direction.BOTTOM));
+        assertEquals(Direction.BOTTOM, tile.getExitRoadDirection(Direction.TOP));
+        assertEquals(Direction.TOP, tile.getExitRoadDirection(Direction.BOTTOM));
 
     }
 
@@ -73,7 +73,7 @@ public class TileTest {
     public void testConnectTwoRoadsWithEdgesWithoutRoads() throws ConnectionRoadToEdgeWithNoRoadException {
         Tile tile = new Tile(new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD));
 
-        assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {tile.connectRoad(Location.TOP, Location.BOTTOM);});
+        assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {tile.connectRoad(Direction.TOP, Direction.BOTTOM);});
 
     }
 
@@ -82,11 +82,11 @@ public class TileTest {
         Tile tile = new Tile(new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD),
                 new EdgeWithRoad(Zone.FIELD, Zone.FIELD), new EdgeWithRoad(Zone.FIELD, Zone.FIELD));
 
-        tile.terminateRoad(Location.TOP);
+        tile.terminateRoad(Direction.TOP);
 
-        assertTrue(tile.isRoadFinished(Location.TOP));
+        assertTrue(tile.isRoadFinished(Direction.TOP));
         assertThrows(NoExitRoadException.class, () -> {
-            tile.getExitRoadLocation(Location.TOP);
+            tile.getExitRoadDirection(Direction.TOP);
         });
     }
 
@@ -94,9 +94,9 @@ public class TileTest {
     public void testTerminateRoadWithEdgeWithoutRoad() throws ConnectionRoadToEdgeWithNoRoadException {
         Tile tile = new Tile(new EdgeNoRoad(Zone.CITY), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD));
 
-        assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {tile.terminateRoad(Location.TOP);});
+        assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {tile.terminateRoad(Direction.TOP);});
 
     }
 
-    
+
 }

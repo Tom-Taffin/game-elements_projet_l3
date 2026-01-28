@@ -1,45 +1,54 @@
 package l3s6.projet.star.game.tile;
 
 public enum Direction {
-    /* Represents the direction of the tile. */
-    NORTH, SOUTH, WEST, EAST;
+    /* Represents the direction of the edge */
+    TOP, RIGHT, BOTTOM, LEFT;
 
-    public Direction rotateHalf(){
+    /**
+     * @return the opposite direction
+     */
+    public Direction toOpposite(){
         switch (this) {
-            case NORTH:
-                return Direction.SOUTH;
-            case EAST:
-                return Direction.WEST;
-            case SOUTH:
-                return Direction.NORTH;
+            case TOP:
+                return Direction.BOTTOM;
+            case RIGHT:
+                return Direction.LEFT;
+            case LEFT:
+                return Direction.RIGHT;
             default:
-                return Direction.EAST;
+                return Direction.TOP;
         }
     }
 
-    public Direction rotateLeft(){
+    /**
+     * @return the next direction in a counter-clockwise direction
+     */
+    public Direction toLeft(){
         switch (this) {
-            case NORTH:
-                return Direction.WEST;
-            case EAST:
-                return Direction.NORTH;
-            case SOUTH:
-                return Direction.EAST;
+            case TOP:
+                return Direction.LEFT;
+            case RIGHT:
+                return Direction.TOP;
+            case LEFT:
+                return Direction.BOTTOM;
             default:
-                return Direction.SOUTH;
+                return Direction.RIGHT;
         }
     }
 
-    public Direction rotateRight(){
+    /**
+     * @return the next direction in a clockwise direction
+     */
+    public Direction toRigth(){
         switch (this) {
-            case NORTH:
-                return Direction.EAST;
-            case EAST:
-                return Direction.SOUTH;
-            case SOUTH:
-                return Direction.WEST;
+            case TOP:
+                return Direction.RIGHT;
+            case RIGHT:
+                return Direction.BOTTOM;
+            case LEFT:
+                return Direction.TOP;
             default:
-                return Direction.NORTH;
+                return Direction.LEFT;
         }
     }
 }
