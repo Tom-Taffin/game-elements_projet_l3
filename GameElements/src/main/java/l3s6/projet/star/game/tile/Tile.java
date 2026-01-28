@@ -3,6 +3,7 @@ package l3s6.projet.star.game.tile;
 import l3s6.projet.star.game.edge.Edge;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Tile {
     private Edge topEdge;
@@ -11,6 +12,7 @@ public class Tile {
     private Edge leftEdge;
 
     private final HashMap<Location, Location> roadConnections;
+    private final HashSet<Location> finishingRoads;
 
     private Direction direction;
     // Direction where the TOP Edge of the tile is.
@@ -23,6 +25,7 @@ public class Tile {
         this.leftEdge = leftEdge;
         this.direction = Direction.NORTH;
         this.roadConnections = new HashMap<>();
+        this.finishingRoads = new HashSet<>();
     }
 
 
@@ -57,7 +60,7 @@ public class Tile {
     }
 
     public boolean isRoadFinished(Location location){
-        return this.roadConnections.containsKey(location) && this.roadConnections.get(location) == null;
+        return this.finishingRoads.contains(location);
     }
 
     public Location getExitRoadLocation(Location enterLocation) throws NoExitRoadException{
@@ -88,7 +91,6 @@ public class Tile {
 
     /**
      * Terminates a road's edge based on the location.
-     * Creates entry in the dictionary, where the value is null.
      * @param location
      * @throws ConnectionRoadToEdgeWithNoRoadException If the edge based on the location doesn't have a road.
      */
@@ -97,7 +99,7 @@ public class Tile {
             throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
         }
 
-        this.roadConnections.put(location, null);
+        this.finishingRoads.add(location);
     }
 
     /**
