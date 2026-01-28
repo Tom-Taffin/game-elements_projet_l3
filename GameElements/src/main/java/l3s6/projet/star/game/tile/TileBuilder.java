@@ -27,6 +27,9 @@ public class TileBuilder {
     public Tile buildTile(String string) throws WrongTileSyntaxException{
         Edge[] edges = new Edge[4];
         String[] stringEdges = string.split("-");
+        if(stringEdges.length != 4){
+            throw new WrongTileSyntaxException("There is no 3 '-'");
+        }
         for(int i = 0 ; i < 4 ; i++){
             if(stringEdges[i].contains("r")){
                 edges[i] = buildEdgeWithRoad(stringEdges[i]);
