@@ -29,13 +29,21 @@ public class TileBuilder {
         String[] stringEdges = string.split("-");
         for(int i = 0 ; i < 4 ; i++){
             if(stringEdges[i].contains("r")){
-                String[] stringZones = stringEdges[i].split("r");
-                edges[i] = new EdgeWithRoad(new Zone(this.getTopology(stringZones[0])),new Zone(this.getTopology(stringZones[1])));
+                edges[i] = buildEdgeWithRoad(stringEdges[i]);
             }
             else{
-                edges[i] = new EdgeNoRoad(new Zone(this.getTopology(stringEdges[i])));
+                edges[i] = this.buildEdgeNoRoad(stringEdges[i]);
             }
         }
         return new Tile(edges[0], edges[1], edges[2], edges[3]);
+    }
+
+    private EdgeNoRoad buildEdgeNoRoad(String string) throws WrongTileSyntaxException{
+        return new EdgeNoRoad(new Zone(this.getTopology(string)));
+    }
+
+    private EdgeWithRoad buildEdgeWithRoad(String string) throws WrongTileSyntaxException{
+        String[] stringZones = string.split("r");
+        return new EdgeWithRoad(new Zone(this.getTopology(stringZones[0])),new Zone(this.getTopology(stringZones[1])));
     }
 }
