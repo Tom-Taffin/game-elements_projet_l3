@@ -62,6 +62,8 @@ public class TileTest {
 
         tile.connectRoad(Location.TOP, Location.BOTTOM);
 
+        assertFalse(tile.isRoadFinished(Location.TOP));
+        assertFalse(tile.isRoadFinished(Location.BOTTOM));
         assertEquals(Location.BOTTOM, tile.getExitRoadLocation(Location.TOP));
         assertEquals(Location.TOP, tile.getExitRoadLocation(Location.BOTTOM));
 
@@ -83,6 +85,9 @@ public class TileTest {
         tile.terminateRoad(Location.TOP);
 
         assertTrue(tile.isRoadFinished(Location.TOP));
+        assertThrows(NoExitRoadException.class, () -> {
+            tile.getExitRoadLocation(Location.TOP);
+        });
     }
 
     @Test
@@ -92,4 +97,6 @@ public class TileTest {
         assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {tile.terminateRoad(Location.TOP);});
 
     }
+
+    
 }
