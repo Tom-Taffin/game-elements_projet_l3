@@ -13,6 +13,7 @@ public class Tile {
 
     private final HashMap<Direction, Direction> roadConnections;
     private final HashSet<Direction> finishingRoads;
+    private final HashMap<Direction, HashSet<Direction>> zoneConnections;
 
     private Orientation orientation;
     // Orientation where the TOP Edge of the tile is.
@@ -26,6 +27,16 @@ public class Tile {
         this.orientation = Orientation.NORTH;
         this.roadConnections = new HashMap<>();
         this.finishingRoads = new HashSet<>();
+        this.zoneConnections = new HashMap<>();
+
+        initializeZoneConnections();
+    }
+
+    private void initializeZoneConnections(){
+        this.zoneConnections.put(Direction.TOP, new HashSet<>());
+        this.zoneConnections.put(Direction.RIGHT, new HashSet<>());
+        this.zoneConnections.put(Direction.BOTTOM, new HashSet<>());
+        this.zoneConnections.put(Direction.LEFT, new HashSet<>());
     }
 
 

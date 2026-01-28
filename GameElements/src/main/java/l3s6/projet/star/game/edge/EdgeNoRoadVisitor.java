@@ -10,7 +10,7 @@ public class EdgeNoRoadVisitor implements EdgeVisitor{
 
     @Override
     public boolean visit(EdgeNoRoad other) {
-        return origin.getZone() == other.getZone();
+        return origin.getZone().equals(other.getZone());
     }
 
     @Override

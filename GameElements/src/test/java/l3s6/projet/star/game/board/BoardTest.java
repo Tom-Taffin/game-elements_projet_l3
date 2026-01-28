@@ -2,6 +2,7 @@ package l3s6.projet.star.game.board;
 
 import l3s6.projet.star.game.edge.EdgeNoRoad;
 import l3s6.projet.star.game.edge.Zone;
+import l3s6.projet.star.game.edge.Topology; // Ajout probable nécessaire si non importé via *
 import l3s6.projet.star.game.tile.Tile;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class BoardTest {
     @Test
     public void testPutTileAt(){
         Board board = new Board();
-        Tile tile = new Tile(new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD));
+        Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
         Coordinates coordinates = new Coordinates();
 
         assertFalse(board.hasTile(coordinates));
@@ -26,7 +27,7 @@ public class BoardTest {
     @Test
     public void testRemoveTileFrom(){
         Board board = new Board();
-        Tile tile = new Tile(new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD), new EdgeNoRoad(Zone.FIELD));
+        Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
         Coordinates coordinates = new Coordinates();
 
         board.putTileAt(tile, coordinates);
