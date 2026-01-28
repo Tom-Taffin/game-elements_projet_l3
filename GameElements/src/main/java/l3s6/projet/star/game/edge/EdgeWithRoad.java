@@ -17,6 +17,14 @@ public class EdgeWithRoad implements Edge {
         return zone2;
     }
 
+    public Topology getZone1Topology(){
+        return this.zone1.getTopology();
+    }
+
+    public Topology getZone2Topology(){
+        return this.zone2.getTopology();
+    }
+
     @Override
     public boolean isCompatibleWith(Edge other) {
         return other.accept(new EdgeWithRoadVisitor(this));
