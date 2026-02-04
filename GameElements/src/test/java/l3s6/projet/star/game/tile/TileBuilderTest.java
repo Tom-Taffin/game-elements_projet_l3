@@ -21,8 +21,8 @@ public class TileBuilderTest {
     
     @Test
     public void testBuildTileWithoutRoadCorrectSyntaxe() throws WrongTileSyntaxException{
-        String expString = "c-f-c1-f";
-        Tile tile = this.tileBuilder.buildTile(expString);
+        String expString = "c1-f3-c2-f3";
+        Tile tile = this.tileBuilder.build(expString);
         assertFalse(tile.getEdge(Direction.TOP).hasRoad());
         assertFalse(tile.getEdge(Direction.RIGHT).hasRoad());
         assertFalse(tile.getEdge(Direction.BOTTOM).hasRoad());
@@ -36,8 +36,8 @@ public class TileBuilderTest {
 
     @Test
     public void testBuildTileWithRoadCorrectSyntaxe() throws WrongTileSyntaxException{
-        String expString = "c-frf0-f0rf-c ";
-        Tile tile = this.tileBuilder.buildTile(expString);
+        String expString = "c1-f2rf0-f0rf2-c1 ";
+        Tile tile = this.tileBuilder.build(expString);
         assertFalse(tile.getEdge(Direction.TOP).hasRoad());
         assertTrue(tile.getEdge(Direction.RIGHT).hasRoad());
         assertTrue(tile.getEdge(Direction.BOTTOM).hasRoad());
@@ -53,17 +53,17 @@ public class TileBuilderTest {
 
     @Test
     public void testBuildTileInCorrectTopologySyntaxe(){
-        String expString = "c-t-c1-f";
+        String expString = "c0-t2-c1-f3";
         assertThrows(WrongTileSyntaxException.class, () -> {
-            this.tileBuilder.buildTile(expString);
+            this.tileBuilder.build(expString);
         });
     }
 
     @Test
     public void testBuildTileInCorrectFormSyntaxe(){
-        String expString = "c-fc1-f";
+        String expString = "c0-fc1-f2";
         assertThrows(WrongTileSyntaxException.class, () -> {
-            this.tileBuilder.buildTile(expString);
+            this.tileBuilder.build(expString);
         });
     }
     
