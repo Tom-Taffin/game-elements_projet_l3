@@ -2,6 +2,7 @@ package l3s6.projet.star.game.tile;
 
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import l3s6.projet.star.game.edge.Edge;
 import l3s6.projet.star.game.edge.EdgeNoRoad;
@@ -15,7 +16,7 @@ public class TileBuilder {
     }
 
     public Tile build(String string) throws WrongTileSyntaxException{
-        HashMap<String,Zone> zoneConnections = new HashMap<>();
+        HashMap<String,HashSet<Zone>> zoneConnections = new HashMap<>();
         Edge[] edges = new Edge[4];
         
         this.analyseString(string, edges, zoneConnections);
@@ -24,7 +25,7 @@ public class TileBuilder {
         return tile;
     }
 
-    private void analyseString(String string, Edge[] edges, HashMap<String,Zone> zoneConnections) throws WrongTileSyntaxException{
+    private void analyseString(String string, Edge[] edges, HashMap<String,HashSet<Zone>> zoneConnections) throws WrongTileSyntaxException{
         String[] stringEdges = string.split("-");
         if(stringEdges.length != 4){
             throw new WrongTileSyntaxException("There is no 3 '-'");
@@ -39,23 +40,30 @@ public class TileBuilder {
         }
     }
 
-    private void analyseEdgeNoRoadString(String stringEdge, Edge[] edges, HashMap<String, Zone> zoneConnections, int index) throws WrongTileSyntaxException {
+    private void analyseEdgeNoRoadString(String stringEdge, Edge[] edges, HashMap<String, HashSet<Zone>> zoneConnections, int index) throws WrongTileSyntaxException {
         EdgeNoRoad edge = this.buildEdgeNoRoad(stringEdge);
         edges[index] = edge;
-        zoneConnections.put(stringEdge.substring(1),edge.getZone());
+        this.saveConnection(zoneConnections, stringEdge.substring(1), edge.getZone());
     }
 
-    private void analyseEdgeWithRoadString(String stringEdge, Edge[] edges, HashMap<String, Zone> zoneConnections, int index) throws WrongTileSyntaxException {
+    private void analyseEdgeWithRoadString(String stringEdge, Edge[] edges, HashMap<String, HashSet<Zone>> zoneConnections, int index) throws WrongTileSyntaxException {
         String[] stringZones = stringEdge.split("r");
         if(stringZones.length != 2){
             throw new WrongTileSyntaxException("There are too many 'r' between the '-'");
         }
         EdgeWithRoad edge = this.buildEdgeWithRoad(stringZones);
         edges[index] = edge;
-        zoneConnections.put(stringZones[0].substring(1),edge.getZone1());
-        zoneConnections.put(stringZones[1].substring(1),edge.getZone2());
+        this.saveConnection(zoneConnections, stringZones[0].substring(1), edge.getZone1());
+        this.saveConnection(zoneConnections, stringZones[1].substring(1), edge.getZone2());
     }
 
+    private void saveConnection(HashMap<String, HashSet<Zone>> zoneConnections, String id, Zone zone) {
+        if(!zoneConnections.containsKey(id)){
+            zoneConnections.put(id,new HashSet<Zone>());
+        }
+        zoneConnections.get(id).add(zone);
+    }
+    
     private EdgeNoRoad buildEdgeNoRoad(String string) throws WrongTileSyntaxException{
         return new EdgeNoRoad(new Zone(this.getTopology(string)));
     }
