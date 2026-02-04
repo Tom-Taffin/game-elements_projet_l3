@@ -20,7 +20,10 @@ public class Zone {
         return connectingZones;
     }
 
-    public void connectTo(Zone zone) {
+    public void connectTo(Zone zone) throws WrongTopologyException {
+        if(this.getTopology()!=zone.getTopology()){
+            throw new WrongTopologyException("There are incompatible topologies");
+        }
         this.connectingZones.add(zone);
         zone.getConnectingZones().add(this);
     }
