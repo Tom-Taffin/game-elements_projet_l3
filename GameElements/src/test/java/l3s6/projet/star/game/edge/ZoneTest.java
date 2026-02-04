@@ -15,4 +15,14 @@ public class ZoneTest {
         assertTrue(zone1.getConnectingZones().contains(zone2));
         assertTrue(zone2.getConnectingZones().contains(zone1));
     }
+
+    @Test
+    public void testConnectZoneWithDifferentTopologies(){
+        Zone zone1 = new Zone(Topology.CITY);
+        Zone zone2 = new Zone(Topology.FIELD);
+
+        assertThrows(WrongTopologyException.class, ()->{
+            zone1.connectTo(zone2);
+        });
+    }
 }
