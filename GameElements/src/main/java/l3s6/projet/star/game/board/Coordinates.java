@@ -1,5 +1,7 @@
 package l3s6.projet.star.game.board;
 
+import l3s6.projet.star.game.edge.Zone;
+
 public class Coordinates {
     /**
      * The y coordinate is positive when it goes up, and negative when it goes down.
@@ -26,5 +28,22 @@ public class Coordinates {
 
     public Coordinates downCoordinates(){
         return new Coordinates(this.x, this.y - 1);
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public boolean equals(Object o){
+
+        if (!(o instanceof Coordinates)) {
+            return false;
+        }
+        Coordinates coordinates = (Coordinates) o;
+        return (coordinates.getX() == this.x) && (coordinates.getY() == this.y);
     }
 }
