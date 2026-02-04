@@ -41,10 +41,10 @@ public class EdgeWithRoad implements Edge {
     }
 
     public void connectZoneToZone1(Zone zone){
-        this.zone1.addConnectingZone(zone);
+        this.zone1.connectTo(zone);
     }
 
     public void connectZoneToZone2(Zone zone){
-        this.zone2.addConnectingZone(zone);
+        this.zone2.connectTo(zone);
     }
 }

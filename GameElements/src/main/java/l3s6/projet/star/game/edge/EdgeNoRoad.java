@@ -31,7 +31,7 @@ public class EdgeNoRoad implements Edge {
     }
 
     public void connectZone(Zone zone){
-        this.zone.addConnectingZone(zone);
+        this.zone.connectTo(zone);
     }
 
 }
