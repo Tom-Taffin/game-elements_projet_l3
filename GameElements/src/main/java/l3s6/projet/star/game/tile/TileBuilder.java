@@ -17,7 +17,9 @@ public class TileBuilder {
     public Tile build(String string) throws WrongTileSyntaxException{
         HashMap<String,Zone> zoneConnections = new HashMap<>();
         Edge[] edges = new Edge[4];
+        
         this.analyseString(string, edges, zoneConnections);
+        
         Tile tile = new Tile(edges[0], edges[1], edges[2], edges[3]);
         return tile;
     }
@@ -29,20 +31,29 @@ public class TileBuilder {
         }
         for(int i = 0 ; i < stringEdges.length ; i++){
             if(stringEdges[i].contains("r")){
-                String[] stringZones = stringEdges[i].split("r");
-                EdgeWithRoad edge = this.buildEdgeWithRoad(stringZones);
-                edges[i] = edge;
-                zoneConnections.put(stringZones[0].substring(1),edge.getZone1());
-                zoneConnections.put(stringZones[1].substring(1),edge.getZone2());
-                
+                this.analyseEdgeWithRoadString(stringEdges[i], edges, zoneConnections, i);
             }
             else{
-                EdgeNoRoad edge = this.buildEdgeNoRoad(stringEdges[i]);
-                edges[i] = edge;
-                zoneConnections.put(stringEdges[i].substring(1),edge.getZone());
-                
+                this.analyseEdgeNoRoadString(stringEdges[i], edges, zoneConnections, i);
             }
         }
+    }
+
+    private void analyseEdgeNoRoadString(String stringEdge, Edge[] edges, HashMap<String, Zone> zoneConnections, int index) throws WrongTileSyntaxException {
+        EdgeNoRoad edge = this.buildEdgeNoRoad(stringEdge);
+        edges[index] = edge;
+        zoneConnections.put(stringEdge.substring(1),edge.getZone());
+    }
+
+    private void analyseEdgeWithRoadString(String stringEdge, Edge[] edges, HashMap<String, Zone> zoneConnections, int index) throws WrongTileSyntaxException {
+        String[] stringZones = stringEdge.split("r");
+        if(stringZones.length != 2){
+            throw new WrongTileSyntaxException("There are too many 'r' between the '-'");
+        }
+        EdgeWithRoad edge = this.buildEdgeWithRoad(stringZones);
+        edges[index] = edge;
+        zoneConnections.put(stringZones[0].substring(1),edge.getZone1());
+        zoneConnections.put(stringZones[1].substring(1),edge.getZone2());
     }
 
     private EdgeNoRoad buildEdgeNoRoad(String string) throws WrongTileSyntaxException{
@@ -61,7 +72,7 @@ public class TileBuilder {
             return Topology.CITY;
         }
         else{
-            throw new WrongTileSyntaxException(string + " is not recognized");
+            throw new WrongTileSyntaxException("Topololy " + string + " is not recognized");
         }
     }
 }
