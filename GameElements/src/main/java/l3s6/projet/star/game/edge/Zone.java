@@ -20,8 +20,9 @@ public class Zone {
         return connectingZones;
     }
 
-    public void addConnectingZone(Zone connectingZones) {
-        this.connectingZones.add(connectingZones);
+    public void connectTo(Zone zone) {
+        this.connectingZones.add(zone);
+        zone.getConnectingZones().add(this);
     }
 
     public boolean equals(Object o){ 
