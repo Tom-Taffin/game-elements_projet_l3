@@ -29,4 +29,9 @@ public class EdgeNoRoad implements Edge {
     public boolean hasRoad() {
         return false;
     }
+
+    public void connectZone(Zone zone){
+        this.zone.addConnectingZone(zone);
+    }
+
 }
