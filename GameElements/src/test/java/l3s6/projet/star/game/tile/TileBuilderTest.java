@@ -20,7 +20,7 @@ public class TileBuilderTest {
     }
     
     @Test
-    public void testBuildTileWithoutRoadCorrectSyntaxe() throws WrongTileSyntaxException{
+    public void testEdgdesOfBuildTileWithoutRoadCorrectSyntaxe() throws WrongTileSyntaxException{
         String expString = "c1-f3-c2-f3";
         Tile tile = this.tileBuilder.build(expString);
         assertFalse(tile.getEdge(Direction.TOP).hasRoad());
@@ -32,11 +32,24 @@ public class TileBuilderTest {
         assertEquals(Topology.FIELD, ((EdgeNoRoad) tile.getEdge(Direction.RIGHT)).getZoneTopology());
         assertEquals(Topology.CITY, ((EdgeNoRoad) tile.getEdge(Direction.BOTTOM)).getZoneTopology());
         assertEquals(Topology.FIELD, ((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZoneTopology());
+
     }
 
     @Test
-    public void testBuildTileWithRoadCorrectSyntaxe() throws WrongTileSyntaxException{
-        String expString = "c1-f2rf0-f0rf2-c1 ";
+    public void testConnectionsOfBuildTileWithoutRoadCorrectSyntaxe() throws WrongTileSyntaxException{
+        String expString = "c1-f3-c2-f3";
+        Tile tile = this.tileBuilder.build(expString);
+
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.TOP)).getZone().isFinished());
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.RIGHT)).getZone().getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZone()));
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.BOTTOM)).getZone().isFinished());
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZone().getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.RIGHT)).getZone()));
+
+    }
+
+    @Test
+    public void testEdgesofBuildTileWithRoadCorrectSyntaxe() throws WrongTileSyntaxException{
+        String expString = "c1-f2rf3-f0rf2-c4";
         Tile tile = this.tileBuilder.build(expString);
         assertFalse(tile.getEdge(Direction.TOP).hasRoad());
         assertTrue(tile.getEdge(Direction.RIGHT).hasRoad());
@@ -49,6 +62,20 @@ public class TileBuilderTest {
         assertEquals(Topology.FIELD, ((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone1Topology());
         assertEquals(Topology.FIELD, ((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone2Topology());
         assertEquals(Topology.CITY, ((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZoneTopology());
+    }
+
+    @Test
+    public void testConnectionsOfBuildTileWithRoadCorrectSyntaxe() throws WrongTileSyntaxException{
+        String expString = "c1-f2rf3-f0rf2-c4";
+        Tile tile = this.tileBuilder.build(expString);
+
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.TOP)).getZone().isFinished());
+        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.RIGHT)).getZone1().getConnectingZones().contains(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone2()));
+        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone2().getConnectingZones().contains(((EdgeWithRoad) tile.getEdge(Direction.RIGHT)).getZone1()));
+        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.RIGHT)).getZone2().isFinished());
+        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone1().isFinished());
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZone().isFinished());
+
     }
 
     @Test

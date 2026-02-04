@@ -8,6 +8,7 @@ import l3s6.projet.star.game.edge.Edge;
 import l3s6.projet.star.game.edge.EdgeNoRoad;
 import l3s6.projet.star.game.edge.EdgeWithRoad;
 import l3s6.projet.star.game.edge.Topology;
+import l3s6.projet.star.game.edge.WrongTopologyException;
 import l3s6.projet.star.game.edge.Zone;
 
 public class TileBuilder {
@@ -22,6 +23,8 @@ public class TileBuilder {
         this.analyseString(string, edges, zoneConnections);
         
         Tile tile = new Tile(edges[0], edges[1], edges[2], edges[3]);
+
+        this.createConnections(tile,zoneConnections);
         return tile;
     }
 
@@ -81,6 +84,22 @@ public class TileBuilder {
         }
         else{
             throw new WrongTileSyntaxException("Topololy " + string + " is not recognized");
+        }
+    }
+
+    private void createConnections(Tile tile, HashMap<String,HashSet<Zone>> zoneConnections) throws WrongTileSyntaxException {
+        for(HashSet<Zone> zonesGroup : zoneConnections.values()){
+            for(Zone zone : zonesGroup){
+                for(Zone otherZone : zonesGroup){
+                    if(zone != otherZone){
+                        try {
+                            zone.connectTo(otherZone);
+                        } catch (WrongTopologyException e) {
+                            throw new WrongTileSyntaxException("There is a connection of different topologies");
+                        }
+                    }
+                }
+            }
         }
     }
 }
