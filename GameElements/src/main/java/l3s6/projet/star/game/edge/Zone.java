@@ -25,16 +25,10 @@ public class Zone {
             throw new WrongTopologyException("There are incompatible topologies");
         }
         this.connectingZones.add(zone);
-        zone.getConnectingZones().add(this);
     }
 
-    public boolean equals(Object o){ 
-  
-        if (!(o instanceof Zone)) {
-            return false; 
-        }
-        Zone zone = (Zone) o;
-        return zone.getTopology() == this.getTopology();
+    public boolean isFinished() {
+        return this.connectingZones.isEmpty();
     }
     
 }
