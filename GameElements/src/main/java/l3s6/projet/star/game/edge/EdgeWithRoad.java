@@ -39,4 +39,12 @@ public class EdgeWithRoad implements Edge {
     public boolean hasRoad() {
         return true;
     }
+
+    public void connectZoneToZone1(Zone zone){
+        this.zone1.addConnectingZone(zone);
+    }
+
+    public void connectZoneToZone2(Zone zone){
+        this.zone2.addConnectingZone(zone);
+    }
 }
