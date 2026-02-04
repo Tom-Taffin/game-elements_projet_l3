@@ -1,6 +1,7 @@
 package l3s6.projet.star.game.tile;
 
 import l3s6.projet.star.game.edge.Edge;
+import l3s6.projet.star.game.meeple.Meeple;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,6 +16,9 @@ public class Tile {
     private final HashSet<Direction> finishingRoads;
     private final HashMap<Direction, HashSet<Direction>> zoneConnections;
 
+    private MeeplePlacements meeples;
+
+
     private Orientation orientation;
     // Orientation where the TOP Edge of the tile is.
     // By default, it's on NORTH.
@@ -28,6 +32,8 @@ public class Tile {
         this.roadConnections = new HashMap<>();
         this.finishingRoads = new HashSet<>();
         this.zoneConnections = new HashMap<>();
+
+        this.meeples = new MeeplePlacements();
 
         initializeZoneConnections();
     }
@@ -131,5 +137,17 @@ public class Tile {
         else {
             return this.getEdge(direction).isCompatibleWith(other.getEdge(direction));
         }
+    }
+
+    public Meeple getMeepleOnZone(Direction direction){
+        return meeples.getMeepleOnZone(this.getEdge(direction));
+    }
+
+    public void placeMeepleOnZone(Meeple meeple, Direction direction){
+        meeples.placeMeepleOnZone(meeple, this.getEdge(direction));
+    }
+
+    public boolean hasMeepleOnZone(Direction direction){
+        return this.meeples.hasMeepleOnZone(this.getEdge(direction));
     }
 }
