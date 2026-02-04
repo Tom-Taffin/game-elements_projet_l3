@@ -15,7 +15,7 @@ public class EdgeWithRoadVisitor implements EdgeVisitor{
 
     @Override
     public boolean visit(EdgeWithRoad other) {
-        return origin.getZone1().equals(other.getZone2()) && origin.getZone2().equals(other.getZone1());
+        return origin.getZone1().getTopology() == other.getZone2().getTopology() && origin.getZone2().getTopology() == other.getZone1().getTopology();
     }
     
 }
