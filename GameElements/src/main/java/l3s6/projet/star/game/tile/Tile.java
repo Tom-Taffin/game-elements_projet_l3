@@ -13,11 +13,9 @@ public class Tile {
 
     private final HashMap<Direction, Direction> roadConnections;
     private final HashSet<Direction> finishingRoads;
-    private final HashMap<Direction, HashSet<Direction>> zoneConnections;
 
     private Orientation orientation;
-    // Orientation where the TOP Edge of the tile is.
-    // By default, it's on NORTH.
+    // By default, the orientation of this tile it's on NORTH.
 
     public Tile(Edge topEdge, Edge rightEdge, Edge bottomEdge, Edge leftEdge) {
         this.topEdge = topEdge;
@@ -27,23 +25,7 @@ public class Tile {
         this.orientation = Orientation.NORTH;
         this.roadConnections = new HashMap<>();
         this.finishingRoads = new HashSet<>();
-        this.zoneConnections = new HashMap<>();
-
-        initializeZoneConnections();
     }
-
-    private void initializeZoneConnections(){
-        this.zoneConnections.put(Direction.TOP, new HashSet<>());
-        this.zoneConnections.put(Direction.RIGHT, new HashSet<>());
-        this.zoneConnections.put(Direction.BOTTOM, new HashSet<>());
-        this.zoneConnections.put(Direction.LEFT, new HashSet<>());
-    }
-
-
-    public HashMap<Direction, Direction> getRoadConnections() {
-        return roadConnections;
-    }
-
 
     public Orientation getOrientation() {
         return orientation;
@@ -55,7 +37,7 @@ public class Tile {
 
     /**
      * @param direction
-     * @return the tile's edge based on the given direction.
+     * @return the tile's edge based on the given direction regardless of orientation.
      */
     public Edge getEdge(Direction direction) {
         switch (direction) {
@@ -70,23 +52,31 @@ public class Tile {
         }
     }
 
-    public boolean isRoadFinished(Direction direction){
+    /**
+     * @param direction the direction of the road
+     * @return true if the road at the direction is terminated.
+     */
+    public boolean isRoadTerminated(Direction direction){
         return this.finishingRoads.contains(direction);
     }
 
+    /**
+     * @param enterDirection the direction of the enter road
+     * @return the direction of the road connected to the road at the enter direction
+     * @throws NoExitRoadException if there is no exit road
+     */
     public Direction getExitRoadDirection(Direction enterDirection) throws NoExitRoadException{
         if(!this.getEdge(enterDirection).hasRoad()){
             throw new NoExitRoadException("There is no road at the enterDirection");
         }
-        if(this.isRoadFinished(enterDirection)){
+        if(this.isRoadTerminated(enterDirection)){
             throw new NoExitRoadException("The road at the enterDirection is not connected");
         }
         return this.roadConnections.get(enterDirection);
     }
 
     /**
-     * Creates a connection between the two given edges, based on the given directions.
-     * Creates 2 entries in the roadConnections dictionary, in both ways.
+     * Creates a road connection between the two given edges, based on the given directions.
      * @param direction1
      * @param direction2
      * @throws ConnectionRoadToEdgeWithNoRoadException If one of the given directions gives an edge without a road.
