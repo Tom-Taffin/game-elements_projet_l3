@@ -17,6 +17,8 @@ public class ZoneTest {
 
         assertTrue(zone1.getConnectingZones().contains(zone2));
         assertFalse(zone1.isFinished());
+        assertTrue(zone2.isFinished());
+
     }
 
     @Test
