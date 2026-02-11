@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EdgeTest {
     @Test
-    public void testEdgeNoRoadConnectEdgeNoRoadSameZone(){
+    public void testEdgeNoRoadConnectEdgeNoRoadSameTopology(){
         Edge noRoadEdge1 = new EdgeNoRoad(new Zone(Topology.FIELD));
         Edge noRoadEdge2 = new EdgeNoRoad(new Zone(Topology.FIELD));
 
@@ -14,7 +14,7 @@ public class EdgeTest {
     }
 
     @Test
-    public void testEdgeNoRoadConnectEdgeNoRoadDifferentZone(){
+    public void testEdgeNoRoadConnectEdgeNoRoadDifferentTopologies(){
         Edge noRoadEdge1 = new EdgeNoRoad(new Zone(Topology.FIELD));
         Edge noRoadEdge2 = new EdgeNoRoad(new Zone(Topology.CITY));
 
@@ -22,7 +22,7 @@ public class EdgeTest {
     }
 
     @Test
-    public void testEdgeWithRoadConnectEdgeWithRoadSameZones(){
+    public void testEdgeWithRoadConnectEdgeWithRoadSameTopology(){
         Edge edgeWithRoad1 = new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.CITY));
         Edge edgeWithRoad2 = new EdgeWithRoad(new Zone(Topology.CITY), new Zone(Topology.FIELD));
 
@@ -30,7 +30,7 @@ public class EdgeTest {
     }
 
     @Test
-    public void testEdgeWithRoadConnectEdgeWithRoadDifferentZones(){
+    public void testEdgeWithRoadConnectEdgeWithRoadDifferentTopologies(){
         Edge edgeWithRoad1 = new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.CITY));
         Edge edgeWithRoad2 = new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.CITY));
 
