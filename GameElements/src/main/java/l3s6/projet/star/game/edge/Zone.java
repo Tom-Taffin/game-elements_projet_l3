@@ -20,13 +20,20 @@ public class Zone {
         return connectingZones;
     }
 
-    public void connectTo(Zone zone) throws WrongTopologyException {
+    /** add an other connected zone to this zone
+     * @param zone
+     * @throws WrongTopologyException if the topology of the other zone is incompatible
+     */
+    public void addConnectedZone(Zone zone) throws WrongTopologyException {
         if(this.getTopology()!=zone.getTopology()){
             throw new WrongTopologyException("There are incompatible topologies");
         }
         this.connectingZones.add(zone);
     }
 
+    /**
+     * @return true if this zone is not connected to anything
+     */
     public boolean isFinished() {
         return this.connectingZones.isEmpty();
     }

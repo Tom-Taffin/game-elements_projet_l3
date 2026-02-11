@@ -93,7 +93,7 @@ public class TileBuilder {
                 for(Zone otherZone : zonesGroup){
                     if(zone != otherZone){
                         try {
-                            zone.connectTo(otherZone);
+                            zone.addConnectedZone(otherZone);
                         } catch (WrongTopologyException e) {
                             throw new WrongTileSyntaxException("There is a connection of different topologies");
                         }

@@ -31,7 +31,7 @@ public class EdgeNoRoad implements Edge {
     }
 
     public void connectZone(Zone zone) throws WrongTopologyException{
-        this.zone.connectTo(zone);
+        this.zone.addConnectedZone(zone);
     }
 
 }

@@ -41,10 +41,10 @@ public class EdgeWithRoad implements Edge {
     }
 
     public void connectZoneToZone1(Zone zone) throws WrongTopologyException{
-        this.zone1.connectTo(zone);
+        this.zone1.addConnectedZone(zone);
     }
 
     public void connectZoneToZone2(Zone zone) throws WrongTopologyException{
-        this.zone2.connectTo(zone);
+        this.zone2.addConnectedZone(zone);
     }
 }
