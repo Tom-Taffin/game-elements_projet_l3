@@ -30,7 +30,10 @@ public class EdgeNoRoad implements Edge {
         return false;
     }
 
-    public void connectZone(Zone zone) throws WrongTopologyException{
+    /** 
+     * add a connected zone to the zone of this edge
+     */
+    public void addConnectZone(Zone zone) throws WrongTopologyException{
         this.zone.addConnectedZone(zone);
     }
 
