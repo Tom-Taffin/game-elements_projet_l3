@@ -38,4 +38,17 @@ public class BoardTest {
 
         assertEquals(tile, removedTile);
     }
+
+    @Test
+    public void testCoordinates(){
+        Board board = new Board();
+        Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
+        Coordinates origin = new Coordinates(0, 0);
+
+        board.putTileAt(tile, origin);
+
+        assertEquals(new Coordinates(0, 0), origin);
+
+        assertTrue(board.hasTile(new Coordinates(0, 0)));
+    }
 }
