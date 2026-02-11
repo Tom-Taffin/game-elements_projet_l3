@@ -87,8 +87,24 @@ public class TileBuilderTest {
     }
 
     @Test
-    public void testBuildTileInCorrectFormSyntaxe(){
+    public void testBuildTileWith3Edges(){
         String expString = "c0-fc1-f2";
+        assertThrows(WrongTileSyntaxException.class, () -> {
+            this.tileBuilder.build(expString);
+        });
+    }
+
+    @Test
+    public void testBuildTileWith2RoadsOnEdge(){
+        String expString = "c1-f2rf3rf6-f0rf2-c4";
+        assertThrows(WrongTileSyntaxException.class, () -> {
+            this.tileBuilder.build(expString);
+        });
+    }
+
+    @Test
+    public void testBuildTileWithDifferentsTopologiesConnections(){
+        String expString = "c1-c3-c2-f3";
         assertThrows(WrongTileSyntaxException.class, () -> {
             this.tileBuilder.build(expString);
         });

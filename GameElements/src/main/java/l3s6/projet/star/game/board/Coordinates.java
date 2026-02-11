@@ -1,7 +1,5 @@
 package l3s6.projet.star.game.board;
 
-import l3s6.projet.star.game.edge.Zone;
-
 public class Coordinates {
     /**
      * The y coordinate is positive when it goes up, and negative when it goes down.
