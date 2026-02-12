@@ -37,10 +37,24 @@ public class Tile {
 
     /**
      * @param direction
-     * @return the tile's edge based on the given direction regardless of orientation.
+     * @return the tile's edge based on the given direction based on orientation.
      */
     public Edge getEdge(Direction direction) {
-        switch (direction) {
+        Direction edgeDirection = direction;
+        switch (this.orientation) {
+            case EAST:
+                edgeDirection = direction.toLeft();
+                break;
+            case SOUTH:
+                edgeDirection = direction.toOpposite();
+                break;
+            case WEST:
+                edgeDirection = direction.toRigth();
+                break;
+            default:
+                break;
+        }
+        switch (edgeDirection) {
             case TOP:
                 return topEdge;
             case RIGHT:
@@ -105,21 +119,10 @@ public class Tile {
 
     /**
      * @param other the other tile
-     * @param direction the direction where you
-     * @return true if the other tile is compatible to the edge direction of this tile based on their orientation
+     * @param direction the direction where you connect the other tile
+     * @return true if the other tile can be connected to the edge direction of this tile based on their orientation
      */
     public boolean isCompatibleWith(Tile other, Direction direction){
-        if (this.orientation == other.getOrientation()){
-            return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toOpposite()));
-        }
-        else if (this.orientation == other.getOrientation().rotateLeft()){
-            return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toRigth()));
-        }
-        else if (this.orientation == other.getOrientation().rotateRight()){
-            return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toLeft()));
-        }
-        else {
-            return this.getEdge(direction).isCompatibleWith(other.getEdge(direction));
-        }
+        return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toOpposite()));
     }
 }
