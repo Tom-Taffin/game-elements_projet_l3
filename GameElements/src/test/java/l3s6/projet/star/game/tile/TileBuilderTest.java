@@ -40,10 +40,10 @@ public class TileBuilderTest {
         String expString = "c1-f3-c2-f3";
         Tile tile = this.tileBuilder.build(expString);
 
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.TOP)).getZone().isFinished());
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.RIGHT)).getZone().getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZone()));
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.BOTTOM)).getZone().isFinished());
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZone().getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.RIGHT)).getZone()));
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.TOP)).isZoneFinished());
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.RIGHT)).getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZone()));
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.BOTTOM)).isZoneFinished());
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.RIGHT)).getZone()));
 
     }
 
@@ -69,12 +69,12 @@ public class TileBuilderTest {
         String expString = "c1-f2rf3-f0rf2-c4";
         Tile tile = this.tileBuilder.build(expString);
 
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.TOP)).getZone().isFinished());
-        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.RIGHT)).getZone1().getConnectingZones().contains(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone2()));
-        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone2().getConnectingZones().contains(((EdgeWithRoad) tile.getEdge(Direction.RIGHT)).getZone1()));
-        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.RIGHT)).getZone2().isFinished());
-        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone1().isFinished());
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.LEFT)).getZone().isFinished());
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.TOP)).isZoneFinished());
+        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.RIGHT)).getZone1ConnectingZones().contains(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone2()));
+        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).getZone2ConnectingZones().contains(((EdgeWithRoad) tile.getEdge(Direction.RIGHT)).getZone1()));
+        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.RIGHT)).isZone2Finished());
+        assertTrue(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM)).isZone1Finished());
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.LEFT)).isZoneFinished());
 
     }
 

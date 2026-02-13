@@ -1,5 +1,7 @@
 package l3s6.projet.star.game.edge;
 
+import java.util.Set;
+
 public class EdgeNoRoad implements Edge {
     private Zone zone;
 
@@ -9,10 +11,6 @@ public class EdgeNoRoad implements Edge {
 
     public Zone getZone() {
         return this.zone;
-    }
-
-    public Topology getZoneTopology(){
-        return this.zone.getTopology();
     }
 
     @Override
@@ -28,6 +26,18 @@ public class EdgeNoRoad implements Edge {
     @Override
     public boolean hasRoad() {
         return false;
+    }
+
+    public Topology getZoneTopology(){
+        return this.zone.getTopology();
+    }
+
+    public Set<Zone> getConnectingZones(){
+        return this.zone.getConnectingZones();
+    }
+
+    public boolean isZoneFinished(){
+        return this.zone.isFinished();
     }
 
 }
