@@ -39,18 +39,4 @@ public class EdgeWithRoad implements Edge {
     public boolean hasRoad() {
         return true;
     }
-
-    /** 
-     * add a connected zone to the zone1 of this edge
-     */
-    public void connectZoneToZone1(Zone zone) throws WrongTopologyException{
-        this.zone1.addConnectedZone(zone);
-    }
-
-    /** 
-     * add a connected zone to the zone2 of this edge
-     */
-    public void connectZoneToZone2(Zone zone) throws WrongTopologyException{
-        this.zone2.addConnectedZone(zone);
-    }
 }
