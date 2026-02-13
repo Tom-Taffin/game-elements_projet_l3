@@ -207,13 +207,13 @@ public class TileTest {
     }
 
     @Test
-    public void testConnectTwoRoadsEdgesWithRoads() throws ConnectionRoadToEdgeWithNoRoadException, NoExitRoadException{
+    public void testConnectTwoRoadsEdgesWithRoads() throws NoRoadException{
         Tile tile = new Tile(new EdgeWithRoad(new Zone(Topology.CITY), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
 
-        assertThrows(NoExitRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
+        assertThrows(NoRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
 
         tile.connectRoad(Direction.TOP, Direction.BOTTOM);
 
@@ -229,7 +229,7 @@ public class TileTest {
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)));
 
-        assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {
+        assertThrows(NoRoadException.class, () -> {
             tile.connectRoad(Direction.TOP, Direction.BOTTOM);
         });
 
@@ -242,21 +242,21 @@ public class TileTest {
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
 
-        assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {
+        assertThrows(NoRoadException.class, () -> {
             tile.connectRoad(Direction.TOP, Direction.BOTTOM);
         });
 
     }
 
     @Test
-    public void testConnectTwoRoadsEdgesWithRoadsWithRotation() throws ConnectionRoadToEdgeWithNoRoadException, NoExitRoadException{
+    public void testConnectTwoRoadsEdgesWithRoadsWithRotation() throws NoRoadException{
         Tile tile = new Tile(new EdgeWithRoad(new Zone(Topology.CITY), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
                             Orientation.EAST);
         
-        assertThrows(NoExitRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
+        assertThrows(NoRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
 
         tile.connectRoad(Direction.TOP, Direction.BOTTOM);
 
@@ -273,7 +273,7 @@ public class TileTest {
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
                             Orientation.EAST);
 
-        assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {
+        assertThrows(NoRoadException.class, () -> {
             tile.connectRoad(Direction.TOP, Direction.BOTTOM);
         });
 
@@ -286,12 +286,12 @@ public class TileTest {
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)));
 
-        assertThrows(NoExitRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
+        assertThrows(NoRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
 
     }
 
     @Test
-    public void testTerminateRoadWithEdgeWithRoad() throws ConnectionRoadToEdgeWithNoRoadException{
+    public void testTerminateRoadWithEdgeWithRoad() throws NoRoadException{
         Tile tile = new Tile(new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
@@ -311,7 +311,7 @@ public class TileTest {
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)));
 
-        assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {tile.terminateRoad(Direction.TOP);});
+        assertThrows(NoRoadException.class, () -> {tile.terminateRoad(Direction.TOP);});
 
     }
 }

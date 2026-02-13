@@ -77,15 +77,15 @@ public class Tile {
     /**
      * @param enterDirection the direction of the enter road
      * @return the direction of the road connected to the road at the enter direction
-     * @throws NoExitRoadException if there is no exit road
+     * @throws NoRoadException if there is no exit road
      */
-    public Direction getExitRoadDirection(Direction enterDirection) throws NoExitRoadException{
+    public Direction getExitRoadDirection(Direction enterDirection) throws NoRoadException{
         if(!this.getEdge(enterDirection).hasRoad()){
-            throw new NoExitRoadException("There is no road at the enterDirection");
+            throw new NoRoadException("There is no road at the enterDirection");
         }
         Direction exitDirection = this.roadConnections.get(enterDirection);
         if(exitDirection == null){
-            throw new NoExitRoadException("The road at the enterDirection is not connected");
+            throw new NoRoadException("The road at the enterDirection is not connected");
         }
         return exitDirection;
     }
@@ -94,11 +94,11 @@ public class Tile {
      * Creates a road connection between the two given edges, based on the given directions.
      * @param direction1
      * @param direction2
-     * @throws ConnectionRoadToEdgeWithNoRoadException If one of the given directions gives an edge without a road.
+     * @throws NoRoadException If one of the given directions gives an edge without a road.
      */
-    public void connectRoad(Direction direction1, Direction direction2) throws ConnectionRoadToEdgeWithNoRoadException {
+    public void connectRoad(Direction direction1, Direction direction2) throws NoRoadException {
         if (!this.getEdge(direction1).hasRoad() || !this.getEdge(direction2).hasRoad()){
-            throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
+            throw new NoRoadException("Tried to connect a road with an edge without a road.");
         }
 
         this.roadConnections.put(direction1, direction2);
@@ -108,11 +108,11 @@ public class Tile {
     /**
      * Terminates a road's edge based on the direction.
      * @param direction
-     * @throws ConnectionRoadToEdgeWithNoRoadException If the edge based on the direction doesn't have a road.
+     * @throws NoRoadException If the edge based on the direction doesn't have a road.
      */
-    public void terminateRoad(Direction direction) throws ConnectionRoadToEdgeWithNoRoadException {
+    public void terminateRoad(Direction direction) throws NoRoadException {
         if (!this.getEdge(direction).hasRoad()){
-            throw new ConnectionRoadToEdgeWithNoRoadException("Tried to terminate a road with an edge without a road.");
+            throw new NoRoadException("Tried to terminate a road with an edge without a road.");
         }
 
         this.finishingRoads.add(direction);
