@@ -72,7 +72,7 @@ public class TileBuilderTest {
     }
 
     @Test
-    public void testConnectionsOfBuildTileWithRoadCorrectSyntaxe() throws WrongTileSyntaxException{
+    public void testZoneConnectionsOfBuildTileWithRoadCorrectSyntaxe() throws WrongTileSyntaxException{
         String expString = "Sc1-f2r1f3-f0r1f2-c4";
         Tile tile = this.tileBuilder.build(expString);
 
@@ -84,6 +84,22 @@ public class TileBuilderTest {
         assertTrue(((EdgeWithRoad) tile.getEdge(Direction.RIGHT.toOpposite())).isZone2Finished());
         assertTrue(((EdgeWithRoad) tile.getEdge(Direction.BOTTOM.toOpposite())).isZone1Finished());
         assertTrue(((EdgeNoRoad) tile.getEdge(Direction.LEFT.toOpposite())).isZoneFinished());
+    }
+
+    @Test
+    public void testRoadConnectionsOfBuildTileWithRoadCorrectSyntaxe() throws WrongTileSyntaxException, NoRoadException{
+        String expString = "Sc1r2c5-f2r1f3-f0r1f2-c4";
+        Tile tile = this.tileBuilder.build(expString);
+
+        assertEquals(Orientation.SOUTH, tile.getOrientation());
+
+        assertTrue(tile.isRoadTerminated(Direction.TOP.getNewDirection(tile.getOrientation())));
+        assertFalse(tile.isRoadTerminated(Direction.RIGHT.getNewDirection(tile.getOrientation())));
+        assertFalse(tile.isRoadTerminated(Direction.BOTTOM.getNewDirection(tile.getOrientation())));
+        assertEquals(Direction.BOTTOM.getNewDirection(tile.getOrientation()),
+                    tile.getExitRoadDirection(Direction.RIGHT.getNewDirection(tile.getOrientation())));
+        assertEquals(Direction.RIGHT.getNewDirection(tile.getOrientation()),
+                    tile.getExitRoadDirection(Direction.BOTTOM.getNewDirection(tile.getOrientation())));
     }
 
     @Test
@@ -121,6 +137,14 @@ public class TileBuilderTest {
     @Test
     public void testBuildTileWithWrongOrientation(){
         String expString = "c1-c3-c2-f3";
+        assertThrows(WrongTileSyntaxException.class, () -> {
+            this.tileBuilder.build(expString);
+        });
+    }
+
+    @Test
+    public void testBuildTileWith3RoadConnected(){
+        String expString = "Sc1r1c5-f2r1f3-f0r1f2-c4\"";
         assertThrows(WrongTileSyntaxException.class, () -> {
             this.tileBuilder.build(expString);
         });
