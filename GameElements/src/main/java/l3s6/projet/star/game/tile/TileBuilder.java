@@ -1,8 +1,9 @@
 package l3s6.projet.star.game.tile;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 
 import l3s6.projet.star.game.edge.Edge;
 import l3s6.projet.star.game.edge.EdgeNoRoad;
@@ -17,16 +18,18 @@ public class TileBuilder {
     }
 
     public Tile build(String string) throws WrongTileSyntaxException{
-        HashMap<String,HashSet<Zone>> zoneConnections = new HashMap<>();
+        HashMap<String,List<Zone>> zoneConnections = new HashMap<>();
+        HashMap<String,List<Direction>> roadConnections = new HashMap<>();
         Edge[] edges = new Edge[4];
         
         Orientation orientation = this.getOrientation(string);
 
-        this.analyseString(string.substring(1), edges, zoneConnections);
+        this.analyseString(string.substring(1), edges, zoneConnections, roadConnections);
         
         Tile tile = new Tile(edges[0], edges[1], edges[2], edges[3], orientation);
 
-        this.createConnections(tile,zoneConnections);
+        this.createZoneConnections(tile,zoneConnections);
+        this.createRoadConnections(tile,roadConnections);
         
         return tile;
     }
@@ -46,14 +49,14 @@ public class TileBuilder {
         }
     }
 
-    private void analyseString(String string, Edge[] edges, HashMap<String,HashSet<Zone>> zoneConnections) throws WrongTileSyntaxException{
+    private void analyseString(String string, Edge[] edges, HashMap<String,List<Zone>> zoneConnections, HashMap<String,List<Direction>> roadConnections) throws WrongTileSyntaxException{
         String[] stringEdges = string.split("-");
         if(stringEdges.length != 4){
             throw new WrongTileSyntaxException("There is no 3 '-'");
         }
         for(int i = 0 ; i < stringEdges.length ; i++){
             if(stringEdges[i].contains("r")){
-                this.analyseEdgeWithRoadString(stringEdges[i], edges, zoneConnections, i);
+                this.analyseEdgeWithRoadString(stringEdges[i], edges, zoneConnections, roadConnections, i);
             }
             else{
                 this.analyseEdgeNoRoadString(stringEdges[i], edges, zoneConnections, i);
@@ -61,28 +64,43 @@ public class TileBuilder {
         }
     }
 
-    private void analyseEdgeNoRoadString(String stringEdge, Edge[] edges, HashMap<String, HashSet<Zone>> zoneConnections, int index) throws WrongTileSyntaxException {
+    private void analyseEdgeNoRoadString(String stringEdge, Edge[] edges, HashMap<String, List<Zone>> zoneConnections, int index) throws WrongTileSyntaxException {
         EdgeNoRoad edge = this.buildEdgeNoRoad(stringEdge);
         edges[index] = edge;
         this.saveConnection(zoneConnections, stringEdge.substring(1), edge.getZone());
     }
 
-    private void analyseEdgeWithRoadString(String stringEdge, Edge[] edges, HashMap<String, HashSet<Zone>> zoneConnections, int index) throws WrongTileSyntaxException {
+    private void analyseEdgeWithRoadString(String stringEdge, Edge[] edges, HashMap<String, List<Zone>> zoneConnections, HashMap<String,List<Direction>> roadConnections, int index) throws WrongTileSyntaxException {
         String[] stringZones = stringEdge.split("r");
         if(stringZones.length != 2){
             throw new WrongTileSyntaxException("There are too many 'r' between the '-'");
         }
+        this.saveConnection(roadConnections, stringZones[1].substring(0,1), this.getDirection(index));
+        stringZones[1] = stringZones[1].substring(1);
         EdgeWithRoad edge = this.buildEdgeWithRoad(stringZones);
         edges[index] = edge;
         this.saveConnection(zoneConnections, stringZones[0].substring(1), edge.getZone1());
         this.saveConnection(zoneConnections, stringZones[1].substring(1), edge.getZone2());
     }
 
-    private void saveConnection(HashMap<String, HashSet<Zone>> zoneConnections, String id, Zone zone) {
-        if(!zoneConnections.containsKey(id)){
-            zoneConnections.put(id,new HashSet<Zone>());
+    private Direction getDirection(int index) {
+        switch (index) {
+            case 0:
+                return Direction.TOP;
+            case 1:
+                return Direction.RIGHT;
+            case 2:
+                return Direction.BOTTOM;
+            default:
+                return Direction.LEFT;
         }
-        zoneConnections.get(id).add(zone);
+    }
+
+    private <Elt> void saveConnection(HashMap<String, List<Elt>> connections, String id, Elt elt) {
+        if(!connections.containsKey(id)){
+            connections.put(id,new ArrayList<Elt>());
+        }
+        connections.get(id).add(elt);
     }
     
     private EdgeNoRoad buildEdgeNoRoad(String string) throws WrongTileSyntaxException{
@@ -105,8 +123,8 @@ public class TileBuilder {
         }
     }
 
-    private void createConnections(Tile tile, HashMap<String,HashSet<Zone>> zoneConnections) throws WrongTileSyntaxException {
-        for(HashSet<Zone> zonesGroup : zoneConnections.values()){
+    private void createZoneConnections(Tile tile, HashMap<String,List<Zone>> zoneConnections) throws WrongTileSyntaxException {
+        for(List<Zone> zonesGroup : zoneConnections.values()){
             for(Zone zone : zonesGroup){
                 for(Zone otherZone : zonesGroup){
                     if(zone != otherZone){
@@ -116,6 +134,28 @@ public class TileBuilder {
                             throw new WrongTileSyntaxException("There is a connection of different topologies");
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private void createRoadConnections(Tile tile, HashMap<String,List<Direction>> roadConnections) throws WrongTileSyntaxException {
+        for(List<Direction> roadGroup : roadConnections.values()){
+            if(roadGroup.size() > 2){
+                throw new WrongTileSyntaxException("More than 2 road can't be connected");
+            }
+            else if(roadGroup.size() == 2){
+                try {
+                    tile.connectRoad(roadGroup.get(0).getNewDirection(tile.getOrientation()), roadGroup.get(1).getNewDirection(tile.getOrientation()));
+                } catch (NoRoadException e) {
+                    throw new WrongTileSyntaxException("No road for connection");
+                }
+            }
+            else{
+                try {
+                    tile.terminateRoad(roadGroup.get(0).getNewDirection(tile.getOrientation()));
+                } catch (NoRoadException e) {
+                    throw new WrongTileSyntaxException("No road for terminate");
                 }
             }
         }

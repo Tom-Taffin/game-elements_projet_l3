@@ -53,7 +53,7 @@ public class TileBuilderTest {
 
     @Test
     public void testEdgesofBuildTileWithRoadCorrectSyntaxe() throws WrongTileSyntaxException{
-        String expString = "Sc1-f2rf3-f0rf2-c4";
+        String expString = "Sc1-f2r1f3-f0r1f2-c4";
         Tile tile = this.tileBuilder.build(expString);
 
         assertEquals(Orientation.SOUTH, tile.getOrientation());
@@ -73,7 +73,7 @@ public class TileBuilderTest {
 
     @Test
     public void testConnectionsOfBuildTileWithRoadCorrectSyntaxe() throws WrongTileSyntaxException{
-        String expString = "Sc1-f2rf3-f0rf2-c4";
+        String expString = "Sc1-f2r1f3-f0r1f2-c4";
         Tile tile = this.tileBuilder.build(expString);
 
         assertEquals(Orientation.SOUTH, tile.getOrientation());
@@ -104,7 +104,7 @@ public class TileBuilderTest {
 
     @Test
     public void testBuildTileWith2RoadsOnEdge(){
-        String expString = "Ec1-f2rf3rf6-f0rf2-c4";
+        String expString = "Ec1-f2r1f3r2f6-f0r3f2-c4";
         assertThrows(WrongTileSyntaxException.class, () -> {
             this.tileBuilder.build(expString);
         });
