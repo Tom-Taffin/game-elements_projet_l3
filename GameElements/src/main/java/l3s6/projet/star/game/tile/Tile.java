@@ -83,10 +83,11 @@ public class Tile {
         if(!this.getEdge(enterDirection).hasRoad()){
             throw new NoExitRoadException("There is no road at the enterDirection");
         }
-        if(this.isRoadTerminated(enterDirection)){
+        Direction exitDirection = this.roadConnections.get(enterDirection);
+        if(exitDirection == null){
             throw new NoExitRoadException("The road at the enterDirection is not connected");
         }
-        return this.roadConnections.get(enterDirection);
+        return exitDirection;
     }
 
     /**
@@ -111,7 +112,7 @@ public class Tile {
      */
     public void terminateRoad(Direction direction) throws ConnectionRoadToEdgeWithNoRoadException {
         if (!this.getEdge(direction).hasRoad()){
-            throw new ConnectionRoadToEdgeWithNoRoadException("Tried to connect a road with an edge without a road.");
+            throw new ConnectionRoadToEdgeWithNoRoadException("Tried to terminate a road with an edge without a road.");
         }
 
         this.finishingRoads.add(direction);
