@@ -126,7 +126,43 @@ public class TileTest {
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
 
         assertTrue(tile1.isCompatibleWith(tile2, Direction.LEFT));
-    
+    }
+
+    @Test
+    public void testCompatibilityOfTwoCompatibleTilesWithRotation(){
+        Tile tile1 = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.CITY)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)));
+
+        Tile tile2 = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.CITY)),  
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),
+                            new EdgeNoRoad(new Zone(Topology.FIELD)));
+
+        tile1.changeOrientation(Orientation.SOUTH);
+        tile2.changeOrientation(Orientation.EAST);
+
+        assertTrue(tile1.isCompatibleWith(tile2, Direction.TOP));
+    }
+
+    @Test
+    public void testCompatibilityOfTwoIncompatibleTilesWithRotation(){
+        Tile tile1 = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.CITY)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)));
+
+        Tile tile2 = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),  
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),
+                            new EdgeNoRoad(new Zone(Topology.FIELD)));
+
+        tile1.changeOrientation(Orientation.SOUTH);
+        tile2.changeOrientation(Orientation.EAST);
+
+        assertFalse(tile1.isCompatibleWith(tile2, Direction.TOP));
+    }
 
     @Test
     public void testConnectTwoRoadsEdgesWithRoads() throws ConnectionRoadToEdgeWithNoRoadException, NoExitRoadException{
@@ -134,6 +170,8 @@ public class TileTest {
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
+
+        assertThrows(NoExitRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
 
         tile.connectRoad(Direction.TOP, Direction.BOTTOM);
 
@@ -143,7 +181,7 @@ public class TileTest {
     }
 
     @Test
-    public void testConnectTwoRoadsWithEdgesWithoutRoads() throws ConnectionRoadToEdgeWithNoRoadException {
+    public void testConnectTwoRoadsWithEdgesWithoutRoads() {
         Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
@@ -156,7 +194,7 @@ public class TileTest {
     }
 
     @Test
-    public void testConnectTwoRoadsWithOneEdgeWithoutRoad() throws ConnectionRoadToEdgeWithNoRoadException {
+    public void testConnectTwoRoadsWithOneEdgeWithoutRoad() {
         Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
@@ -169,23 +207,36 @@ public class TileTest {
     }
 
     @Test
+    public void testGetExitRoadWithEdgeWithoutRoad() {
+        Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.CITY)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)));
+
+        assertThrows(NoExitRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
+
+    }
+
+    @Test
     public void testTerminateRoadWithEdgeWithRoad() throws ConnectionRoadToEdgeWithNoRoadException{
-        Tile tile = new Tile(new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
-                new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
+        Tile tile = new Tile(new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
+                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
+                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
+                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
         
         assertFalse(tile.isRoadTerminated(Direction.TOP));
         
         tile.terminateRoad(Direction.TOP);
 
         assertTrue(tile.isRoadTerminated(Direction.TOP));
-        assertThrows(NoExitRoadException.class, () -> {
-            tile.getExitRoadDirection(Direction.TOP);
-        });
     }
 
     @Test
-    public void testTerminateRoadWithEdgeWithoutRoad() throws ConnectionRoadToEdgeWithNoRoadException {
-        Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.CITY)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
+    public void testTerminateRoadWithEdgeWithoutRoad() {
+        Tile tile = new Tile(new EdgeNoRoad(new Zone(Topology.CITY)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)));
 
         assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {tile.terminateRoad(Direction.TOP);});
 
