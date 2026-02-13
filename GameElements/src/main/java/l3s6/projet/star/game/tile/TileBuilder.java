@@ -20,12 +20,30 @@ public class TileBuilder {
         HashMap<String,HashSet<Zone>> zoneConnections = new HashMap<>();
         Edge[] edges = new Edge[4];
         
-        this.analyseString(string, edges, zoneConnections);
+        Orientation orientation = this.getOrientation(string);
+
+        this.analyseString(string.substring(1), edges, zoneConnections);
         
-        Tile tile = new Tile(edges[0], edges[1], edges[2], edges[3]);
+        Tile tile = new Tile(edges[0], edges[1], edges[2], edges[3], orientation);
 
         this.createConnections(tile,zoneConnections);
+        
         return tile;
+    }
+
+    private Orientation getOrientation(String string) throws WrongTileSyntaxException {
+        switch (string.charAt(0)) {
+            case 'N':
+                return Orientation.NORTH;
+            case 'E':
+                return Orientation.EAST;
+            case 'S':
+                return Orientation.SOUTH;
+            case 'W':
+                return Orientation.WEST;
+            default:
+                throw new WrongTileSyntaxException("Orientation " + string.charAt(0) + " is not recognized");
+        }
     }
 
     private void analyseString(String string, Edge[] edges, HashMap<String,HashSet<Zone>> zoneConnections) throws WrongTileSyntaxException{
