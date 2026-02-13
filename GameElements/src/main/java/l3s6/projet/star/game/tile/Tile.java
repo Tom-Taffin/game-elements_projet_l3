@@ -17,22 +17,22 @@ public class Tile {
     private Orientation orientation;
     // By default, the orientation of this tile it's on NORTH.
 
-    public Tile(Edge topEdge, Edge rightEdge, Edge bottomEdge, Edge leftEdge) {
+    public Tile(Edge topEdge, Edge rightEdge, Edge bottomEdge, Edge leftEdge){
+        this(topEdge, rightEdge, bottomEdge, leftEdge, Orientation.NORTH);
+    }
+
+    public Tile(Edge topEdge, Edge rightEdge, Edge bottomEdge, Edge leftEdge, Orientation orientation) {
         this.topEdge = topEdge;
         this.rightEdge = rightEdge;
         this.bottomEdge = bottomEdge;
         this.leftEdge = leftEdge;
-        this.orientation = Orientation.NORTH;
+        this.orientation = orientation;
         this.roadConnections = new HashMap<>();
         this.finishingRoads = new HashSet<>();
     }
 
     public Orientation getOrientation() {
         return orientation;
-    }
-
-    public void changeOrientation(Orientation orientation){
-        this.orientation = orientation;
     }
 
     /**

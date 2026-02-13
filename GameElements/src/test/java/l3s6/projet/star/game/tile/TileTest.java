@@ -9,32 +9,44 @@ public class TileTest {
     @Test
     public void testGetEdgeWithNorthOrientation(){
         Edge topEdge = new EdgeNoRoad(new Zone(Topology.CITY));
-        Tile tile1 = new Tile(topEdge, new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
-        tile1.changeOrientation(Orientation.NORTH);
+        Tile tile1 = new Tile(topEdge, 
+                    new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                    new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                    new EdgeNoRoad(new Zone(Topology.FIELD)),
+                    Orientation.NORTH);
         assertSame(topEdge, tile1.getEdge(Direction.TOP));
     }
 
     @Test
     public void testGetEdgeWithEstOrientation(){
         Edge topEdge = new EdgeNoRoad(new Zone(Topology.CITY));
-        Tile tile1 = new Tile(topEdge, new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
-        tile1.changeOrientation(Orientation.EAST);
+        Tile tile1 = new Tile(topEdge, 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),
+                            Orientation.EAST);
         assertSame(topEdge, tile1.getEdge(Direction.RIGHT));
     }
 
     @Test
     public void testGetEdgeWithSouthOrientation(){
         Edge topEdge = new EdgeNoRoad(new Zone(Topology.CITY));
-        Tile tile1 = new Tile(topEdge, new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
-        tile1.changeOrientation(Orientation.SOUTH);
+        Tile tile1 = new Tile(topEdge, 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),
+                            Orientation.SOUTH);
         assertSame(topEdge, tile1.getEdge(Direction.BOTTOM));
     }
 
     @Test
     public void testGetEdgeWithWestOrientation(){
         Edge topEdge = new EdgeNoRoad(new Zone(Topology.CITY));
-        Tile tile1 = new Tile(topEdge, new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)), new EdgeNoRoad(new Zone(Topology.FIELD)));
-        tile1.changeOrientation(Orientation.WEST);
+        Tile tile1 = new Tile(topEdge, 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)), 
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),
+                            Orientation.WEST);
         assertSame(topEdge, tile1.getEdge(Direction.LEFT));
     }
     
@@ -133,15 +145,14 @@ public class TileTest {
         Tile tile1 = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.CITY)), 
-                            new EdgeNoRoad(new Zone(Topology.FIELD)));
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),
+                            Orientation.SOUTH);
 
         Tile tile2 = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.CITY)),  
                             new EdgeNoRoad(new Zone(Topology.FIELD)),
-                            new EdgeNoRoad(new Zone(Topology.FIELD)));
-
-        tile1.changeOrientation(Orientation.SOUTH);
-        tile2.changeOrientation(Orientation.EAST);
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),
+                            Orientation.EAST);
 
         assertTrue(tile1.isCompatibleWith(tile2, Direction.TOP));
     }
@@ -151,15 +162,14 @@ public class TileTest {
         Tile tile1 = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.CITY)), 
-                            new EdgeNoRoad(new Zone(Topology.FIELD)));
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),
+                            Orientation.SOUTH);
 
         Tile tile2 = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)),  
                             new EdgeNoRoad(new Zone(Topology.FIELD)),
-                            new EdgeNoRoad(new Zone(Topology.FIELD)));
-
-        tile1.changeOrientation(Orientation.SOUTH);
-        tile2.changeOrientation(Orientation.EAST);
+                            new EdgeNoRoad(new Zone(Topology.FIELD)),
+                            Orientation.EAST);
 
         assertFalse(tile1.isCompatibleWith(tile2, Direction.TOP));
     }
@@ -169,14 +179,13 @@ public class TileTest {
         Tile tile1 = new Tile(new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.CITY)),
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
-                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
+                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
+                            Orientation.WEST);
 
         Tile tile2 = new Tile(new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)),
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
-
-        tile1.changeOrientation(Orientation.WEST);
 
         assertFalse(tile1.isCompatibleWith(tile2, Direction.LEFT));
     }
@@ -186,14 +195,13 @@ public class TileTest {
         Tile tile1 = new Tile(new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.CITY)),
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
-                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
+                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
+                            Orientation.WEST);
 
         Tile tile2 = new Tile(new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)),
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
-
-        tile1.changeOrientation(Orientation.WEST);
         
         assertTrue(tile1.isCompatibleWith(tile2, Direction.LEFT));
     }
@@ -245,9 +253,8 @@ public class TileTest {
         Tile tile = new Tile(new EdgeWithRoad(new Zone(Topology.CITY), new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
-                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
-
-        tile.changeOrientation(Orientation.EAST);
+                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
+                            Orientation.EAST);
         
         assertThrows(NoExitRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
 
@@ -263,9 +270,8 @@ public class TileTest {
         Tile tile = new Tile(new EdgeWithRoad(new Zone(Topology.CITY), new Zone(Topology.FIELD)), 
                             new EdgeNoRoad(new Zone(Topology.FIELD)), 
                             new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)), 
-                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)));
-
-        tile.changeOrientation(Orientation.EAST);
+                            new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD)),
+                            Orientation.EAST);
 
         assertThrows(ConnectionRoadToEdgeWithNoRoadException.class, () -> {
             tile.connectRoad(Direction.TOP, Direction.BOTTOM);
