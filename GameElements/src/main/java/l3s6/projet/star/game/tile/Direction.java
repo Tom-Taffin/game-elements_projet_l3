@@ -5,6 +5,22 @@ public enum Direction {
     TOP, RIGHT, BOTTOM, LEFT;
 
     /**
+     * @return the new direction based on the orientation
+     */
+    public Direction toOrientation(Orientation orientation){
+        switch (orientation) {
+            case NORTH:
+                return this;
+            case EAST:
+                return this.toLeft();
+            case SOUTH:
+                return this.toOpposite();
+            default:
+                return this.toRigth();
+        }
+    }
+    
+    /**
      * @return the opposite direction
      */
     public Direction toOpposite(){
