@@ -5,9 +5,9 @@ public enum Direction {
     TOP, RIGHT, BOTTOM, LEFT;
 
     /**
-     * @return the new direction based on the orientation
+     * @return the old direction of something before the orientation
      */
-    public Direction toOrientation(Orientation orientation){
+    public Direction getOldDirection(Orientation orientation){
         switch (orientation) {
             case NORTH:
                 return this;
@@ -17,6 +17,22 @@ public enum Direction {
                 return this.toOpposite();
             default:
                 return this.toRigth();
+        }
+    }
+
+    /**
+     * @return the new direction of something after the orientation
+     */
+    public Direction getNewDirection(Orientation orientation){
+        switch (orientation) {
+            case NORTH:
+                return this;
+            case EAST:
+                return this.toRigth();
+            case SOUTH:
+                return this.toOpposite();
+            default:
+                return this.toLeft();
         }
     }
     

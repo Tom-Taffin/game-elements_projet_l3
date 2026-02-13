@@ -40,7 +40,7 @@ public class Tile {
      * @return the tile's edge based on the given direction based on orientation.
      */
     public Edge getEdge(Direction direction) {
-        switch (direction.toOrientation(this.orientation)) {
+        switch (direction.getOldDirection(this.orientation)) {
             case TOP:
                 return topEdge;
             case RIGHT:
