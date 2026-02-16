@@ -4,6 +4,9 @@ public enum Orientation {
     /* Represents the orientation of the tile. */
     NORTH, SOUTH, WEST, EAST;
 
+    /**
+     * @return the opposite orientation
+     */
     public Orientation rotateHalf(){
         switch (this) {
             case NORTH:
@@ -17,6 +20,9 @@ public enum Orientation {
         }
     }
 
+    /**
+     * @return the next orientation in a counter-clockwise direction
+     */
     public Orientation rotateLeft(){
         switch (this) {
             case NORTH:
@@ -30,6 +36,9 @@ public enum Orientation {
         }
     }
 
+    /**
+     * @return the next orientation in a clockwise direction
+     */
     public Orientation rotateRight(){
         switch (this) {
             case NORTH:
