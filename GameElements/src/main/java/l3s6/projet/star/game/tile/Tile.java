@@ -78,8 +78,6 @@ public class Tile {
 
     /**
      * Creates a road connection between the two given edges, based on the given directions.
-     * @param direction1
-     * @param direction2
      * @throws NoRoadException If one of the given directions gives an edge without a road.
      */
     public void connectRoad(Direction direction1, Direction direction2) throws NoRoadException {
@@ -93,7 +91,6 @@ public class Tile {
 
     /**
      * Terminates a road's edge based on the direction.
-     * @param direction
      * @throws NoRoadException If the edge based on the direction doesn't have a road.
      */
     public void terminateRoad(Direction direction) throws NoRoadException {
