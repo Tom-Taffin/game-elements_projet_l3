@@ -1,0 +1,102 @@
+@startuml edge_package
+title COO Project - edge package
+
+package edge {
+    interface Edge {
+        + {abstract} boolean isCompatibleWith(Edge other)
+        + {abstract} boolean accept(EdgeVisitor visitor)
+        + {abstract} boolean hasRoad()
+    }
+    
+    class EdgeNoRoad {
+        - Zone zone
+        
+        + EdgeNoRoad(Zone zone)
+        + Zone getZone()
+        + boolean isCompatibleWith(Edge other)
+        + boolean accept(EdgeVisitor visitor)
+        + boolean hasRoad()
+        + Topology getZoneTopology()
+        + Set<Zone> getConnectingZones()
+        + boolean isZoneFinished()
+    }
+    
+    class EdgeWithRoad {
+        - Zone zone1
+        - Zone zone2
+        
+        + EdgeWithRoad(Zone zone1, Zone zone2)
+        + Zone getZone1()
+        + Zone getZone2()
+        + boolean isCompatibleWith(Edge other)
+        + boolean accept(EdgeVisitor visitor)
+        + boolean hasRoad()
+        + Topology getZone1Topology()
+        + Topology getZone2Topology()
+        + Set<Zone> getZone1ConnectingZones()
+        + Set<Zone> getZone2ConnectingZones()
+        + boolean isZone1Finished()
+        + boolean isZone2Finished()
+    }
+    
+    class Zone {
+        - Topology topology
+        - Set<Zone> connectingZones
+        
+        + Zone(Topology topology)
+        + Topology getTopology()
+        + Set<Zone> getConnectingZones()
+        + void addConnectedZone(Zone zone) throws WrongTopologyException
+        + boolean isFinished()
+    }
+    
+    interface EdgeVisitor {
+        + {abstract} boolean visit(EdgeNoRoad edge)
+        + {abstract} boolean visit(EdgeWithRoad edge)
+    }
+    
+    class EdgeNoRoadVisitor {
+        - EdgeNoRoad origin
+        
+        + EdgeNoRoadVisitor(EdgeNoRoad origin)
+        + boolean visit(EdgeNoRoad other)
+        + boolean visit(EdgeWithRoad other)
+    }
+    
+    class EdgeWithRoadVisitor {
+        - EdgeWithRoad origin
+        
+        + EdgeWithRoadVisitor(EdgeWithRoad origin)
+        + boolean visit(EdgeNoRoad other)
+        + boolean visit(EdgeWithRoad other)
+    }
+    
+    enum Topology {
+        FIELD
+        CITY
+    }
+    
+    exception WrongTopologyException {
+        + WrongTopologyException(String message)
+    }
+    
+    Edge <|.. EdgeNoRoad : implements
+    Edge <|.. EdgeWithRoad : implements
+    EdgeVisitor <|.. EdgeNoRoadVisitor : implements
+    EdgeVisitor <|.. EdgeWithRoadVisitor : implements
+    
+    EdgeNoRoad "1" *-- "1" Zone : contains
+    EdgeWithRoad "1" *-- "2" Zone : contains
+    Zone "0..*" o-- "0..*" Zone : connects
+    Zone --> Topology : has
+    Zone ..> WrongTopologyException : throws
+    
+    EdgeNoRoadVisitor o-- EdgeNoRoad : references
+    EdgeWithRoadVisitor o-- EdgeWithRoad : references
+    
+    Edge ..> EdgeVisitor : uses
+    EdgeNoRoad ..> EdgeNoRoadVisitor : creates
+    EdgeWithRoad ..> EdgeWithRoadVisitor : creates
+}
+
+@enduml
