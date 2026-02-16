@@ -31,10 +31,10 @@ public class TileBuilderTest {
         assertFalse(tile.getEdge(Direction.BOTTOM).hasRoad());
         assertFalse(tile.getEdge(Direction.LEFT).hasRoad());
 
-        assertEquals(Topology.CITY, ((EdgeNoRoad) tile.getEdge(Direction.TOP.toRigth())).getZoneTopology());
-        assertEquals(Topology.FIELD, ((EdgeNoRoad) tile.getEdge(Direction.RIGHT.toRigth())).getZoneTopology());
-        assertEquals(Topology.CITY, ((EdgeNoRoad) tile.getEdge(Direction.BOTTOM.toRigth())).getZoneTopology());
-        assertEquals(Topology.FIELD, ((EdgeNoRoad) tile.getEdge(Direction.LEFT.toRigth())).getZoneTopology());
+        assertEquals(Topology.CITY, ((EdgeNoRoad) tile.getEdge(Direction.TOP.toRight())).getZoneTopology());
+        assertEquals(Topology.FIELD, ((EdgeNoRoad) tile.getEdge(Direction.RIGHT.toRight())).getZoneTopology());
+        assertEquals(Topology.CITY, ((EdgeNoRoad) tile.getEdge(Direction.BOTTOM.toRight())).getZoneTopology());
+        assertEquals(Topology.FIELD, ((EdgeNoRoad) tile.getEdge(Direction.LEFT.toRight())).getZoneTopology());
     }
 
     @Test
@@ -44,10 +44,10 @@ public class TileBuilderTest {
 
         assertEquals(Orientation.EAST, tile.getOrientation());
 
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.TOP.toRigth())).isZoneFinished());
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.RIGHT.toRigth())).getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.LEFT.toRigth())).getZone()));
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.BOTTOM.toRigth())).isZoneFinished());
-        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.LEFT.toRigth())).getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.RIGHT.toRigth())).getZone()));
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.TOP.toRight())).isZoneFinished());
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.RIGHT.toRight())).getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.LEFT.toRight())).getZone()));
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.BOTTOM.toRight())).isZoneFinished());
+        assertTrue(((EdgeNoRoad) tile.getEdge(Direction.LEFT.toRight())).getConnectingZones().contains(((EdgeNoRoad) tile.getEdge(Direction.RIGHT.toRight())).getZone()));
 
     }
 

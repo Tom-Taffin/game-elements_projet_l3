@@ -16,7 +16,7 @@ public enum Direction {
             case SOUTH:
                 return this.toOpposite();
             default:
-                return this.toRigth();
+                return this.toRight();
         }
     }
 
@@ -28,7 +28,7 @@ public enum Direction {
             case NORTH:
                 return this;
             case EAST:
-                return this.toRigth();
+                return this.toRight();
             case SOUTH:
                 return this.toOpposite();
             default:
@@ -71,7 +71,7 @@ public enum Direction {
     /**
      * @return the next direction in a clockwise direction
      */
-    public Direction toRigth(){
+    public Direction toRight(){
         switch (this) {
             case TOP:
                 return Direction.RIGHT;
