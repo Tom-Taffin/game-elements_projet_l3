@@ -53,12 +53,12 @@ Orientation WEST:
 
 ### Direction et Edge
 
-Une tuile possède un `edge` représentant un bord. De plus il existe 4 directions (TOP, RIGHT, BOTTOM, LEFT) pour situé un bord. Ainsi on peut récupérer un bord de la tuile grace à la méthode getEdge(Direction).
+Une tuile possède quatre `edge` représentant chaque bord. De plus il existe 4 directions (TOP, RIGHT, BOTTOM, LEFT) pour situé un bord. Ainsi on peut récupérer un bord de la tuile grace à la méthode getEdge(Direction).
  
 ![tile direction exemple](images/tile_exemple1_direction.png)
 ![tile direction exemple](images/tile_exemple1_East_direction.png)
 
-Peux importe l'orientation de la tuile, getEdge(Top) renvoie toujours le bord situé en haut comme illustré ci-dessus. Ainsi getEdge(Top) renvoie une ville dans le premier cas et des plaines avec une route dans le second.
+Peu importe l'orientation de la tuile, getEdge(Top) renvoie toujours le bord situé en haut comme illustré ci-dessus. Ainsi getEdge(Top) renvoie une ville dans le premier cas et des plaines avec une route dans le second.
 
 ### Vérification compatibilité
 
@@ -69,8 +69,8 @@ Cas compatible:
 ![right tile](images/tile_exemple2_South.png)  
 La tuile de gauche est orienté vers l'est et la tuile de droite vers le sud.
 ```java
-tuileGauche.isCompatible(tuileDroite,Orientation.RIGHT); // renvoie True
-tuileDroite.isCompatible(tuileGauche,Orientation.LEFT); // renvoie True
+tuileGauche.isCompatible(tuileDroite,Direction.RIGHT); // renvoie True
+tuileDroite.isCompatible(tuileGauche,Direction.LEFT); // renvoie True
 ```
 
 Cas non compatible:  
@@ -78,8 +78,8 @@ Cas non compatible:
 ![right tile](images/tile_exemple2_South.png)  
 La tuile de gauche est orienté vers le sud et la tuile de droite vers le sud.
 ```java
-tuileGauche.isCompatible(tuileDroite,Orientation.RIGHT); // renvoie False
-tuileDroite.isCompatible(tuileGauche,Orientation.LEFT); // renvoie False
+tuileGauche.isCompatible(tuileDroite,Direction.RIGHT); // renvoie False
+tuileDroite.isCompatible(tuileGauche,Direction.LEFT); // renvoie False
 ```
 
 ### Connections et terminaison route
@@ -87,19 +87,19 @@ tuileDroite.isCompatible(tuileGauche,Orientation.LEFT); // renvoie False
 Cas 1:  
 ![tile exemple](images/tile_exemple1.png)
 ```java
-tile.getExitRoadDirection(Orientation.RIGHT); // renvoie LEFT
-tile.getExitRoadDirection(Orientation.LEFT); // renvoie RIGHT
-tile.getExitRoadDirection(Orientation.TOP); // NoRoadException
-tile.isRoadTerminated(Orientation.RIGHT); // renvoie False
-tile.isRoadTerminated(Orientation.TOP); // renvoie False
+tile.getExitRoadDirection(Direction.RIGHT); // renvoie LEFT
+tile.getExitRoadDirection(Direction.LEFT); // renvoie RIGHT
+tile.getExitRoadDirection(Direction.TOP); // NoRoadException
+tile.isRoadTerminated(Direction.RIGHT); // renvoie False
+tile.isRoadTerminated(Direction.TOP); // renvoie False
 ```
 
 Cas 1:  
 ![tile exemple](images/tile_exemple2.png)
 ```java
-tile.isRoadTerminated(Orientation.RIGHT); // renvoie False
-tile.isRoadTerminated(Orientation.BOTTOM); // renvoie True
-tile.getExitRoadDirection(Orientation.BOTTOM); // NoRoadException
+tile.isRoadTerminated(Direction.RIGHT); // renvoie False
+tile.isRoadTerminated(Direction.BOTTOM); // renvoie True
+tile.getExitRoadDirection(Direction.BOTTOM); // NoRoadException
 ```
 
 ## Orientation
@@ -140,7 +140,7 @@ edgeWithRoad.isZone2Finished()
 ```
 Par exemple:  
 ![tile exemple](images/tile_exemple2.png)  
-Sur la tuile ci-dessus la zone de gauche a pour zones connectées la zone en haut et à droite et respectivement pour la zone en haut et à droite. La zone en bas est terminée.
+Sur la tuile ci-dessus la zone de gauche a pour zones connectées la zone en haut et à droite et respectivement pour la zone en haut et à droite. Les zones en bas sont terminées.
 
 
 ## Umls
