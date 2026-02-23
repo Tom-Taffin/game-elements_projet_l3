@@ -3,48 +3,21 @@ image: maven:3.9.9-eclipse-temurin-17
 stages:
   - build
   - test
-  - package
-
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-  MAVEN_CLI_OPTS: "-B -e -V"
 
 cache:
   paths:
     - .m2/repository
 
 before_script:
-  - echo "Java version"
-  - java -version
-  - echo "Maven version"
+  - echo "Using Maven"
   - mvn -version
 
-# ---------------- BUILD ----------------
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS clean compile
+    - mvn -B -DskipTests clean package
 
-# ---------------- TEST + COVERAGE ----------------
 test:
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS verify
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - target/surefire-reports/*.xml
-    paths:
-      - target/site/jacoco
-    expire_in: 1 week
-
-# ---------------- PACKAGE ----------------
-package:
-  stage: package
-  script:
-    - mvn $MAVEN_CLI_OPTS package -DskipTests
-  artifacts:
-    paths:
-      - target/*.jar
-    expire_in: 1 week
+    - mvn -B test
