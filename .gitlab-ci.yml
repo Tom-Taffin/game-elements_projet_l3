@@ -9,21 +9,19 @@ cache:
   paths:
     - .m2/repository
 
-before_script:
-  - echo "Using Maven"
-  - mvn -version
-
 build:
   stage: build
   script:
-    - mvn -B -DskipTests clean package
+    - mvn -B -DskipTests clean package -s settings.xml
 
 test:
   stage: test
   script:
-    - mvn -B test
+    - mvn -B test -s settings.xml
 
 deploy:
   stage: deploy
   script:
-    - mvn deploy -s settings.xml
+    - mvn deploy -s settings.xml -DskipTests
+  only:
+    - main
