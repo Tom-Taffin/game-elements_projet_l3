@@ -1,8 +1,9 @@
-image: maven:3.9.9-eclipse-temurin-17
+image: maven:3.9.9-eclipse-temurin-11
 
 stages:
   - build
   - test
+  - deploy
 
 cache:
   paths:
@@ -21,3 +22,8 @@ test:
   stage: test
   script:
     - mvn -B test
+
+deploy:
+  stage: deploy
+  script:
+    - mvn deploy -s settings.xml
