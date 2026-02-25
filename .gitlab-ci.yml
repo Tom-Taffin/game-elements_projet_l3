@@ -19,7 +19,7 @@ test:
   script:
     - mvn -B test -s settings.xml
 
-deploy:
+deploy_job:
   stage: deploy
   script:
     - mvn deploy -s settings.xml -DskipTests
