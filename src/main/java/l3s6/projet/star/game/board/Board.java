@@ -7,10 +7,48 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
+
     private final Map<Pair<Integer, Integer>, Tile> tiles;
+    protected int minWidth;
+    protected int maxWidth;
+    protected int minHeight;
+    protected int maxHeight;
 
     public Board(){
         this.tiles = new HashMap<>();
+        this.minWidth = 0;
+        this.maxWidth = 0;
+        this.minHeight = 0;
+        this.maxHeight = 0;
+    }
+
+    public int getMinWidth() {
+        return minWidth;
+    }
+
+    public int getMaxWidth() {
+        return maxWidth;
+    }
+
+    public int getMinHeight() {
+        return minHeight;
+    }
+
+    public int getMaxHeight() {
+        return maxHeight;
+    }
+
+    /**
+     * Updates min and max width and height.
+     * @param coord
+     */
+    private void updateSize(Coordinates coord){
+        int x = coord.getX();
+        int y = coord.getY();
+        if (x < minWidth) minWidth = x;
+        if (x > maxWidth) maxWidth = x;
+        if (y < minHeight) minHeight = y;
+        if (y > maxHeight) maxHeight = y;
     }
 
     /**
@@ -19,6 +57,7 @@ public class Board {
      * @param coord
      */
     public void putTileAt(Tile tile, Coordinates coord){
+        this.updateSize(coord);
         this.tiles.put(new Pair<>(coord.getX(), coord.getY()), tile);
     }
 
