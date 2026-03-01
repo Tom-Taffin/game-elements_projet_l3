@@ -19,17 +19,41 @@ public class Edge {
         return this.zones;
     }
 
+    public Zone getZoneAt(int i){
+        return this.zones.get(i);
+    }
+
+    public int getSize(){
+        return this.zones.size();
+    }
+
     public boolean isCompatibleWith(Edge otherEdge){
-        if (this.zones.size() != otherEdge.getZones().size()){
+        if (this.getSize() != otherEdge.getSize()){
             return false;
         }
-        int size = this.zones.size();
+        int size = this.getSize();
         for (int i = 0; i < size; i++){
-            if (this.zones.get(i).getTopology() != otherEdge.getZones().get(size-i-1).getTopology()){
+            if (this.getZoneAt(i).getTopology() != otherEdge.getZoneAt(size-i-1).getTopology()){
                 return false;
             }
         }
         return true;
+    }
+
+    public void connectTwoZones(int i, Zone z) throws WrongTopologyException{
+        this.getZoneAt(i).addConnectedZone(z);
+        z.addConnectedZone(this.getZoneAt(i));
+    }
+
+    /* TODO: Is this useful ? */
+    public void connectTwoEdges(Edge otherEdge) throws WrongTopologyException{
+        if (!this.isCompatibleWith(otherEdge)){
+            throw new WrongTopologyException(this.toString() + " and " + otherEdge.toString() + " can't be connected.");
+        }
+        int size = this.getSize();
+        for (int i = 0; i < size; i++){
+            this.getZoneAt(i).addConnectedZone(otherEdge.getZoneAt(size-i-1));
+        }
     }
 
 }

@@ -31,6 +31,10 @@ public class Zone {
         this.connectingZones.add(zone);
     }
 
+    public boolean isConnectedTo(Zone zone){
+        return this.connectingZones.contains(zone);
+    }
+
     /**
      * @return true if this zone is not connected to anything
      */
