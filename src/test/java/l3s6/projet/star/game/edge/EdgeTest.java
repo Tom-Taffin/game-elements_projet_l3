@@ -6,50 +6,43 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EdgeTest {
     @Test
-    public void testEdgeNoRoadConnectEdgeNoRoadSameTopology(){
-        Edge noRoadEdge1 = new EdgeNoRoad(new Zone(Topology.FIELD));
-        Edge noRoadEdge2 = new EdgeNoRoad(new Zone(Topology.FIELD));
+    public void testEdgeOneZoneConnectSameTopology(){
+        Edge EdgeOneZone1 = new Edge(new Zone(Topology.FIELD));
+        Edge EdgeOneZone2 = new Edge(new Zone(Topology.FIELD));
 
-        assertTrue(noRoadEdge1.isCompatibleWith(noRoadEdge2));
+        assertTrue(EdgeOneZone1.isCompatibleWith(EdgeOneZone2));
     }
 
     @Test
-    public void testEdgeNoRoadConnectEdgeNoRoadDifferentTopologies(){
-        Edge noRoadEdge1 = new EdgeNoRoad(new Zone(Topology.FIELD));
-        Edge noRoadEdge2 = new EdgeNoRoad(new Zone(Topology.CITY));
+    public void testEdgeOneZoneConnectDifferentTopologies(){
+        Edge EdgeOneZone1 = new Edge(new Zone(Topology.FIELD));
+        Edge EdgeOneZone2 = new Edge(new Zone(Topology.CITY));
 
-        assertFalse(noRoadEdge1.isCompatibleWith(noRoadEdge2));
+        assertFalse(EdgeOneZone1.isCompatibleWith(EdgeOneZone2));
     }
 
     @Test
-    public void testEdgeWithRoadConnectEdgeWithRoadSameTopology(){
-        Edge edgeWithRoad1 = new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.CITY));
-        Edge edgeWithRoad2 = new EdgeWithRoad(new Zone(Topology.CITY), new Zone(Topology.FIELD));
+    public void testEdgeManyZonesConnectSameTopology(){
+        Edge EdgeManyZones1 = new Edge(new Zone(Topology.FIELD), new Zone(Topology.ROAD), new Zone(Topology.FIELD));
+        Edge EdgeManyZones2 = new Edge(new Zone(Topology.FIELD), new Zone(Topology.ROAD), new Zone(Topology.FIELD));
 
-        assertTrue(edgeWithRoad1.isCompatibleWith(edgeWithRoad2));
+        assertTrue(EdgeManyZones1.isCompatibleWith(EdgeManyZones2));
     }
 
     @Test
-    public void testEdgeWithRoadConnectEdgeWithRoadDifferentTopologies(){
-        Edge edgeWithRoad1 = new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.CITY));
-        Edge edgeWithRoad2 = new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.CITY));
+    public void testEdgeManyZonesConnectDifferentTopologies(){
+        Edge EdgeManyZones1 = new Edge(new Zone(Topology.FIELD), new Zone(Topology.ROAD), new Zone(Topology.FIELD));
+        Edge EdgeManyZones2 = new Edge(new Zone(Topology.CITY), new Zone(Topology.ROAD), new Zone(Topology.FIELD));
 
-        assertFalse(edgeWithRoad1.isCompatibleWith(edgeWithRoad2));
+        assertFalse(EdgeManyZones1.isCompatibleWith(EdgeManyZones2));
     }
 
     @Test
-    public void testEdgeWithRoadConnectEdgeNoRoad(){
-        Edge edgeWithRoad = new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD));
-        Edge noRoadEdge = new EdgeNoRoad(new Zone(Topology.FIELD));
+    public void testEdgeWithDifferentZoneSizes(){
+        Edge EdgeManyZones1 = new Edge(new Zone(Topology.FIELD), new Zone(Topology.ROAD), new Zone(Topology.FIELD));
+        Edge EdgeManyZones2 = new Edge(new Zone(Topology.ROAD), new Zone(Topology.FIELD));
 
-        assertFalse(edgeWithRoad.isCompatibleWith(noRoadEdge));
+        assertFalse(EdgeManyZones1.isCompatibleWith(EdgeManyZones2));
     }
 
-    @Test
-    public void testEdgeNoRoadConnectEdgeWithRoad(){
-        Edge edgeWithRoad = new EdgeWithRoad(new Zone(Topology.FIELD), new Zone(Topology.FIELD));
-        Edge noRoadEdge = new EdgeNoRoad(new Zone(Topology.FIELD));
-
-        assertFalse(noRoadEdge.isCompatibleWith(edgeWithRoad));
-    }
 }
