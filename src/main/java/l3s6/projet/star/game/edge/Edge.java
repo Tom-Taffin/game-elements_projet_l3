@@ -15,6 +15,14 @@ public class Edge {
         }
     }
 
+    public Edge(Zone firstZone, List<Zone> zones){
+        this.zones = new ArrayList<>();
+        this.zones.add(firstZone);
+        for (Zone z : zones){
+            this.zones.add(z);
+        }
+    }
+
     public List<Zone> getZones(){
         return this.zones;
     }
@@ -54,6 +62,14 @@ public class Edge {
         for (int i = 0; i < size; i++){
             this.getZoneAt(i).addConnectedZone(otherEdge.getZoneAt(size-i-1));
         }
+    }
+
+    public String toString(){
+        String res = "";
+        for (Zone z : this.zones){
+            res += z.toString();
+        }
+        return res;
     }
 
 }

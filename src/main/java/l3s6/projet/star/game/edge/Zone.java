@@ -42,4 +42,8 @@ public class Zone {
         return this.connectingZones.isEmpty();
     }
     
+    public String toString(){
+        return this.topology.toString();
+    }
+
 }

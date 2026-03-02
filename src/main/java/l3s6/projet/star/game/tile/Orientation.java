@@ -51,4 +51,17 @@ public enum Orientation {
                 return Orientation.NORTH;
         }
     }
+
+    public String toString(){
+        switch (this) {
+            case EAST:
+                return "E";
+            case SOUTH:
+                return "S";
+            case WEST:
+                return "W";
+            default:
+                return "N";
+        }
+    }
 }
