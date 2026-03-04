@@ -12,13 +12,14 @@ public class ZoneTest {
         Zone zone2 = new Zone(Topology.FIELD);
 
         assertTrue(zone1.isFinished());
-
-        zone1.addConnectedZone(zone2);
-
-        assertTrue(zone1.getConnectingZones().contains(zone2));
-        assertFalse(zone1.isFinished());
         assertTrue(zone2.isFinished());
 
+        zone1.connectTo(zone2);
+
+        assertTrue(zone1.getConnectingZones().contains(zone2));
+        assertTrue(zone2.getConnectingZones().contains(zone1));
+        assertFalse(zone1.isFinished());
+        assertFalse(zone2.isFinished());
     }
 
     @Test
@@ -27,7 +28,7 @@ public class ZoneTest {
         Zone zone2 = new Zone(Topology.FIELD);
 
         assertThrows(WrongTopologyException.class, ()->{
-            zone1.addConnectedZone(zone2);
+            zone1.connectTo(zone2);
         });
     }
 }
