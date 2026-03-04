@@ -53,17 +53,6 @@ public class Edge {
         z.addConnectedZone(this.getZoneAt(i));
     }
 
-    /* TODO: Is this useful ? */
-    public void connectTwoEdges(Edge otherEdge) throws WrongTopologyException{
-        if (!this.isCompatibleWith(otherEdge)){
-            throw new WrongTopologyException(this.toString() + " and " + otherEdge.toString() + " can't be connected.");
-        }
-        int size = this.getSize();
-        for (int i = 0; i < size; i++){
-            this.getZoneAt(i).addConnectedZone(otherEdge.getZoneAt(size-i-1));
-        }
-    }
-
     public String toString(){
         String res = "";
         for (Zone z : this.zones){
