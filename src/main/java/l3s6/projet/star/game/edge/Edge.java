@@ -7,6 +7,14 @@ public class Edge {
 
     protected List<Zone> zones;
 
+    public Edge(Zone firstZone, List<Zone> zones){
+        this.zones = new ArrayList<>();
+        this.zones.add(firstZone);
+        for (Zone z : zones){
+            this.zones.add(z);
+        }
+    }
+    
     public Edge(Zone firstZone, Zone... zones){
         this.zones = new ArrayList<>();
         this.zones.add(firstZone);
@@ -15,11 +23,11 @@ public class Edge {
         }
     }
 
-    public Edge(Zone firstZone, List<Zone> zones){
+    public Edge(Topology firstTopology, Topology... topologies){
         this.zones = new ArrayList<>();
-        this.zones.add(firstZone);
-        for (Zone z : zones){
-            this.zones.add(z);
+        this.zones.add(new Zone(firstTopology));
+        for (Topology t : topologies){
+            this.zones.add(new Zone(t));
         }
     }
 
