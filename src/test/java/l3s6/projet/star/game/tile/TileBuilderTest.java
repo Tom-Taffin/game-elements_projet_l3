@@ -2,7 +2,11 @@ package l3s6.projet.star.game.tile;
 
 import org.junit.jupiter.api.Test;
 
+import l3s6.projet.star.game.edge.Topology;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -26,6 +30,17 @@ public class TileBuilderTest {
         assertEquals(2, tile.getEdge(Direction.BOTTOM).getSize());
         assertEquals(1, tile.getEdge(Direction.LEFT).getSize());
         assertEquals(3, tile.getEdge(Direction.TOP).getSize());
+    }
+
+    @Test
+    public void testTopologyCorrectSyntaxe() throws WrongTileSyntaxException{
+        String expString = "Ec1-c1f2-c2-f3c2f4";
+        Tile tile = this.tileBuilder.build(expString);
+
+        assertEquals(List.of(Topology.CITY), tile.getEdge(Direction.RIGHT).getZoneTopologies());
+        assertEquals(List.of(Topology.CITY, Topology.FIELD), tile.getEdge(Direction.BOTTOM).getZoneTopologies());
+        assertEquals(List.of(Topology.CITY), tile.getEdge(Direction.LEFT).getZoneTopologies());
+        assertEquals(List.of(Topology.FIELD, Topology.CITY, Topology.FIELD), tile.getEdge(Direction.TOP).getZoneTopologies());
     }
 
     @Test

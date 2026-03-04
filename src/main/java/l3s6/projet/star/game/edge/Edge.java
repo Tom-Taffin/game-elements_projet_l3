@@ -35,6 +35,14 @@ public class Edge {
         return this.zones;
     }
 
+    public List<Topology> getZoneTopologies(){
+        List<Topology> topologies = new ArrayList<>();
+        for (Zone z : this.zones){
+            topologies.add(z.getTopology());
+        }
+        return topologies;
+    }
+
     public Zone getZoneAt(int i){
         return this.zones.get(i);
     }
