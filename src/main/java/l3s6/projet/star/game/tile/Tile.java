@@ -56,42 +56,72 @@ public class Tile {
         return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toOpposite()));
     }
 
-    public String stringRepresentation(){
-        String res = this.orientation.toString();
+    /**
+     * Creates the simplest String representation of the tile which takes into account zone connections.
+     * @return the String representation of the tile
+     */
+    private String tileStringRepresentation(){
+        String tileRes = this.orientation.toString();
         Map<Topology,Integer> nextIndicesForEachTopology = new HashMap<>();
         Map<Zone, String> visitedZones = new HashMap<>();
         int edgeIndex;
         for (edgeIndex = 0; edgeIndex < this.edges.length; edgeIndex++) {
-            for(Zone zone : this.edges[edgeIndex].getZones()){
-                Zone[] connectedZones = zone.getConnectingZones().toArray(Zone[]::new);
-                int i;
-                for(i = 0; i < connectedZones.length; i++){
-                    if (visitedZones.containsKey(connectedZones[i])){
-                        res += visitedZones.get(connectedZones[i]);
-                        break;
-                    }
-                }
-                // zone wasn't visited before
-                if (i == connectedZones.length){
-                    if (nextIndicesForEachTopology.containsKey(zone.getTopology())){
-                        visitedZones.put(zone, zone.toString() + nextIndicesForEachTopology.get(zone.getTopology()).toString());
-                        nextIndicesForEachTopology.replace(zone.getTopology(), nextIndicesForEachTopology.get(zone.getTopology())+1);
-                    } else {
-                        visitedZones.put(zone, zone.toString() + "1");
-                        nextIndicesForEachTopology.put(zone.getTopology(), 2);
-                    }
-                    res += visitedZones.get(zone);
-                }
-            }
-            // no - after the last edge
+            tileRes += edgeStringRepresentation(this.edges[edgeIndex], nextIndicesForEachTopology, visitedZones);
             if (edgeIndex < this.edges.length-1){
-                res += "-";
+                tileRes += "-";
             }
         }   
-        return res;
+        return tileRes;
+    }
+
+    /**
+     * Creates the simplest String representation of an edge which takes into account zone connections from previous edges.
+     * @param edge the edge
+     * @param nextIndicesForEachTopology contains the next index of each topology type
+     * @param visitedZones contains for each zone the String representation of the zone to which it's belong
+     * @return the String representation of the edge
+     */
+    private String edgeStringRepresentation(Edge edge, Map<Topology,Integer> nextIndicesForEachTopology, Map<Zone, String> visitedZones){
+        String edgeRes = "";
+        for(Zone zone : edge.getZones()){
+            edgeRes += zoneStringRepresentation(zone, nextIndicesForEachTopology, visitedZones);
+        }
+        return edgeRes;
+    }
+
+    /**
+     * Creates the simplest String representation of a zone which takes into account zone connections from previous edges.
+     * @param zone the zone
+     * @param nextIndicesForEachTopology contains the next index of each topology type
+     * @param visitedZones contains for each zone the String representation of the zone to which it's belong
+     * @return the String representation of the zone
+     */
+    private String zoneStringRepresentation(Zone zone, Map<Topology,Integer> nextIndicesForEachTopology, Map<Zone, String> visitedZones){
+        String zoneRes = "";
+        Zone[] connectedZones = zone.getConnectingZones().toArray(Zone[]::new);
+        int i;
+        for(i = 0; i < connectedZones.length; i++){
+            if (visitedZones.containsKey(connectedZones[i])){
+                // zone was visited before
+                zoneRes += visitedZones.get(connectedZones[i]);
+                break;
+            }
+        }
+        
+        if (i == connectedZones.length){
+            // zone wasn't visited before
+            if (!(nextIndicesForEachTopology.containsKey(zone.getTopology()))){
+                // if it's the first time seeing this type of topology, add it to nextIndicesForEachTopology
+                nextIndicesForEachTopology.put(zone.getTopology(), 1);
+            }
+            visitedZones.put(zone, zone.toString() + nextIndicesForEachTopology.get(zone.getTopology()).toString());
+            nextIndicesForEachTopology.replace(zone.getTopology(), nextIndicesForEachTopology.get(zone.getTopology())+1);
+            zoneRes += visitedZones.get(zone);
+        }
+        return zoneRes;
     }
 
     public String toString(){
-        return this.stringRepresentation();
+        return this.tileStringRepresentation();
     }
 }
