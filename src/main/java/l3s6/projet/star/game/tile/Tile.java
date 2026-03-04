@@ -56,6 +56,13 @@ public class Tile {
         return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toOpposite()));
     }
 
+    /**
+     * @return the i-th zone of the edge at the direction
+     */
+    public Zone getZonesAt(Direction direction, int i){
+        return this.getEdge(direction).getZoneAt(i);
+    }
+
     public String toString(){
         return this.tileStringRepresentation();
     }

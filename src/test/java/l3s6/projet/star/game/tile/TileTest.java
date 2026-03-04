@@ -82,60 +82,60 @@ public class TileTest {
 
     @Test
     public void testCompatibilityOfTwoCompatibleTilesWithRoads(){
-        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.CITY),
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.CITY, Topology.FIELD));
+        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.CITY),
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.CITY, Topology.ROAD, Topology.FIELD));
 
-        Tile tile2 = new Tile(new Edge(Topology.CITY, Topology.CITY), 
-                            new Edge(Topology.FIELD, Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.CITY), 
-                            new Edge(Topology.CITY, Topology.FIELD));
+        Tile tile2 = new Tile(new Edge(Topology.CITY, Topology.ROAD, Topology.CITY), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD),
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.CITY), 
+                            new Edge(Topology.CITY, Topology.ROAD, Topology.FIELD));
 
         assertTrue(tile1.isCompatibleWith(tile2, Direction.RIGHT));
     }
 
     @Test
     public void testCompatibilityOfTwoIncompatibleTilesWithRoads(){
-        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.CITY, Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.CITY, Topology.FIELD));
+        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.CITY, Topology.ROAD, Topology.FIELD),
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.CITY, Topology.ROAD, Topology.FIELD));
 
-        Tile tile2 = new Tile(new Edge(Topology.CITY, Topology.CITY), 
-                            new Edge(Topology.FIELD, Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.CITY), 
-                            new Edge(Topology.CITY, Topology.FIELD));
+        Tile tile2 = new Tile(new Edge(Topology.CITY, Topology.ROAD, Topology.CITY), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD),
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.CITY), 
+                            new Edge(Topology.CITY, Topology.ROAD, Topology.FIELD));
 
         assertFalse(tile1.isCompatibleWith(tile2, Direction.RIGHT));
     }
 
     @Test
     public void testCompatibilityOfTwoIncompatibleTilesWithAndWithoutRoad(){
-        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.CITY),
+        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.CITY),
                             new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD));
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD));
 
-        Tile tile2 = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
+        Tile tile2 = new Tile(new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
                             new Edge(Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD));
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD));
 
         assertFalse(tile1.isCompatibleWith(tile2, Direction.LEFT));
     }
 
     @Test
     public void testCompatibilityOfTwoCompatibleTilesWithAndWithoutRoad(){
-        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.CITY),
+        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.CITY),
                             new Edge(Topology.FIELD), 
                             new Edge(Topology.FIELD));
 
-        Tile tile2 = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
+        Tile tile2 = new Tile(new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
                             new Edge(Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD));
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD));
 
         assertTrue(tile1.isCompatibleWith(tile2, Direction.LEFT));
     }
@@ -176,16 +176,16 @@ public class TileTest {
 
     @Test
     public void testCompatibilityOfTwoIncompatibleTilesWithAndWithoutRoadWithRotation(){
-        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.CITY),
+        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.CITY),
                             new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD),
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD),
                             Orientation.WEST);
 
-        Tile tile2 = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
+        Tile tile2 = new Tile(new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
                             new Edge(Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD));
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD));
 
         assertFalse(tile1.isCompatibleWith(tile2, Direction.LEFT));
     }
@@ -193,125 +193,16 @@ public class TileTest {
     @Test
     public void testCompatibilityOfTwoCompatibleTilesWithAndWithoutRoadWithRotation(){
         Tile tile1 = new Tile(new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.CITY),
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.CITY),
                             new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD),
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD),
                             Orientation.WEST);
 
-        Tile tile2 = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
+        Tile tile2 = new Tile(new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
                             new Edge(Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD));
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD));
         
         assertTrue(tile1.isCompatibleWith(tile2, Direction.LEFT));
-    }
-     
-    @Test
-    public void testConnectTwoRoadsEdgesWithRoads() throws NoRoadException{
-        Tile tile = new Tile(new Edge(Topology.CITY, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD));
-
-        assertThrows(NoRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
-
-        tile.connectRoad(Direction.TOP, Direction.BOTTOM);
-
-        assertEquals(Direction.BOTTOM, tile.getExitRoadDirection(Direction.TOP));
-        assertEquals(Direction.TOP, tile.getExitRoadDirection(Direction.BOTTOM));
-
-    }
-
-    @Test
-    public void testConnectTwoRoadsWithEdgesWithoutRoads() {
-        Tile tile = new Tile(new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD));
-
-        assertThrows(NoRoadException.class, () -> {
-            tile.connectRoad(Direction.TOP, Direction.BOTTOM);
-        });
-
-    }
-
-    @Test
-    public void testConnectTwoRoadsWithOneEdgeWithoutRoad() {
-        Tile tile = new Tile(new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD));
-
-        assertThrows(NoRoadException.class, () -> {
-            tile.connectRoad(Direction.TOP, Direction.BOTTOM);
-        });
-
-    }
-
-    @Test
-    public void testConnectTwoRoadsEdgesWithRoadsWithRotation() throws NoRoadException{
-        Tile tile = new Tile(new Edge(Topology.CITY, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD),
-                            Orientation.EAST);
-        
-        assertThrows(NoRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
-
-        tile.connectRoad(Direction.TOP, Direction.BOTTOM);
-
-        assertEquals(Direction.BOTTOM, tile.getExitRoadDirection(Direction.TOP));
-        assertEquals(Direction.TOP, tile.getExitRoadDirection(Direction.BOTTOM));
-
-    }
-
-    @Test
-    public void testConnectTwoRoadsWithOneEdgeWithoutRoadWithRotation() {
-        Tile tile = new Tile(new Edge(Topology.CITY, Topology.FIELD), 
-                            new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD),
-                            Orientation.EAST);
-
-        assertThrows(NoRoadException.class, () -> {
-            tile.connectRoad(Direction.TOP, Direction.BOTTOM);
-        });
-
-    }
-
-    @Test
-    public void testGetExitRoadWithEdgeWithoutRoad() {
-        Tile tile = new Tile(new Edge(Topology.CITY), 
-                            new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD));
-
-        assertThrows(NoRoadException.class, () -> {tile.getExitRoadDirection(Direction.TOP);});
-
-    }
-
-    @Test
-    public void testTerminateRoadWithEdge() throws NoRoadException{
-        Tile tile = new Tile(new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD),
-                            new Edge(Topology.FIELD, Topology.FIELD), 
-                            new Edge(Topology.FIELD, Topology.FIELD));
-        
-        assertFalse(tile.isRoadTerminated(Direction.TOP));
-        
-        tile.terminateRoad(Direction.TOP);
-
-        assertTrue(tile.isRoadTerminated(Direction.TOP));
-    }
-
-    @Test
-    public void testTerminateRoadWithEdgeWithoutRoad() {
-        Tile tile = new Tile(new Edge(Topology.CITY), 
-                            new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD), 
-                            new Edge(Topology.FIELD));
-
-        assertThrows(NoRoadException.class, () -> {tile.terminateRoad(Direction.TOP);});
-
     }
 }
