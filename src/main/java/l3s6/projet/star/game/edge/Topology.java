@@ -5,8 +5,6 @@ public enum Topology {
 
     public String toString(){
         switch (this) {
-            case FIELD:
-                return "f";
             case CITY:
                 return "c";
             case ROAD:
