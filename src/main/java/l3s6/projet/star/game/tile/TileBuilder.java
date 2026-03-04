@@ -61,12 +61,10 @@ public class TileBuilder {
     }
 
     /**
-     * Analyzes the string representation of the tile edges and populates the edges array,
-     * zone connections, and road connections.
+     * Analyzes the string representation of the tile edges, populates the edges array and 
+     * create zone connections.
      * @param string the substring containing edge descriptions
      * @param edges the array to store the parsed edges
-     * @param zoneConnections map to store zone connections by ID
-     * @param roadConnections map to store road connections by ID
      * @throws WrongTileSyntaxException if the string format is invalid
      */
     private void analyseString(String string, Edge[] edges) throws WrongTileSyntaxException{
@@ -74,6 +72,8 @@ public class TileBuilder {
         if(stringEdges.length != 4){
             throw new WrongTileSyntaxException("There is no 3 '-'");
         }
+        
+        // visitedZones associates an id with a list of zones for all visited zones.
         HashMap<String,List<Zone>> visitedZones = new HashMap<>();
 
         for(int i = 0 ; i < stringEdges.length ; i++){
@@ -83,29 +83,23 @@ public class TileBuilder {
 
     /**
      * Analyzes a string representation of an edge with a road.
-     * Stores the builded edge in edges at the index
-     * and saves connections in zoneConnections and roadConnections.
+     * Stores the builded edge in edges at the index,
+     * populates visitedZones and
+     * create  connections.
      * @param stringEdge the string for the edge
      * @param edges the edges array
-     * @param zoneConnections map for zone connections
-     * @param roadConnections map for road connections
      * @param index the index in the edges array
+     * @param visitedZones a map that associates an id with a list of zones for all visited zones.
      * @throws WrongTileSyntaxException if the format is invalid
      */
     private void analyseEdgeString(String stringEdge, Edge[] edges, int index, HashMap<String,List<Zone>> visitedZones) throws WrongTileSyntaxException {
         List<Zone> zonesPerEdges = new ArrayList<>();
+        // each stringZones element is a letter with the id number
         String[] stringZones = stringEdge.split("(?=[a-zA-Z])");
         for(int j = 0; j < stringZones.length; j++){
             Zone zone = new Zone(this.getTopology(stringZones[j]));
             if (visitedZones.containsKey(stringZones[j])){
-                for (Zone visitedZone : visitedZones.get(stringZones[j])){
-                    try{
-                        zone.addConnectedZone(visitedZone);
-                        visitedZone.addConnectedZone(zone);
-                    } catch (WrongTopologyException e){
-                        throw new WrongTileSyntaxException(zone.toString() + " can't connected to previously visited zone");
-                    }
-                }
+                createConnections(visitedZones.get(stringZones[j]), zone);
             }
             else {
                 visitedZones.put(stringZones[j], new ArrayList<>());
@@ -114,6 +108,20 @@ public class TileBuilder {
             zonesPerEdges.add(zone);
         }
         edges[index] = new Edge(zonesPerEdges.get(0), zonesPerEdges.subList(1, zonesPerEdges.size()));
+    }
+
+    /** create zone connections of the zone based on visitedZones
+     * @param visitedZones zones that need to be connected to zone
+     */
+    private void createConnections(List<Zone> visitedZones, Zone zone)
+            throws WrongTileSyntaxException {
+        for (Zone visitedZone : visitedZones){
+            try{
+                zone.connectTo(visitedZone);
+            } catch (WrongTopologyException e){
+                throw new WrongTileSyntaxException(zone.toString() + " can't connected to previously visited zone");
+            }
+        }
     }
 
     /**

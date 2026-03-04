@@ -49,8 +49,7 @@ public class Edge {
     }
 
     public void connectTwoZones(int i, Zone z) throws WrongTopologyException{
-        this.getZoneAt(i).addConnectedZone(z);
-        z.addConnectedZone(this.getZoneAt(i));
+        this.getZoneAt(i).connectTo(z);
     }
 
     public String toString(){
