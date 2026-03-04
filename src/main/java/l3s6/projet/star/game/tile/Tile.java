@@ -56,6 +56,10 @@ public class Tile {
         return this.getEdge(direction).isCompatibleWith(other.getEdge(direction.toOpposite()));
     }
 
+    public String toString(){
+        return this.tileStringRepresentation();
+    }
+
     /**
      * Creates the simplest String representation of the tile which takes into account zone connections.
      * @return the String representation of the tile
@@ -119,9 +123,5 @@ public class Tile {
             zoneRes += visitedZones.get(zone);
         }
         return zoneRes;
-    }
-
-    public String toString(){
-        return this.tileStringRepresentation();
     }
 }
