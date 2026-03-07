@@ -25,6 +25,16 @@ public class BoardTest {
     }
 
     @Test
+    public void testCorrectCreation(){
+        assertEquals(0, board.getMaxX());
+        assertEquals(0, board.getMinX());
+        assertEquals(0, board.getMaxY());
+        assertEquals(0, board.getMinY());
+
+        assertTrue(board.hasTile(new Coordinates(0, 0)));
+    }
+
+    @Test
     public void testPutTileAt(){
         assertFalse(board.hasTile(coordinates));
 
