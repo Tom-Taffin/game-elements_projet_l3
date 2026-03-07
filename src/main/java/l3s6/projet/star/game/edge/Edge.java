@@ -47,6 +47,9 @@ public class Edge {
         return this.zones.get(i);
     }
 
+    /**
+     * @return the number of zones
+     */
     public int getSize(){
         return this.zones.size();
     }
@@ -62,10 +65,6 @@ public class Edge {
             }
         }
         return true;
-    }
-
-    public void connectTwoZones(int i, Zone z) throws WrongTopologyException{
-        this.getZoneAt(i).connectTo(z);
     }
 
     public String toString(){
