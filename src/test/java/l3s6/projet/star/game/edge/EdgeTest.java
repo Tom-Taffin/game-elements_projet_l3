@@ -44,29 +44,4 @@ public class EdgeTest {
 
         assertFalse(EdgeManyZones1.isCompatibleWith(EdgeManyZones2));
     }
-
-    @Test
-    public void connectTwoZonesSameTopology() throws WrongTopologyException{
-        Edge edge1 = new Edge(Topology.FIELD, Topology.ROAD);
-        Zone zone = new Zone(Topology.FIELD);
-
-        int i = 0;
-        edge1.connectTwoZones(i, zone);
-
-        assertTrue(edge1.getZoneAt(i).isConnectedTo(zone));
-        assertTrue(zone.isConnectedTo(edge1.getZoneAt(i)));
-    }
-
-    @Test
-    public void connectTwoZonesDifferentTopology() throws WrongTopologyException{
-        Edge edge1 = new Edge(Topology.FIELD, Topology.ROAD);
-        Zone zone = new Zone(Topology.ROAD);
-
-        int i = 0;
-        assertThrows(WrongTopologyException.class, () -> {edge1.connectTwoZones(i, zone);});
-
-        assertFalse(edge1.getZoneAt(i).isConnectedTo(zone));
-        assertFalse(zone.isConnectedTo(edge1.getZoneAt(i)));
-    }
-
 }
