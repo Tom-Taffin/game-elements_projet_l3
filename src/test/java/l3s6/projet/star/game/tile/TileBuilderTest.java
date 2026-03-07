@@ -73,8 +73,8 @@ public class TileBuilderTest {
 
         assertEquals(1, tile.getZoneAt(Direction.BOTTOM,0).getConnectingZones().size());
         assertTrue(tile.getZoneAt(Direction.BOTTOM,0).isConnectedTo(tile.getZoneAt(Direction.TOP,0)));
-        assertEquals(1, tile.getEdge(Direction.TOP).getZoneAt(0).getConnectingZones().size());
-        assertTrue(tile.getEdge(Direction.TOP).getZoneAt(0).isConnectedTo(tile.getZoneAt(Direction.BOTTOM,0)));
+        assertEquals(1, tile.getZoneAt(Direction.TOP, 0).getConnectingZones().size());
+        assertTrue(tile.getZoneAt(Direction.TOP, 0).isConnectedTo(tile.getZoneAt(Direction.BOTTOM,0)));
         assertTrue(tile.getZoneAt(Direction.RIGHT,0).isFinished());
         assertTrue(tile.getZoneAt(Direction.LEFT,0).isFinished());
     }
