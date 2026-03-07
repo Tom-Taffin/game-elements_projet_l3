@@ -1,7 +1,6 @@
 package l3s6.projet.star.game.board;
 
 import l3s6.projet.star.game.edge.Edge;
-import l3s6.projet.star.game.edge.Zone;
 import l3s6.projet.star.game.edge.Topology; // Ajout probable nécessaire si non importé via *
 import l3s6.projet.star.game.tile.Tile;
 import org.junit.jupiter.api.Test;
@@ -22,21 +21,6 @@ public class BoardTest {
         assertTrue(board.hasTile(coordinates));
 
         assertEquals(tile, board.getTileAt(coordinates));
-    }
-
-    @Test
-    public void testRemoveTileFrom(){
-        Board board = new Board();
-        Tile tile = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
-        Coordinates coordinates = new Coordinates(0, 0);
-
-        board.putTileAt(tile, coordinates);
-
-        Tile removedTile = board.removeTileFrom(coordinates);
-
-        assertFalse(board.hasTile(coordinates));
-
-        assertEquals(tile, removedTile);
     }
 
     @Test

@@ -9,33 +9,33 @@ import java.util.Map;
 public class Board {
 
     private final Map<Pair<Integer, Integer>, Tile> tiles;
-    protected int minWidth;
-    protected int maxWidth;
-    protected int minHeight;
-    protected int maxHeight;
+    protected int minX;
+    protected int maxX;
+    protected int minY;
+    protected int maxY;
 
     public Board(){
         this.tiles = new HashMap<>();
-        this.minWidth = 0;
-        this.maxWidth = 0;
-        this.minHeight = 0;
-        this.maxHeight = 0;
+        this.minX = 0;
+        this.maxX = 0;
+        this.minY = 0;
+        this.maxY = 0;
     }
 
-    public int getMinWidth() {
-        return minWidth;
+    public int getMinX() {
+        return minX;
     }
 
-    public int getMaxWidth() {
-        return maxWidth;
+    public int getMaxX() {
+        return maxX;
     }
 
-    public int getMinHeight() {
-        return minHeight;
+    public int getMinY() {
+        return minY;
     }
 
-    public int getMaxHeight() {
-        return maxHeight;
+    public int getMaxY() {
+        return maxY;
     }
 
     /**
@@ -44,10 +44,10 @@ public class Board {
     private void updateSize(Coordinates coord){
         int x = coord.getX();
         int y = coord.getY();
-        if (x < minWidth) minWidth = x;
-        if (x > maxWidth) maxWidth = x;
-        if (y < minHeight) minHeight = y;
-        if (y > maxHeight) maxHeight = y;
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
     }
 
     /**
@@ -76,14 +76,5 @@ public class Board {
      */
     public Tile getTileAt(Coordinates coord){
         return this.tiles.get(new Pair<>(coord.getX(), coord.getY()));
-    }
-
-    /**
-     * Remove the tile at the given coordinates, then returns it.
-     * @param coord
-     * @return the removed tile
-     */
-    public Tile removeTileFrom(Coordinates coord){
-        return this.tiles.remove(new Pair<>(coord.getX(), coord.getY()));
     }
 }
