@@ -16,8 +16,8 @@ public class ZoneTest {
 
         zone1.connectTo(zone2);
 
-        assertTrue(zone1.getConnectingZones().contains(zone2));
-        assertTrue(zone2.getConnectingZones().contains(zone1));
+        assertTrue(zone1.isConnectedTo(zone2));
+        assertTrue(zone2.isConnectedTo(zone1));
         assertFalse(zone1.isFinished());
         assertFalse(zone2.isFinished());
     }
