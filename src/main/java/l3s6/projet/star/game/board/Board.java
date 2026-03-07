@@ -39,7 +39,7 @@ public class Board {
     }
 
     /**
-     * Updates min and max width and height.
+     * Updates min and max coordinates.
      */
     private void updateSize(Coordinates coord){
         int x = coord.getX();

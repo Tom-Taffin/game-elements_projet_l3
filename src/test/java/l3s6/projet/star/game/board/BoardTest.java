@@ -7,32 +7,62 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
+
 public class BoardTest {
+
+    private Board board;
+    private Tile tile;
+    private Coordinates coordinates;
+
+    @BeforeEach
+    public void init(){
+        board = new Board();
+        tile = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
+        coordinates = new Coordinates(2, 1);
+    }
+
     @Test
     public void testPutTileAt(){
-        Board board = new Board();
-        Tile tile = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
-        Coordinates coordinates = new Coordinates(0, 0);
-
         assertFalse(board.hasTile(coordinates));
 
         board.putTileAt(tile, coordinates);
 
         assertTrue(board.hasTile(coordinates));
-
         assertEquals(tile, board.getTileAt(coordinates));
     }
 
     @Test
-    public void testCoordinates(){
-        Board board = new Board();
-        Tile tile = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
-        Coordinates origin = new Coordinates(0, 0);
+    public void testDifferentCoordinatesInstances(){
+        Coordinates origin = new Coordinates(2, 1);
+
+        assertFalse(board.hasTile(new Coordinates(2, 1)));
 
         board.putTileAt(tile, origin);
 
-        assertEquals(new Coordinates(0, 0), origin);
+        assertTrue(board.hasTile(new Coordinates(2, 1)));
+    }
 
-        assertTrue(board.hasTile(new Coordinates(0, 0)));
+    @Test
+    public void testMinAndMaxCoordinatesUpdated(){
+        assertEquals(0, board.getMaxX());
+        assertEquals(0, board.getMinX());
+        assertEquals(0, board.getMaxY());
+        assertEquals(0, board.getMinY());
+
+        board.putTileAt(tile, new Coordinates(2, 1));
+        board.putTileAt(tile, new Coordinates(-3, -6));
+
+        assertEquals(2, board.getMaxX());
+        assertEquals(-3, board.getMinX());
+        assertEquals(1, board.getMaxY());
+        assertEquals(-6, board.getMinY());
+
+        board.putTileAt(tile, new Coordinates(10, -10));
+
+        assertEquals(10, board.getMaxX());
+        assertEquals(-3, board.getMinX());
+        assertEquals(1, board.getMaxY());
+        assertEquals(-10, board.getMinY());
     }
 }
