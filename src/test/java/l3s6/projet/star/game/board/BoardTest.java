@@ -3,6 +3,8 @@ package l3s6.projet.star.game.board;
 import l3s6.projet.star.game.edge.Edge;
 import l3s6.projet.star.game.edge.Topology; // Ajout probable nécessaire si non importé via *
 import l3s6.projet.star.game.tile.Tile;
+import l3s6.projet.star.game.tile.WrongTileSyntaxException;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +18,7 @@ public class BoardTest {
     private Coordinates coordinates;
 
     @BeforeEach
-    public void init(){
+    public void init() throws WrongTileSyntaxException{
         board = new Board();
         tile = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
         coordinates = new Coordinates(2, 1);

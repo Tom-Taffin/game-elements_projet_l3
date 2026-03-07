@@ -8,18 +8,23 @@ import java.util.Map;
 
 public class Board {
 
-    private final Map<Pair<Integer, Integer>, Tile> tiles;
+    private final static String FIRST_TILE = "Nc1-f2r3f4-f4-f4r3f2";
+
+    protected Map<Pair<Integer, Integer>, Tile> tiles;
     protected int minX;
     protected int maxX;
     protected int minY;
     protected int maxY;
 
-    public Board(){
-        this.tiles = new HashMap<>();
+    public Board() throws WrongTileSyntaxException{
         this.minX = 0;
         this.maxX = 0;
         this.minY = 0;
         this.maxY = 0;
+
+        this.tiles = new HashMap<>();
+        Tile firstTile = new TileBuilder().build(FIRST_TILE);
+        this.putTileAt(firstTile, new Coordinates(0, 0));
     }
 
     public int getMinX() {
