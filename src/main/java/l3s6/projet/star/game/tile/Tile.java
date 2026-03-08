@@ -30,6 +30,18 @@ public class Tile {
         return orientation;
     }
 
+    public void rotateRight(){
+        this.orientation = this.orientation.rotateRight();
+    }
+
+    public void rotateLeft(){
+        this.orientation = this.orientation.rotateLeft();
+    }
+
+    public void rotateHalf(){
+        this.orientation = this.orientation.rotateHalf();
+    }
+
     /**
      * @param direction
      * @return the tile's edge based on the given direction based on orientation.
