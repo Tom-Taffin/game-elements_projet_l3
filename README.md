@@ -11,10 +11,10 @@ Bibliothèque Java pour créer des éléments de jeu Carcassonne.
 [Orientation][TopEdge]-[RightEdge]-[BottomEdge]-[LeftEdge]
 
 Orientation: N, E, S, W
-Edge: [topology][id] ou [topology1][id1]r[road_id][topology2][id2]
-Topology: f (field), c (city)
+Edge: [topology1][id1][topology2][id2]
+Topology: f (field), c (city), r (road)
 
-Deux éléments possédant le même id sont reliés sur la tuile.
+Deux éléments possédant le même id et la même topologie sont reliés sur la tuile.
 ```
 
 ### Utilisation
@@ -34,10 +34,14 @@ La méthode build renvoie WrongTileSyntaxException si la chaîne est mal formée
 
 **Rôle** : représente une tuile de jeu avec 4 bords.
 
+### Format de Chaîne
+
+La méthode `toString()` d'une tuile permet d'obtenir sa représentation en chaîne de caractères.
+
 ### Orientation
 
 La tuile possède une orientation définie à sa création et qui ne peux pas être modifiée.  
-On peut l'obtenir avec la méthode getOrientation().
+On peut l'obtenir avec la méthode `getOrientation()`.
 
 Orientation NORTH:  
 ![tile with north orientation](images/tile_exemple1.png)
@@ -53,12 +57,12 @@ Orientation WEST:
 
 ### Direction et Edge
 
-Une tuile possède quatre `edge` représentant chaque bord. De plus il existe 4 directions (TOP, RIGHT, BOTTOM, LEFT) pour situé un bord. Ainsi on peut récupérer un bord de la tuile grâce à la méthode getEdge(Direction).
+Une tuile possède quatre `edge` représentant chaque bord. De plus il existe 4 directions (TOP, RIGHT, BOTTOM, LEFT) pour situé un bord. Ainsi on peut récupérer un bord de la tuile grâce à la méthode `getEdge(Direction)`.
  
 ![tile direction exemple](images/tile_exemple1_direction.png)
 ![tile direction exemple](images/tile_exemple1_East_direction.png)
 
-Peu importe l'orientation de la tuile, getEdge(Top) renvoie toujours le bord situé en haut comme illustré ci-dessus. Ainsi getEdge(Top) renvoie une ville dans le premier cas et des plaines avec une route dans le second.
+Peu importe l'orientation de la tuile, getEdge(TOP) renvoie toujours le bord situé en haut comme illustré ci-dessus. Ainsi getEdge(TOP) renvoie une ville dans le premier cas et des plaines avec une route dans le second.
 
 ### Vérification compatibilité
 
@@ -82,26 +86,6 @@ tuileGauche.isCompatible(tuileDroite,Direction.RIGHT); // renvoie False
 tuileDroite.isCompatible(tuileGauche,Direction.LEFT); // renvoie False
 ```
 
-### Connexions et terminaison route
-
-Cas 1 :  
-![tile exemple](images/tile_exemple1.png)
-```java
-tile.getExitRoadDirection(Direction.RIGHT); // renvoie LEFT
-tile.getExitRoadDirection(Direction.LEFT); // renvoie RIGHT
-tile.getExitRoadDirection(Direction.TOP); // NoRoadException
-tile.isRoadTerminated(Direction.RIGHT); // renvoie False
-tile.isRoadTerminated(Direction.TOP); // renvoie False
-```
-
-Cas 2 :  
-![tile exemple](images/tile_exemple2.png)
-```java
-tile.isRoadTerminated(Direction.RIGHT); // renvoie False
-tile.isRoadTerminated(Direction.BOTTOM); // renvoie True
-tile.getExitRoadDirection(Direction.BOTTOM); // NoRoadException
-```
-
 ## Orientation
 
 L'enum Orientation possèdent les méthodes suivantes permettant de manipuler ses instances simplement :  
@@ -120,23 +104,38 @@ TOP.getNewDirection(EAST) -> RIGHT (return the new direction of something after 
 
 ## Zone
 
-Un `Edge` représentant un bord peut être un `EdgeNoRoad` ou un `EdgeWithRoad` et possède respectivement une ou deux zones.  
-Une `Zone` possède une certaine topologie (`CITY` ou `FIELD`) que l'on obtient avec `getTopology()` et des zones connectées.  
+Un `Edge` représente un bord et possède une ou plusieurs zones.  
+Une `Zone` possède une certaine topologie (`CITY`, `FIELD`, `ROAD`) que l'on obtient avec `getTopology()` et des zones connectées.
+
+### getZoneAt
+
+![tile exemple](images/tile_exemple1.png)  
+Pour obtenir la zone de ville en haut de la tuile ci-dessus:
+
+```java
+tile.getZoneAt(Direction.TOP, 0);
+```
+
+Pour obtenir la zone de route à droite de la tuile ci-dessus:
+```java
+tile.getZoneAt(Direction.RIGHT, 1);
+```
+
+Pour obtenir la zone de plaine sous la route à gauche de la tuile ci-dessus:
+```java
+tile.getZoneAt(Direction.LEFT, 2);
+```
+
+### Zones connexions
 
 Pour obtenir l'ensemble des zones connectées à une zone : 
 ```java
 zone.getConnectingZones()
-edgeNoRoad.getConnectingZones()
-edgeWithRoad.getZone1ConnectingZones()
-edgeWithRoad.getZone2ConnectingZones()
 ```
 
 Pour savoir si une zone n'est connectée à aucune autre zone : 
 ```java
 zone.isFinished()
-edgeNoRoad.isZoneFinished()
-edgeWithRoad.isZone1Finished()
-edgeWithRoad.isZone2Finished()
 ```
 Par exemple :  
 ![tile exemple](images/tile_exemple2.png)  
