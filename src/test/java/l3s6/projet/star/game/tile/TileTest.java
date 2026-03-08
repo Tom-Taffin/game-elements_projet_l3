@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TileTest {
+
     @Test
     public void testGetEdgeWithNorthOrientation(){
         Edge topEdge = new Edge(Topology.CITY);
@@ -204,5 +205,41 @@ public class TileTest {
                             new Edge(Topology.FIELD, Topology.ROAD, Topology.FIELD));
         
         assertTrue(tile1.isCompatibleWith(tile2, Direction.LEFT));
+    }
+
+    @Test
+    public void testGetEdgeAfterRotate(){
+        Edge topEdge = new Edge(Topology.CITY);
+        Tile tile1 = new Tile(topEdge, 
+                    new Edge(Topology.FIELD), 
+                    new Edge(Topology.FIELD), 
+                    new Edge(Topology.FIELD),
+                    Orientation.NORTH);
+        assertSame(topEdge, tile1.getEdge(Direction.TOP));
+        tile1.rotateRight();
+        assertSame(topEdge, tile1.getEdge(Direction.RIGHT));
+        assertEquals(Orientation.EAST, tile1.getOrientation());
+
+    }
+
+    @Test
+    public void testCompatibilityAfterRotation(){
+        Tile tile1 = new Tile(new Edge(Topology.FIELD), 
+                            new Edge(Topology.FIELD), 
+                            new Edge(Topology.CITY), 
+                            new Edge(Topology.FIELD),
+                            Orientation.WEST);
+
+        Tile tile2 = new Tile(new Edge(Topology.FIELD), 
+                            new Edge(Topology.CITY),  
+                            new Edge(Topology.FIELD),
+                            new Edge(Topology.FIELD),
+                            Orientation.EAST);
+
+        assertFalse(tile1.isCompatibleWith(tile2, Direction.TOP));
+
+        tile1.rotateLeft();
+
+        assertTrue(tile1.isCompatibleWith(tile2, Direction.TOP));
     }
 }
