@@ -1,5 +1,7 @@
 package l3s6.projet.star.game.board;
 
+import java.util.ArrayList;
+
 public class Coordinates {
     /**
      * The y coordinate is positive when it goes up, and negative when it goes down.
@@ -12,20 +14,44 @@ public class Coordinates {
         this.y = y;
     }
 
+    /**
+     * @return the coordinates that are to the right
+     */
     public Coordinates rightCoordinates(){
         return new Coordinates(this.x + 1, this.y);
     }
 
+    /**
+     * @return the coordinates that are to the left
+     */
     public Coordinates leftCoordinates(){
         return new Coordinates(this.x - 1, this.y);
     }
 
+    /**
+     * @return the coordinates that are above
+     */
     public Coordinates upCoordinates(){
         return new Coordinates(this.x, this.y + 1);
     }
 
+    /**
+     * @return the coordinates that are below
+     */
     public Coordinates downCoordinates(){
         return new Coordinates(this.x, this.y - 1);
+    }
+
+    /**
+     * @return an ArrayList of all the coordinates that are adjacent
+     */
+    public ArrayList<Coordinates> getOutsideFrontierTiles(){
+        ArrayList<Coordinates> res = new ArrayList<>();
+        res.add(this.upCoordinates());
+        res.add(this.rightCoordinates());
+        res.add(this.downCoordinates());
+        res.add(this.leftCoordinates());
+        return res;
     }
 
     public int getY() {
