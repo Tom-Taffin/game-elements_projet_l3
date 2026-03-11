@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class CoordinatesTest {
 
@@ -18,11 +17,11 @@ public class CoordinatesTest {
     @Test
     public void testGetOutsideFrontierTiles(){
         Coordinates origin = new Coordinates(0, 0);
-        Set<Coordinates> exeptedSet = new HashSet<>();
-        exeptedSet.add(new Coordinates(0, 1));
-        exeptedSet.add(new Coordinates(1, 0));
-        exeptedSet.add(new Coordinates(0, -1));
-        exeptedSet.add(new Coordinates(-1, 0));
-        assertEquals(exeptedSet, origin.getAdjacentCoordinates());
+        ArrayList<Coordinates> exeptedList = new ArrayList<>();
+        exeptedList.add(new Coordinates(0, 1));
+        exeptedList.add(new Coordinates(1, 0));
+        exeptedList.add(new Coordinates(0, -1));
+        exeptedList.add(new Coordinates(-1, 0));
+        assertEquals(exeptedList, origin.getAdjacentCoordinates());
     }
 }
