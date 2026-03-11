@@ -6,6 +6,16 @@ import java.util.Set;
 public class Zone {
     private Topology topology;
     private Set<Zone> connectingZones;
+    private Zone adjacentZone;
+
+    public Zone getAdjacentZone() {
+        return adjacentZone;
+    }
+
+    public void setAdjacentZone(Zone zone) {
+        this.adjacentZone = zone;
+        zone.adjacentZone = this;
+    }
 
     public Zone(Topology topology) {
         this.topology = topology;

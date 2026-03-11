@@ -1,9 +1,10 @@
 package l3s6.projet.star.game.board;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import org.javatuples.Pair;
+
+import l3s6.projet.star.game.tile.Direction;
 
 public class Coordinates {
     /**
@@ -47,6 +48,19 @@ public class Coordinates {
      */
     public Coordinates downCoordinates(){
         return new Coordinates(this.x, this.y - 1);
+    }
+
+    public Coordinates getAdjacent(Direction direction){
+        switch (direction) {
+            case TOP:
+                return upCoordinates();
+            case RIGHT:
+                return rightCoordinates();
+            case LEFT:
+                return leftCoordinates();
+            default:
+                return downCoordinates();
+        }
     }
 
     /**

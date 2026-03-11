@@ -69,7 +69,22 @@ public class Board {
      */
     public void putTileAt(Tile tile, Coordinates coord){
         this.updateSize(coord);
+
+        for (Direction direction : Direction.values()){
+            this.setAdjacentZones(tile, coord, direction);
+        }
+
         this.tiles.put(new Pair<>(coord.getX(), coord.getY()), tile);
+    }
+
+    private void setAdjacentZones(Tile tile, Coordinates coord, Direction direction) {
+        if (this.hasTile(coord.getAdjacent(direction))){
+            Tile otherTile = this.getTileAt(coord.getAdjacent(direction));
+            int nbZones = tile.getEdge(direction).getSize();
+            for (int i = 0 ; i < nbZones ; i++){
+                tile.getZoneAt(direction, i).setAdjacentZone(otherTile.getZoneAt(direction.toOpposite(), nbZones-i-1));
+            }
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package l3s6.projet.star.game.tile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import l3s6.projet.star.game.edge.Edge;
@@ -73,6 +74,10 @@ public class Tile {
      */
     public Zone getZoneAt(Direction direction, int i){
         return this.getEdge(direction).getZoneAt(i);
+    }
+
+    public List<Zone> getZones(Direction direction){
+        return this.getEdge(direction).getZones();
     }
 
     public String toString(){
