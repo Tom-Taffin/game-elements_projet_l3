@@ -2,7 +2,17 @@ package l3s6.projet.star.game.edge;
 
 import org.junit.jupiter.api.Test;
 
+import l3s6.projet.star.game.board.Board;
+import l3s6.projet.star.game.board.Coordinates;
+import l3s6.projet.star.game.tile.Direction;
+import l3s6.projet.star.game.tile.Tile;
+import l3s6.projet.star.game.tile.TileBuilder;
+import l3s6.projet.star.game.tile.WrongTileSyntaxException;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ZoneTest {
     @Test
@@ -30,5 +40,46 @@ public class ZoneTest {
         assertThrows(WrongTopologyException.class, ()->{
             zone1.connectTo(zone2);
         });
+    }
+
+    @Test
+    public void testGetAllBoardConnectingZones() throws WrongTileSyntaxException{
+        Board board = new Board();
+        TileBuilder tileBuilder = new TileBuilder();
+        Tile tile1 = tileBuilder.build("Nc1-f0r0c1-f0-f0");
+        Tile tile2 = tileBuilder.build("Nf1-f0-f0-c1");
+        Tile tile3 = tileBuilder.build("Nf0-f0-f1-c1");
+        Tile tile4 = tileBuilder.build("Nf0-f0-f0-f0");
+        Tile tile5 = tileBuilder.build("Nc0-c0-c0-c0r0f1");
+        Tile tile6 = tileBuilder.build("Nc1-c0-c0-c1");
+
+        board.putTileAt(tile1, new Coordinates(10,10));
+        board.putTileAt(tile2, new Coordinates(10,10).leftCoordinates());
+        board.putTileAt(tile3, new Coordinates(10,10).leftCoordinates().downCoordinates());
+        board.putTileAt(tile4, new Coordinates(10,10).downCoordinates());
+        board.putTileAt(tile5, new Coordinates(10,10).rightCoordinates());
+        board.putTileAt(tile6, new Coordinates(10,10).upCoordinates());
+
+        Set<Zone> visitedZones = tile1.getZoneAt(Direction.LEFT, 0).getAllBoardConnectingZones();
+
+        Set<Zone> expectedZones = new HashSet<>();
+        expectedZones.add(tile1.getZoneAt(Direction.RIGHT, 0));
+        expectedZones.add(tile1.getZoneAt(Direction.BOTTOM, 0));
+        expectedZones.add(tile1.getZoneAt(Direction.LEFT, 0));
+        expectedZones.add(tile2.getZoneAt(Direction.RIGHT, 0));
+        expectedZones.add(tile2.getZoneAt(Direction.BOTTOM, 0));
+        expectedZones.add(tile3.getZoneAt(Direction.TOP, 0));
+        expectedZones.add(tile3.getZoneAt(Direction.RIGHT, 0));
+        expectedZones.add(tile4.getZoneAt(Direction.TOP, 0));
+        expectedZones.add(tile4.getZoneAt(Direction.RIGHT, 0));
+        expectedZones.add(tile4.getZoneAt(Direction.BOTTOM, 0));
+        expectedZones.add(tile4.getZoneAt(Direction.LEFT, 0));
+        expectedZones.add(tile5.getZoneAt(Direction.LEFT, 2));
+
+        assertEquals(expectedZones.size(), visitedZones.size());
+        assertTrue(visitedZones.containsAll(expectedZones));
+        
+
+
     }
 }

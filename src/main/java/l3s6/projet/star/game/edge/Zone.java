@@ -34,6 +34,27 @@ public class Zone {
         return connectingZones;
     }
 
+    /**
+     * @return all the connecting zones in the board including this zone
+     */
+    public Set<Zone> getAllBoardConnectingZones(){
+        Set<Zone> visitedZones = new HashSet<>();
+        this.getAllBoardConnectingZones(visitedZones);
+        return visitedZones;
+    }
+
+    public void getAllBoardConnectingZones(Set<Zone> visitedZones) {
+        if(!visitedZones.contains(this)){
+            visitedZones.add(this);
+            for(Zone zone : this.getConnectingZones()){
+                zone.getAllBoardConnectingZones(visitedZones);
+            }
+            if(this.hasAdjacentZone()){
+                this.getAdjacentZone().getAllBoardConnectingZones(visitedZones);
+            }
+        }
+    }
+
     /** connect this zone to an other zone
      * @throws WrongTopologyException if the topology of the other zone is incompatible
      */
