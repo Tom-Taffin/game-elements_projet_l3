@@ -1,6 +1,7 @@
 package l3s6.projet.star.game.board;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.javatuples.Pair;
 
@@ -49,10 +50,10 @@ public class Coordinates {
     }
 
     /**
-     * @return an ArrayList of all the coordinates that are adjacent
+     * @return an set of all the coordinates that are adjacent
      */
-    public ArrayList<Coordinates> getAdjacentCoordinates(){
-        ArrayList<Coordinates> res = new ArrayList<>();
+    public Set<Coordinates> getAdjacentCoordinates(){
+        Set<Coordinates> res = new HashSet<>();
         res.add(this.upCoordinates());
         res.add(this.rightCoordinates());
         res.add(this.downCoordinates());
