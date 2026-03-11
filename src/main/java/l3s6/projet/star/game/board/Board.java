@@ -77,6 +77,9 @@ public class Board {
         this.tiles.put(new Pair<>(coord.getX(), coord.getY()), tile);
     }
 
+    /**
+     * set adjacent zone for all the zone at the direction edge of this tile located at coord
+     */
     private void setAdjacentZones(Tile tile, Coordinates coord, Direction direction) {
         if (this.hasTile(coord.getAdjacent(direction))){
             Tile otherTile = this.getTileAt(coord.getAdjacent(direction));
