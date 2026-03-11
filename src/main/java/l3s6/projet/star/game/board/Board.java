@@ -90,6 +90,9 @@ public class Board {
         return this.tiles.get(new Pair<>(coord.getX(), coord.getY()));
     }
 
+    /**
+     * @return all possible location coordinates for a new tile
+     */
     public Set<Coordinates> getOutsideFrontierTiles(){
         Set<Coordinates> res = new HashSet<>();
         for (Pair<Integer, Integer> coordPair : this.tiles.keySet()){
