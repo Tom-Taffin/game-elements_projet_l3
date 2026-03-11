@@ -4,7 +4,9 @@ import l3s6.projet.star.game.tile.*;
 import org.javatuples.Pair;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Board {
 
@@ -86,5 +88,17 @@ public class Board {
      */
     public Tile getTileAt(Coordinates coord){
         return this.tiles.get(new Pair<>(coord.getX(), coord.getY()));
+    }
+
+    public Set<Coordinates> getOutsideFrontierTiles(){
+        Set<Coordinates> res = new HashSet<>();
+        for (Pair<Integer, Integer> coordPair : this.tiles.keySet()){
+            for (Coordinates coord : new Coordinates(coordPair).getAdjacentCoordinates()){
+                if (!this.hasTile(coord)){
+                    res.add(coord);
+                }
+            }
+        }
+        return res;
     }
 }
