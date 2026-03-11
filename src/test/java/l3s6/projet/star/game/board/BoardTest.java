@@ -2,6 +2,7 @@ package l3s6.projet.star.game.board;
 
 import l3s6.projet.star.game.edge.Edge;
 import l3s6.projet.star.game.edge.Topology; // Ajout probable nécessaire si non importé via *
+import l3s6.projet.star.game.tile.Direction;
 import l3s6.projet.star.game.tile.Tile;
 import l3s6.projet.star.game.tile.WrongTileSyntaxException;
 
@@ -76,5 +77,23 @@ public class BoardTest {
         assertEquals(-3, board.getMinX());
         assertEquals(1, board.getMaxY());
         assertEquals(-10, board.getMinY());
+    }
+
+    @Test
+    public void testAdjacentZoneSetted(){
+        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.CITY), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
+        Tile tile2 = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
+        Tile tile3 = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.CITY, Topology.FIELD), new Edge(Topology.FIELD));
+
+        board.putTileAt(tile1, new Coordinates(2, 2));
+        board.putTileAt(tile2, new Coordinates(1, 3));
+        board.putTileAt(tile3, new Coordinates(2, 3));
+
+        assertFalse(tile3.getZoneAt(Direction.TOP, 0).hasAdjacentZone());
+        assertFalse(tile3.getZoneAt(Direction.RIGHT, 0).hasAdjacentZone());
+        assertTrue(tile3.getZoneAt(Direction.BOTTOM, 0).hasAdjacentZone());
+        assertSame(tile1.getZoneAt(Direction.TOP, 1), tile3.getZoneAt(Direction.BOTTOM, 0).getAdjacentZone());
+        assertSame(tile1.getZoneAt(Direction.TOP, 0), tile3.getZoneAt(Direction.BOTTOM, 1).getAdjacentZone());
+        assertSame(tile2.getZoneAt(Direction.RIGHT, 0), tile3.getZoneAt(Direction.LEFT, 0).getAdjacentZone());
     }
 }
