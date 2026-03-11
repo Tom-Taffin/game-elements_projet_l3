@@ -16,14 +16,19 @@ public class Board {
     protected int minY;
     protected int maxY;
 
-    public Board() throws WrongTileSyntaxException{
+    public Board(){
         this.minX = 0;
         this.maxX = 0;
         this.minY = 0;
         this.maxY = 0;
 
         this.tiles = new HashMap<>();
-        Tile firstTile = new TileBuilder().build(FIRST_TILE);
+        Tile firstTile;
+        try {
+            firstTile = new TileBuilder().build(FIRST_TILE);
+        } catch (WrongTileSyntaxException e) {
+            throw new RuntimeException("Wrong first tile syntax");
+        }
         this.putTileAt(firstTile, new Coordinates(0, 0));
     }
 
