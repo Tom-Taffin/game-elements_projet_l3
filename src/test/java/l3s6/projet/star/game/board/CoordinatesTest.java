@@ -22,6 +22,6 @@ public class CoordinatesTest {
         exeptedList.add(new Coordinates(1, 0));
         exeptedList.add(new Coordinates(0, -1));
         exeptedList.add(new Coordinates(-1, 0));
-        assertEquals(exeptedList, origin.getOutsideFrontierTiles());
+        assertEquals(exeptedList, origin.getAdjacentCoordinates());
     }
 }
