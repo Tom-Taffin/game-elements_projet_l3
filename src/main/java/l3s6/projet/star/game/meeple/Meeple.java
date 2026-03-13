@@ -5,9 +5,11 @@ import l3s6.projet.star.game.edge.Zone;
 
 public class Meeple {
     private final Zone zone;
+    private final Color color;
 
-    public Meeple(Zone zone) {
+    public Meeple(Zone zone, Color color) {
         this.zone = zone;
+        this.color = color;
     }
 
     public Zone getZone() {

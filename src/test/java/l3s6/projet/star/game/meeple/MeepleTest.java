@@ -12,7 +12,7 @@ public class MeepleTest {
     @Test
     public void testGetZone(){
         Tile tile = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
-        Meeple meeple = new Meeple(tile.getZoneAt(Direction.TOP, 0));
+        Meeple meeple = new Meeple(tile.getZoneAt(Direction.TOP, 0), Color.RED);
 
         assertEquals(tile.getZoneAt(Direction.TOP, 0), meeple.getZone());
     }
@@ -20,7 +20,7 @@ public class MeepleTest {
     @Test
     public void testGetTopology(){
         Tile tile = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
-        Meeple meeple = new Meeple(tile.getZoneAt(Direction.TOP, 0));
+        Meeple meeple = new Meeple(tile.getZoneAt(Direction.TOP, 0), Color.RED);
 
         assertEquals(Topology.FIELD, meeple.getTopology());
     }
