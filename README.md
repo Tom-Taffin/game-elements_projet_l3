@@ -40,7 +40,7 @@ La méthode `toString()` d'une tuile permet d'obtenir sa représentation en cha�
 
 ### Orientation
 
-La tuile possède une orientation définie à sa création et qui ne peux pas être modifiée.  
+La tuile possède une orientation définie à sa création.  
 On peut l'obtenir avec la méthode `getOrientation()`.
 
 Orientation NORTH:  
@@ -54,6 +54,8 @@ Orientation SOUTH:
 
 Orientation WEST:  
 ![tile with west orientation](images/tile_exemple1_West.png)
+
+La tuile peut être tournée avec les méthodes `tile.rotateRight()`, `tile.rotateLeft()` et `tile.rotateHalf()`.
 
 ### Direction et Edge
 
