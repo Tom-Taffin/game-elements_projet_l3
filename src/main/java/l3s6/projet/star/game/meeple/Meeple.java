@@ -12,6 +12,10 @@ public class Meeple {
         this.color = color;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public Zone getZone() {
         return zone;
     }
