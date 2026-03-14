@@ -1,12 +1,23 @@
 package l3s6.projet.star.game.meeple;
-public class Meeple {
-    private final Color color;
 
-    public Meeple(Color color) {
-        this.color = color;
+import l3s6.projet.star.game.player.Player;
+
+public class Meeple {
+    private Player player;
+
+    public Meeple(Player player) {
+        this.player = player;
     }
 
-    public Color getColor() {
-        return color;
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public void incrementPlayerMeeple(){
+        this.player.incrementMeepleCount();
+    }
+
+    public void decrementPlayerMeeple() {
+        this.player.decrementMeepleCount();
     }
 }

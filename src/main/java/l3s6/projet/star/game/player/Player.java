@@ -7,6 +7,7 @@ public class Player {
     private int score;
     private int nbBlames;
     private int nbMeeples;
+
     private final Color color;
 
     public Player(String id, Color color, int nbMeeples) {
@@ -50,6 +51,10 @@ public class Player {
         if (this.nbMeeples < 0) {
             this.nbMeeples = 0;
         }
+    }
+
+    public int getNbMeeples() {
+        return nbMeeples;
     }
 
     public boolean hasMeeples(){

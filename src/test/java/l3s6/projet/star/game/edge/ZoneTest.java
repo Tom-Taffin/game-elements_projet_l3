@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import l3s6.projet.star.game.board.Board;
 import l3s6.projet.star.game.board.Coordinates;
+import l3s6.projet.star.game.meeple.Color;
+import l3s6.projet.star.game.meeple.Meeple;
+import l3s6.projet.star.game.player.Player;
 import l3s6.projet.star.game.tile.Direction;
 import l3s6.projet.star.game.tile.Tile;
 import l3s6.projet.star.game.tile.TileBuilder;
@@ -79,7 +82,20 @@ public class ZoneTest {
         assertEquals(expectedZones.size(), visitedZones.size());
         assertTrue(visitedZones.containsAll(expectedZones));
         
+    }
 
-
+    @Test
+    public void testGiveBackMeeple() throws NoMeepleException{
+        Zone zone = new Zone(Topology.CITY);
+        Player player = new Player("Sam", Color.BLACK, 2);
+        Meeple meeple = new Meeple(player);
+        
+        assertEquals(2, player.getNbMeeples());
+        zone.setMeeple(meeple);
+        assertEquals(1, player.getNbMeeples());
+        assertTrue(zone.hasMeeple());
+        zone.giveBackMeeple();
+        assertEquals(2, player.getNbMeeples());
+        
     }
 }

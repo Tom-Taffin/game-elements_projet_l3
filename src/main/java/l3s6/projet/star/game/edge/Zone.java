@@ -12,16 +12,36 @@ public class Zone {
     private Set<Zone> connectingZones;
     private Zone adjacentZone = null;
 
+    public Zone(Topology topology) {
+        this.topology = topology;
+        connectingZones = new HashSet<>();
+    }
+
     public Meeple getMeeple() {
         return meeple;
     }
 
+    /**
+     * set meeple into this zone and decrement amout of player's meeple
+     */
     public void setMeeple(Meeple meeple) {
         this.meeple = meeple;
+        this.meeple.decrementPlayerMeeple();
     }
 
     public boolean hasMeeple(){
         return meeple != null;
+    }
+
+    /**
+     * remove meeple into this zone and increment amout of player's meeple
+     */
+    public void giveBackMeeple() throws NoMeepleException{
+        if(!this.hasMeeple()){
+            throw new NoMeepleException("There is no meeple in this zone");
+        }
+        this.meeple.incrementPlayerMeeple();
+        this.meeple = null;
     }
 
     public Zone getAdjacentZone() {
@@ -37,38 +57,12 @@ public class Zone {
         zone.adjacentZone = this;
     }
 
-    public Zone(Topology topology) {
-        this.topology = topology;
-        connectingZones = new HashSet<>();
-    }
-
     public Topology getTopology() {
         return topology;
     }
 
     public Set<Zone> getConnectingZones() {
         return connectingZones;
-    }
-
-    /**
-     * @return all the connecting zones in the board including this zone
-     */
-    public Set<Zone> getAllBoardConnectingZones(){
-        Set<Zone> visitedZones = new HashSet<>();
-        this.getAllBoardConnectingZones(visitedZones);
-        return visitedZones;
-    }
-
-    public void getAllBoardConnectingZones(Set<Zone> visitedZones) {
-        if(!visitedZones.contains(this)){
-            visitedZones.add(this);
-            for(Zone zone : this.getConnectingZones()){
-                zone.getAllBoardConnectingZones(visitedZones);
-            }
-            if(this.hasAdjacentZone()){
-                this.getAdjacentZone().getAllBoardConnectingZones(visitedZones);
-            }
-        }
     }
 
     /** connect this zone to an other zone
@@ -91,6 +85,27 @@ public class Zone {
      */
     public boolean isFinished() {
         return this.connectingZones.isEmpty();
+    }
+
+    /**
+     * @return all the connecting zones in the board including this zone
+     */
+    public Set<Zone> getAllBoardConnectingZones(){
+        Set<Zone> visitedZones = new HashSet<>();
+        this.getAllBoardConnectingZones(visitedZones);
+        return visitedZones;
+    }
+
+    public void getAllBoardConnectingZones(Set<Zone> visitedZones) {
+        if(!visitedZones.contains(this)){
+            visitedZones.add(this);
+            for(Zone zone : this.getConnectingZones()){
+                zone.getAllBoardConnectingZones(visitedZones);
+            }
+            if(this.hasAdjacentZone()){
+                this.getAdjacentZone().getAllBoardConnectingZones(visitedZones);
+            }
+        }
     }
     
     public String toString(){
