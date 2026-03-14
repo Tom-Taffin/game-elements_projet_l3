@@ -3,10 +3,26 @@ package l3s6.projet.star.game.edge;
 import java.util.HashSet;
 import java.util.Set;
 
+import l3s6.projet.star.game.meeple.Meeple;
+
 public class Zone {
     private Topology topology;
+    private Meeple meeple = null;
+
     private Set<Zone> connectingZones;
     private Zone adjacentZone = null;
+
+    public Meeple getMeeple() {
+        return meeple;
+    }
+
+    public void setMeeple(Meeple meeple) {
+        this.meeple = meeple;
+    }
+
+    public boolean hasMeeple(){
+        return meeple != null;
+    }
 
     public Zone getAdjacentZone() {
         return adjacentZone;
