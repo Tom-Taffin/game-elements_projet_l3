@@ -1,25 +1,16 @@
 package l3s6.projet.star.game.player;
 
-import l3s6.projet.star.game.meeple.Color;
-
 public class Player {
     private final String id;
     private int score;
     private int nbBlames;
     private int nbMeeples;
 
-    private final Color color;
-
-    public Player(String id, Color color, int nbMeeples) {
+    public Player(String id, int nbMeeples) {
         this.id = id;
         this.score = 0;
         this.nbBlames = 0;
         this.nbMeeples = nbMeeples;
-        this.color = color;
-    }
-
-    public Color getColor() {
-        return color;
     }
 
     public int getNumberOfBlames(){
