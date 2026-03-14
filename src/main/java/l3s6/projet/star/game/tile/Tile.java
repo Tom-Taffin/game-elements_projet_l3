@@ -31,6 +31,10 @@ public class Tile {
         return orientation;
     }
 
+    public void setOrientation(Orientation orientation){
+        this.orientation = orientation;
+    }
+
     public void rotateRight(){
         this.orientation = this.orientation.rotateRight();
     }
