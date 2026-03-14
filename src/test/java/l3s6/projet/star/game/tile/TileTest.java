@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Set;
+
 public class TileTest {
 
     @Test
@@ -241,5 +243,37 @@ public class TileTest {
         tile1.rotateLeft();
 
         assertTrue(tile1.isCompatibleWith(tile2, Direction.TOP));
+    }
+
+    @Test
+    public void testGetDistinctZone() throws WrongTopologyException{
+        Tile tile = new Tile(new Edge(Topology.FIELD,Topology.ROAD, Topology.FIELD), 
+                            new Edge(Topology.FIELD,Topology.ROAD, Topology.FIELD),  
+                            new Edge(Topology.CITY),
+                            new Edge(Topology.FIELD));
+        
+        tile.getZoneAt(Direction.TOP, 0).connectTo(tile.getZoneAt(Direction.LEFT, 0));
+        tile.getZoneAt(Direction.TOP, 0).connectTo(tile.getZoneAt(Direction.RIGHT, 2));
+        tile.getZoneAt(Direction.LEFT, 0).connectTo(tile.getZoneAt(Direction.RIGHT, 2));
+        tile.getZoneAt(Direction.TOP, 2).connectTo(tile.getZoneAt(Direction.RIGHT, 0));
+        tile.getZoneAt(Direction.TOP, 1).connectTo(tile.getZoneAt(Direction.RIGHT, 1));
+        
+        Set<Zone> distinctZones = tile.getDistinctZone();
+        assertFalse(distinctZones.contains(tile.getZoneAt(Direction.TOP, 0)) && 
+                    distinctZones.contains(tile.getZoneAt(Direction.LEFT, 0)));
+        
+        assertFalse(distinctZones.contains(tile.getZoneAt(Direction.TOP, 0)) && 
+                    distinctZones.contains(tile.getZoneAt(Direction.RIGHT, 2)));
+        
+        assertFalse(distinctZones.contains(tile.getZoneAt(Direction.RIGHT, 2)) && 
+                    distinctZones.contains(tile.getZoneAt(Direction.LEFT, 0)));
+    
+        assertTrue(distinctZones.contains(tile.getZoneAt(Direction.RIGHT, 2)) ||
+                    distinctZones.contains(tile.getZoneAt(Direction.LEFT, 0)) ||
+                    distinctZones.contains(tile.getZoneAt(Direction.TOP, 0)));
+
+        assertTrue(distinctZones.contains(tile.getZoneAt(Direction.BOTTOM, 0)));
+        
+        assertEquals(4, distinctZones.size());
     }
 }

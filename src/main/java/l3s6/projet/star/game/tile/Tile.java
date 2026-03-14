@@ -1,8 +1,10 @@
 package l3s6.projet.star.game.tile;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import l3s6.projet.star.game.edge.Edge;
 import l3s6.projet.star.game.edge.Topology;
@@ -82,6 +84,28 @@ public class Tile {
 
     public List<Zone> getZones(Direction direction){
         return this.getEdge(direction).getZones();
+    }
+
+    /**
+     * @return a list of all zones with only one zone per connected zones.
+     * In other words there is no two zones connected in the list.
+     */
+    public Set<Zone> getDistinctZone(){
+        HashSet<Zone> res = new HashSet<>();
+        for(Direction direction : Direction.values()){
+            for(Zone zone : this.getEdge(direction).getZones()){
+                boolean hasConnectedZone = false;
+                for(Zone connectedZone : zone.getConnectingZones()){
+                    if(res.contains(connectedZone)){
+                        hasConnectedZone = true;
+                    }
+                }
+                if(!hasConnectedZone){
+                    res.add(zone);
+                }
+            }
+        }
+        return res;
     }
 
     public String toString(){
