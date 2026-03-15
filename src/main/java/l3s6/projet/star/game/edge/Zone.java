@@ -32,8 +32,12 @@ public class Zone {
 
     /**
      * set meeple into this zone and decrement amout of player's meeple
+     * @throws WrongTopologyException 
      */
-    public void setMeeple(Meeple meeple) {
+    public void setMeeple(Meeple meeple) throws WrongTopologyException {
+        if(this.topology == Topology.FIELD){
+            throw new WrongTopologyException("Meeple can't be placed on field");
+        }
         this.meeple = meeple;
         this.meeple.decrementPlayerMeeple();
     }
