@@ -98,6 +98,7 @@ public class TileBuilder {
         String[] stringZones = stringEdge.split("(?=[a-zA-Z])");
         for(int j = 0; j < stringZones.length; j++){
             Zone zone = new Zone(this.getTopology(stringZones[j]));
+            this.setShield(zone, stringZones[j]);
             if (visitedZones.containsKey(stringZones[j])){
                 createConnections(visitedZones.get(stringZones[j]), zone);
             }
@@ -134,7 +135,7 @@ public class TileBuilder {
         if(string.startsWith("f")){
             return Topology.FIELD;
         }
-        else if(string.startsWith("c")){
+        else if(string.startsWith("c") || string.startsWith("C")){
             return Topology.CITY;
         }
         else if(string.startsWith("r")){
@@ -142,6 +143,15 @@ public class TileBuilder {
         }
         else{
             throw new WrongTileSyntaxException("Topololy " + string + " is not recognized");
+        }
+    }
+
+    /**
+     * Set a shield on the zone if is necessary
+     */
+    private void setShield(Zone zone, String string) {
+        if(string.startsWith("C")){
+            zone.setShield();
         }
     }
 

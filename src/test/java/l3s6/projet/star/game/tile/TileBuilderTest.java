@@ -21,21 +21,21 @@ public class TileBuilderTest {
 
     @Test
     public void testSouthOrientationCorrectSyntaxe() throws WrongTileSyntaxException{
-        String expString = "Sc1-c1f2-c2-f3c2f4";
+        String expString = "SC1-C1f2-c2-f3c2f4";
         Tile tile = this.tileBuilder.build(expString);
         assertEquals(Orientation.SOUTH, tile.getOrientation());
     }
 
     @Test
     public void testEastOrientationCorrectSyntaxe() throws WrongTileSyntaxException{
-        String expString = "Ec1-c1f2-c2-f3c2f4";
+        String expString = "EC1-C1f2-c2-f3c2f4";
         Tile tile = this.tileBuilder.build(expString);
         assertEquals(Orientation.EAST, tile.getOrientation());
     }
     
     @Test
     public void testEdgeSizesCorrectSyntaxe() throws WrongTileSyntaxException{
-        String expString = "Ec1-c1f2-c2-f3c2f4";
+        String expString = "EC1-C1f2-c2-f3c2f4";
         Tile tile = this.tileBuilder.build(expString);
 
         assertEquals(1, tile.getEdge(Direction.RIGHT).getSize());
@@ -46,7 +46,7 @@ public class TileBuilderTest {
 
     @Test
     public void testTopologyCorrectSyntaxe() throws WrongTileSyntaxException{
-        String expString = "Ec1-c1f2-c2-f3c2f4";
+        String expString = "EC1-C1f2-c2-f3c2f4";
         Tile tile = this.tileBuilder.build(expString);
 
         assertEquals(List.of(Topology.CITY), tile.getEdge(Direction.RIGHT).getZoneTopologies());
@@ -101,6 +101,21 @@ public class TileBuilderTest {
         assertThrows(WrongTileSyntaxException.class, () -> {
             this.tileBuilder.build(expString);
         });
+    }
+
+    @Test
+    public void testSetShield() throws WrongTileSyntaxException{
+        String expString = "NC1-C1f2-c2-f3c2f4";
+        Tile tile = this.tileBuilder.build(expString);
+
+        assertTrue(tile.getZoneAt(Direction.TOP, 0).hasShield());
+        assertTrue(tile.getZoneAt(Direction.RIGHT, 0).hasShield());
+        assertFalse(tile.getZoneAt(Direction.RIGHT, 1).hasShield());
+        assertFalse(tile.getZoneAt(Direction.BOTTOM, 0).hasShield());
+        assertFalse(tile.getZoneAt(Direction.LEFT, 0).hasShield());
+        assertFalse(tile.getZoneAt(Direction.LEFT, 1).hasShield());
+        assertFalse(tile.getZoneAt(Direction.LEFT, 2).hasShield());
+
     }
 
 }

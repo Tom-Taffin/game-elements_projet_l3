@@ -8,6 +8,15 @@ import l3s6.projet.star.game.meeple.Meeple;
 public class Zone {
     private Topology topology;
     private Meeple meeple = null;
+    private boolean hasShield = false;
+
+    public boolean hasShield() {
+        return hasShield;
+    }
+
+    public void setShield() {
+        this.hasShield = true;
+    }
 
     private Set<Zone> connectingZones;
     private Zone adjacentZone = null;
