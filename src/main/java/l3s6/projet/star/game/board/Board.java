@@ -3,6 +3,7 @@ package l3s6.projet.star.game.board;
 import l3s6.projet.star.game.tile.*;
 import org.javatuples.Pair;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -48,6 +49,10 @@ public class Board {
 
     public int getMaxY() {
         return maxY;
+    }
+
+    public Collection<Tile> getTiles(){
+        return this.tiles.values();
     }
 
     /**
