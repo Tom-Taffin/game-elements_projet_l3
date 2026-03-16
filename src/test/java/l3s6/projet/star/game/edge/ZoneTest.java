@@ -87,7 +87,7 @@ public class ZoneTest {
     public void testGiveBackMeeple() throws NoMeepleException, WrongTopologyException{
         Zone zone = new Zone(Topology.CITY);
         Player player = new Player("Sam", 2);
-        Meeple meeple = new Meeple(player);
+        Meeple meeple = new Meeple(player, new Coordinates(0,0));
         
         assertEquals(2, player.getNbMeeples());
         zone.setMeeple(meeple);
@@ -102,7 +102,7 @@ public class ZoneTest {
     public void testPlaceMeepleOnField(){
         Zone zone = new Zone(Topology.FIELD);
         Player player = new Player("Sam", 2);
-        Meeple meeple = new Meeple(player);
+        Meeple meeple = new Meeple(player,new Coordinates(0,0));
         assertThrows(WrongTopologyException.class, () -> {
             zone.setMeeple(meeple);
         });
