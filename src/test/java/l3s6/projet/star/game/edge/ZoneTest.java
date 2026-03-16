@@ -23,15 +23,15 @@ public class ZoneTest {
         Zone zone1 = new Zone(Topology.FIELD);
         Zone zone2 = new Zone(Topology.FIELD);
 
-        assertTrue(zone1.isFinished());
-        assertTrue(zone2.isFinished());
+        assertTrue(zone1.isNotConnected());
+        assertTrue(zone2.isNotConnected());
 
         zone1.connectTo(zone2);
 
         assertTrue(zone1.isConnectedTo(zone2));
         assertTrue(zone2.isConnectedTo(zone1));
-        assertFalse(zone1.isFinished());
-        assertFalse(zone2.isFinished());
+        assertFalse(zone1.isNotConnected());
+        assertFalse(zone2.isNotConnected());
     }
 
     @Test

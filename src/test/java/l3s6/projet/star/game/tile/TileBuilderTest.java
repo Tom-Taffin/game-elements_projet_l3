@@ -60,10 +60,10 @@ public class TileBuilderTest {
         String expString = "Ec1-f1-c2-f2";
         Tile tile = this.tileBuilder.build(expString);
 
-        assertTrue(tile.getZoneAt(Direction.RIGHT,0).isFinished());
-        assertTrue(tile.getZoneAt(Direction.BOTTOM,0).isFinished());
-        assertTrue(tile.getZoneAt(Direction.LEFT,0).isFinished());
-        assertTrue(tile.getZoneAt(Direction.TOP,0).isFinished());
+        assertTrue(tile.getZoneAt(Direction.RIGHT,0).isNotConnected());
+        assertTrue(tile.getZoneAt(Direction.BOTTOM,0).isNotConnected());
+        assertTrue(tile.getZoneAt(Direction.LEFT,0).isNotConnected());
+        assertTrue(tile.getZoneAt(Direction.TOP,0).isNotConnected());
     }
 
     @Test
@@ -75,8 +75,8 @@ public class TileBuilderTest {
         assertTrue(tile.getZoneAt(Direction.BOTTOM,0).isConnectedTo(tile.getZoneAt(Direction.TOP,0)));
         assertEquals(1, tile.getZoneAt(Direction.TOP, 0).getConnectingZones().size());
         assertTrue(tile.getZoneAt(Direction.TOP, 0).isConnectedTo(tile.getZoneAt(Direction.BOTTOM,0)));
-        assertTrue(tile.getZoneAt(Direction.RIGHT,0).isFinished());
-        assertTrue(tile.getZoneAt(Direction.LEFT,0).isFinished());
+        assertTrue(tile.getZoneAt(Direction.RIGHT,0).isNotConnected());
+        assertTrue(tile.getZoneAt(Direction.LEFT,0).isNotConnected());
     }
 
     @Test

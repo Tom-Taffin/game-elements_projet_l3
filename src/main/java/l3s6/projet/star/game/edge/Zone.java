@@ -96,7 +96,7 @@ public class Zone {
     /**
      * @return true if this zone is not connected to anything
      */
-    public boolean isFinished() {
+    public boolean isNotConnected() {
         return this.connectingZones.isEmpty();
     }
 
