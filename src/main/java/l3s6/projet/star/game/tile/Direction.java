@@ -83,4 +83,23 @@ public enum Direction {
                 return Direction.LEFT;
         }
     }
+
+    /**
+     * @return the direction corresponding to the character
+     * @throws WrongTileSyntaxException if the char doesn't correspond to a direction
+     */
+    public static Direction fromChar(Character c) throws WrongTileSyntaxException{
+        switch (c) {
+            case 'T':
+                return Direction.TOP;
+            case 'R':
+                return Direction.RIGHT;
+            case 'B':
+                return Direction.BOTTOM;
+            case 'L':
+                return Direction.LEFT;
+            default:
+                throw new WrongTileSyntaxException("The char " + c + " doesn't correspond to a direction");
+        }
+    }
 }
