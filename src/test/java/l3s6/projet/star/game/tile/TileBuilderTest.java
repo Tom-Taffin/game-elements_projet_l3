@@ -104,7 +104,7 @@ public class TileBuilderTest {
     }
 
     @Test
-    public void testSetShield() throws WrongTileSyntaxException{
+    public void testShieldSetted() throws WrongTileSyntaxException{
         String expString = "NC1-C1f2-c2-f3c2f4";
         Tile tile = this.tileBuilder.build(expString);
 
@@ -116,6 +116,37 @@ public class TileBuilderTest {
         assertFalse(tile.getZoneAt(Direction.LEFT, 1).hasShield());
         assertFalse(tile.getZoneAt(Direction.LEFT, 2).hasShield());
 
+    }
+
+    @Test
+    public void testAbbeySetted() throws WrongTileSyntaxException{
+        String expString = "NAC1-C1f2-c2-f3c2f4";
+        Tile tile = this.tileBuilder.build(expString);
+        assertTrue(tile.hasAbbey());
+    }
+
+    @Test
+    public void testTopologyCorrectSyntaxeWithAbbey() throws WrongTileSyntaxException{
+        String expString = "EAC1-C1f2-c2-f3c2f4";
+        Tile tile = this.tileBuilder.build(expString);
+
+        assertEquals(List.of(Topology.CITY), tile.getEdge(Direction.RIGHT).getZoneTopologies());
+        assertEquals(List.of(Topology.CITY, Topology.FIELD), tile.getEdge(Direction.BOTTOM).getZoneTopologies());
+        assertEquals(List.of(Topology.CITY), tile.getEdge(Direction.LEFT).getZoneTopologies());
+        assertEquals(List.of(Topology.FIELD, Topology.CITY, Topology.FIELD), tile.getEdge(Direction.TOP).getZoneTopologies());
+    }
+
+    @Test
+    public void testTileWithConnectionsCorrectSyntaxeWithAbbey() throws WrongTileSyntaxException{
+        String expString = "EAc1-f1-c2-f1";
+        Tile tile = this.tileBuilder.build(expString);
+
+        assertEquals(1, tile.getZoneAt(Direction.BOTTOM,0).getConnectingZones().size());
+        assertTrue(tile.getZoneAt(Direction.BOTTOM,0).isConnectedTo(tile.getZoneAt(Direction.TOP,0)));
+        assertEquals(1, tile.getZoneAt(Direction.TOP, 0).getConnectingZones().size());
+        assertTrue(tile.getZoneAt(Direction.TOP, 0).isConnectedTo(tile.getZoneAt(Direction.BOTTOM,0)));
+        assertTrue(tile.getZoneAt(Direction.RIGHT,0).isNotConnected());
+        assertTrue(tile.getZoneAt(Direction.LEFT,0).isNotConnected());
     }
 
 }

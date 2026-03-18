@@ -32,9 +32,21 @@ public class TileBuilder {
 
         Orientation orientation = this.getOrientation(string);
 
-        this.analyseString(string.substring(1), edges);
+
+        Boolean hasAbbey = this.hasAbbey(string);
+        String edgesString;
+        if(hasAbbey){
+            edgesString = string.substring(2);
+        } else {
+            edgesString = string.substring(1);
+        }
+
+        this.analyseString(edgesString, edges);
         
         Tile tile = new Tile(edges[0], edges[1], edges[2], edges[3], orientation);
+        if (hasAbbey){
+            tile.setAbbey();
+        }
         
         return tile;
     }
@@ -58,6 +70,10 @@ public class TileBuilder {
             default:
                 throw new WrongTileSyntaxException("Orientation " + string.charAt(0) + " is not recognized");
         }
+    }
+
+    private Boolean hasAbbey(String string) {
+        return string.charAt(1) == 'A';
     }
 
     /**
