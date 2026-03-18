@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.javatuples.Pair;
+
 import l3s6.projet.star.game.edge.Edge;
 import l3s6.projet.star.game.edge.Topology;
 import l3s6.projet.star.game.edge.Zone;
+import l3s6.projet.star.game.meeple.Meeple;
 
 public class Tile {
     private Edge[] edges;
@@ -175,5 +178,16 @@ public class Tile {
             zoneRes += visitedZones.get(zone);
         }
         return zoneRes;
+    }
+
+    public Pair<Meeple, String> getMeeple(){
+        for (Direction d : Direction.values()){
+            Edge edge = this.getEdge(d);
+            Pair<Meeple, String> edgeMeeple = edge.getMeeple();
+            if (edgeMeeple != null) {
+                return new Pair<Meeple,String>(edgeMeeple.getValue0(), Direction.toChar(d) + edgeMeeple.getValue1());
+            }
+        }
+        return null;
     }
 }

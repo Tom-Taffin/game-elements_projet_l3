@@ -102,4 +102,20 @@ public enum Direction {
                 throw new WrongTileSyntaxException("The char " + c + " doesn't correspond to a direction");
         }
     }
+
+    /**
+     * @return the character corresponding to the character direction
+     */
+    public static Character toChar(Direction d) {
+        switch (d) {
+            case TOP:
+                return 'T';
+            case RIGHT:
+                return 'R';
+            case BOTTOM:
+                return 'B';
+            default:
+                return 'L';
+        }
+    }
 }

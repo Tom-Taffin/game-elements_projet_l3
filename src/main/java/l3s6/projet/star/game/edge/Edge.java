@@ -3,6 +3,10 @@ package l3s6.projet.star.game.edge;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.javatuples.Pair;
+
+import l3s6.projet.star.game.meeple.Meeple;
+
 public class Edge {
 
     protected List<Zone> zones;
@@ -73,6 +77,17 @@ public class Edge {
             res += z.toString();
         }
         return res;
+    }
+
+    public Pair<Meeple, String> getMeeple(){
+        for (int i = 0; i < this.zones.size(); i++){
+            Zone z = this.getZoneAt(i);
+            Meeple zoneMeeple = z.getMeeple();
+            if (zoneMeeple != null){
+                return new Pair<Meeple,String>(zoneMeeple, String.format("%d", i));
+            }
+        }
+        return null;
     }
 
 }
