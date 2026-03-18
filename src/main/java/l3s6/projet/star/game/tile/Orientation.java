@@ -65,7 +65,7 @@ public enum Orientation {
         }
     }
 
-    public Orientation fromChar(Character c){
+    public static Orientation fromChar(Character c){
         switch (c) {
             case 'E':
                 return EAST;
