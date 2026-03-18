@@ -1,0 +1,154 @@
+@startuml
+
+class l3s6.projet.star.game.board.Board {
+	{field} {static} -FIRST_TILE : String
+	{field} #maxX : int
+	{field} #maxY : int
+	{field} #minX : int
+	{field} #minY : int
+	{method} +getOutsideFrontierTiles () : java.util.Set
+	{method} +getTileAt ( paramCoordinates1 : l3s6.projet.star.game.board.Coordinates ) : l3s6.projet.star.game.tile.Tile
+	{method} +hasTile ( paramCoordinates1 : l3s6.projet.star.game.board.Coordinates ) : boolean
+	{method} +putTileAt ( paramTile1 : l3s6.projet.star.game.tile.Tile , paramCoordinates2 : l3s6.projet.star.game.board.Coordinates ) : void
+	{method} -setAdjacentZones ( paramTile1 : l3s6.projet.star.game.tile.Tile , paramCoordinates2 : l3s6.projet.star.game.board.Coordinates , paramDirection3 : l3s6.projet.star.game.tile.Direction ) : void
+	{method} -updateSize ( paramCoordinates1 : l3s6.projet.star.game.board.Coordinates ) : void
+}
+
+
+class l3s6.projet.star.game.board.Coordinates {
+	{field} -x : int
+	{field} -y : int
+	{method} +downCoordinates () : l3s6.projet.star.game.board.Coordinates
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +getAdjacent ( paramDirection1 : l3s6.projet.star.game.tile.Direction ) : l3s6.projet.star.game.board.Coordinates
+	{method} +getAdjacentCoordinates () : java.util.ArrayList
+	{method} +leftCoordinates () : l3s6.projet.star.game.board.Coordinates
+	{method} +rightCoordinates () : l3s6.projet.star.game.board.Coordinates
+	{method} +upCoordinates () : l3s6.projet.star.game.board.Coordinates
+}
+
+
+class l3s6.projet.star.game.edge.Edge {
+	{method} +getMeeple () : org.javatuples.Pair
+	{method} +getSize () : int
+	{method} +getZoneAt ( paramint1 : int ) : l3s6.projet.star.game.edge.Zone
+	{method} +getZoneTopologies () : java.util.List
+	{method} +isCompatibleWith ( paramEdge1 : l3s6.projet.star.game.edge.Edge ) : boolean
+	{method} +toString () : String
+}
+
+
+class l3s6.projet.star.game.edge.NoMeepleException {
+}
+
+
+enum l3s6.projet.star.game.edge.Topology {
+	{field} +c
+	{field} +f
+	{field} +r
+}
+
+
+class l3s6.projet.star.game.edge.WrongTopologyException {
+}
+
+
+class l3s6.projet.star.game.edge.Zone {
+	{field} -hasShield : boolean
+	{method} +connectTo ( paramZone1 : l3s6.projet.star.game.edge.Zone ) : void
+	{method} +getAllBoardConnectingZones () : java.util.Set
+	{method} +getAllBoardConnectingZones ( paramSet1 : java.util.Set ) : void
+	{method} +giveBackMeeple () : void
+	{method} +hasAdjacentZone () : Boolean
+	{method} +hasMeeple () : boolean
+	{method} +hasShield () : boolean
+	{method} +isConnectedTo ( paramZone1 : l3s6.projet.star.game.edge.Zone ) : boolean
+	{method} +isNotConnected () : boolean
+	{method} +setShield () : void
+	{method} +toString () : String
+}
+
+
+class l3s6.projet.star.game.meeple.Meeple {
+	{method} +decrementPlayerMeeple () : void
+	{method} +incrementPlayerMeeple () : void
+}
+
+
+class l3s6.projet.star.game.player.Player {
+	{field} -id : String
+	{field} -nbBlames : int
+	{field} -nbMeeples : int
+	{field} -score : int
+	{method} +addPoints ( paramint1 : int ) : void
+	{method} +blame () : void
+	{method} +decrementMeepleCount () : void
+	{method} +getNumberOfBlames () : int
+	{method} +hasMeeples () : boolean
+	{method} +incrementMeepleCount () : void
+}
+
+
+enum l3s6.projet.star.game.tile.Direction {
+	{field} +BOTTOM
+	{field} +LEFT
+	{field} +RIGHT
+	{field} +TOP
+}
+
+
+enum l3s6.projet.star.game.tile.Orientation {
+	{field} +E
+	{field} +N
+	{field} +S
+	{field} +W
+}
+
+
+class l3s6.projet.star.game.tile.Tile {
+	{field} -edges : [Ll3s6.projet.star.game.edge.Edge;
+	{method} -edgeStringRepresentation ( paramEdge1 : l3s6.projet.star.game.edge.Edge , paramMap2 : java.util.Map , paramMap3 : java.util.Map ) : String
+	{method} +getDistinctZone () : java.util.Set
+	{method} +getEdge ( paramDirection1 : l3s6.projet.star.game.tile.Direction ) : l3s6.projet.star.game.edge.Edge
+	{method} +getMeeple () : org.javatuples.Pair
+	{method} +getZoneAt ( paramDirection1 : l3s6.projet.star.game.tile.Direction , paramint2 : int ) : l3s6.projet.star.game.edge.Zone
+	{method} +getZones ( paramDirection1 : l3s6.projet.star.game.tile.Direction ) : java.util.List
+	{method} +isCompatibleWith ( paramTile1 : l3s6.projet.star.game.tile.Tile , paramDirection2 : l3s6.projet.star.game.tile.Direction ) : boolean
+	{method} +rotateHalf () : void
+	{method} +rotateLeft () : void
+	{method} +rotateRight () : void
+	{method} -tileStringRepresentation () : String
+	{method} +toString () : String
+	{method} -zoneStringRepresentation ( paramZone1 : l3s6.projet.star.game.edge.Zone , paramMap2 : java.util.Map , paramMap3 : java.util.Map ) : String
+}
+
+
+class l3s6.projet.star.game.tile.TileBuilder {
+	{method} -analyseEdgeString ( paramString1 : String , paramEdge;2 : [Ll3s6.projet.star.game.edge.Edge; , paramint3 : int , paramHashMap4 : java.util.HashMap ) : void
+	{method} -analyseString ( paramString1 : String , paramEdge;2 : [Ll3s6.projet.star.game.edge.Edge; ) : void
+	{method} +build ( paramString1 : String ) : l3s6.projet.star.game.tile.Tile
+	{method} -createConnections ( paramList1 : java.util.List , paramZone2 : l3s6.projet.star.game.edge.Zone ) : void
+	{method} -getOrientation ( paramString1 : String ) : l3s6.projet.star.game.tile.Orientation
+	{method} -getTopology ( paramString1 : String ) : l3s6.projet.star.game.edge.Topology
+	{method} -setShield ( paramZone1 : l3s6.projet.star.game.edge.Zone , paramString2 : String ) : void
+}
+
+
+class l3s6.projet.star.game.tile.WrongTileSyntaxException {
+}
+
+
+
+
+l3s6.projet.star.game.board.Board "1" o-- "0..*"  l3s6.projet.star.game.tile.Tile : tiles
+l3s6.projet.star.game.edge.Edge "1" o-- "0..*"  l3s6.projet.star.game.edge.Zone : zones
+l3s6.projet.star.game.edge.Zone "1" o-- "0..*"  l3s6.projet.star.game.edge.Zone : connectingZones
+l3s6.projet.star.game.edge.Zone -->  l3s6.projet.star.game.edge.Topology : topology
+l3s6.projet.star.game.edge.Zone -->  l3s6.projet.star.game.edge.Zone : adjacentZone
+l3s6.projet.star.game.edge.Zone -->  l3s6.projet.star.game.meeple.Meeple : meeple
+l3s6.projet.star.game.meeple.Meeple -->  l3s6.projet.star.game.board.Coordinates : coordinates
+l3s6.projet.star.game.meeple.Meeple -->  l3s6.projet.star.game.player.Player : player
+l3s6.projet.star.game.tile.Tile -->  l3s6.projet.star.game.tile.Orientation : orientation
+
+
+@enduml
