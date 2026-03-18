@@ -168,6 +168,9 @@ public class Tile {
      */
     private String tileStringRepresentation(){
         String tileRes = this.orientation.toString();
+        if (this.hasAbbey){
+            tileRes += "A";
+        }
         Map<Topology,Integer> nextIndicesForEachTopology = new HashMap<>();
         Map<Zone, String> visitedZones = new HashMap<>();
         int edgeIndex;
@@ -176,7 +179,7 @@ public class Tile {
             if (edgeIndex < this.edges.length-1){
                 tileRes += "-";
             }
-        }   
+        }
         return tileRes;
     }
 
