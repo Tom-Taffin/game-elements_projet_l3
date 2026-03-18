@@ -3,7 +3,9 @@ package l3s6.projet.star.game.edge;
 import java.util.HashSet;
 import java.util.Set;
 
+import l3s6.projet.star.game.meeple.AlreadyHaveMeepleException;
 import l3s6.projet.star.game.meeple.Meeple;
+import l3s6.projet.star.game.meeple.NoMeepleException;
 
 public class Zone {
     private Topology topology;
@@ -32,11 +34,13 @@ public class Zone {
 
     /**
      * set meeple into this zone and decrement amout of player's meeple
-     * @throws WrongTopologyException 
      */
-    public void setMeeple(Meeple meeple) throws WrongTopologyException {
+    public void setMeeple(Meeple meeple) throws WrongTopologyException, AlreadyHaveMeepleException {
         if(this.topology == Topology.FIELD){
             throw new WrongTopologyException("Meeple can't be placed on field");
+        }
+        if(this.hasMeeple()){
+            throw new AlreadyHaveMeepleException("The is already a meeple on the abbey");
         }
         this.meeple = meeple;
         this.meeple.decrementPlayerMeeple();

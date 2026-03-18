@@ -11,11 +11,14 @@ import org.javatuples.Pair;
 import l3s6.projet.star.game.edge.Edge;
 import l3s6.projet.star.game.edge.Topology;
 import l3s6.projet.star.game.edge.Zone;
+import l3s6.projet.star.game.meeple.AlreadyHaveMeepleException;
 import l3s6.projet.star.game.meeple.Meeple;
+import l3s6.projet.star.game.meeple.NoMeepleException;
 
 public class Tile {
     private Edge[] edges;
-
+    private boolean hasAbbey = false;
+    private Meeple abbeyMeeple = null;
     private Orientation orientation;
     // By default, the orientation of this tile it's on NORTH.
 
@@ -30,6 +33,14 @@ public class Tile {
         this.edges[2] = bottomEdge;
         this.edges[3] = leftEdge;
         this.orientation = orientation;
+    }
+
+    public boolean hasAbbey() {
+        return hasAbbey;
+    }
+
+    public void setAbbey(){
+        this.hasAbbey = true;
     }
 
     public Orientation getOrientation() {
@@ -50,6 +61,42 @@ public class Tile {
 
     public void rotateHalf(){
         this.orientation = this.orientation.rotateHalf();
+    }
+
+    public boolean hasMeepleOnAbbey(){
+        return this.abbeyMeeple != null;
+    }
+    
+    public Meeple getAbbeyMeeple() {
+        return abbeyMeeple;
+    }
+
+    /**
+     * set meeple into the abbey and decrement amout of player's meeple
+     */
+    public void setAbbeyMeeple(Meeple meeple) throws NoAbbeyException, AlreadyHaveMeepleException {
+        if(!this.hasAbbey()){
+            throw new NoAbbeyException("This tile doesn't have an abbey");
+        }
+        if(this.hasMeepleOnAbbey()){
+            throw new AlreadyHaveMeepleException("The abbey already has meeple");
+        }
+        this.abbeyMeeple = meeple;
+        meeple.decrementPlayerMeeple();
+    }
+
+    /**
+     * remove meeple into the abbey and increment amout of player's meeple
+     */
+    public void giveBackAbbeyMeeple() throws NoMeepleException, NoAbbeyException{
+        if(!this.hasAbbey()){
+            throw new NoAbbeyException("This tile doesn't have an abbey");
+        }
+        if (!this.hasMeepleOnAbbey()){
+            throw new NoMeepleException("There is no meeple on the abbey");
+        }
+        this.abbeyMeeple.incrementPlayerMeeple();
+        this.abbeyMeeple = null;
     }
 
     /**

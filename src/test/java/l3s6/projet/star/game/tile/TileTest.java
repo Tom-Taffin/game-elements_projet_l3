@@ -1,6 +1,12 @@
 package l3s6.projet.star.game.tile;
 
+import l3s6.projet.star.game.board.Coordinates;
 import l3s6.projet.star.game.edge.*;
+import l3s6.projet.star.game.meeple.AlreadyHaveMeepleException;
+import l3s6.projet.star.game.meeple.Meeple;
+import l3s6.projet.star.game.meeple.NoMeepleException;
+import l3s6.projet.star.game.player.Player;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -275,5 +281,80 @@ public class TileTest {
         assertTrue(distinctZones.contains(tile.getZoneAt(Direction.BOTTOM, 0)));
         
         assertEquals(4, distinctZones.size());
+    }
+
+    @Test
+    public void testGiveBackAbbeyMeeple() throws NoAbbeyException, NoMeepleException, AlreadyHaveMeepleException{
+        Tile tile = new Tile(new Edge(Topology.FIELD), 
+                            new Edge(Topology.FIELD), 
+                            new Edge(Topology.CITY), 
+                            new Edge(Topology.FIELD),
+                            Orientation.WEST);
+
+        tile.setAbbey();
+
+        Player player = new Player("Sam", 2);
+        Meeple meeple = new Meeple(player, new Coordinates(0,0));
+        
+        assertFalse(tile.hasMeepleOnAbbey());
+        assertEquals(2, player.getNbMeeples());
+        tile.setAbbeyMeeple(meeple);
+        assertEquals(1, player.getNbMeeples());
+        assertTrue(tile.hasMeepleOnAbbey());
+        tile.giveBackAbbeyMeeple();
+        assertEquals(2, player.getNbMeeples());
+        assertFalse(tile.hasMeepleOnAbbey());
+        
+    }
+
+    @Test
+    public void testSetAbbeyMeepleOnMeeple() throws NoAbbeyException, AlreadyHaveMeepleException{
+        Tile tile = new Tile(new Edge(Topology.FIELD), 
+                            new Edge(Topology.FIELD), 
+                            new Edge(Topology.CITY), 
+                            new Edge(Topology.FIELD),
+                            Orientation.WEST);
+
+        tile.setAbbey();
+
+        Player player = new Player("Sam", 2);
+        Meeple meeple = new Meeple(player, new Coordinates(0,0));
+
+        tile.setAbbeyMeeple(meeple);
+        assertThrows(AlreadyHaveMeepleException.class, () -> {
+            tile.setAbbeyMeeple(meeple);
+        });
+        
+    }
+
+    @Test
+    public void testGiveBackNoMeeple(){
+        Tile tile = new Tile(new Edge(Topology.FIELD), 
+                            new Edge(Topology.FIELD), 
+                            new Edge(Topology.CITY), 
+                            new Edge(Topology.FIELD),
+                            Orientation.WEST);
+
+        tile.setAbbey();
+
+        assertThrows(NoMeepleException.class, () -> {
+            tile.giveBackAbbeyMeeple();;
+        });
+    }
+
+    @Test
+    public void testNoAbbeySetMeeple(){
+        Tile tile = new Tile(new Edge(Topology.FIELD), 
+                            new Edge(Topology.FIELD), 
+                            new Edge(Topology.CITY), 
+                            new Edge(Topology.FIELD),
+                            Orientation.WEST);
+
+        Player player = new Player("Sam", 2);
+        Meeple meeple = new Meeple(player, new Coordinates(0,0));
+
+        assertThrows(NoAbbeyException.class, () -> {
+            tile.setAbbeyMeeple(meeple);
+        });
     }
 }

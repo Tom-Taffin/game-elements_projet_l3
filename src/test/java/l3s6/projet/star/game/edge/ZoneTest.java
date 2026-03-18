@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import l3s6.projet.star.game.board.Board;
 import l3s6.projet.star.game.board.Coordinates;
+import l3s6.projet.star.game.meeple.AlreadyHaveMeepleException;
 import l3s6.projet.star.game.meeple.Meeple;
+import l3s6.projet.star.game.meeple.NoMeepleException;
 import l3s6.projet.star.game.player.Player;
 import l3s6.projet.star.game.tile.Direction;
 import l3s6.projet.star.game.tile.Tile;
@@ -84,17 +86,19 @@ public class ZoneTest {
     }
 
     @Test
-    public void testGiveBackMeeple() throws NoMeepleException, WrongTopologyException{
+    public void testGiveBackMeeple() throws NoMeepleException, WrongTopologyException, AlreadyHaveMeepleException{
         Zone zone = new Zone(Topology.CITY);
         Player player = new Player("Sam", 2);
         Meeple meeple = new Meeple(player, new Coordinates(0,0));
         
+        assertFalse(zone.hasMeeple());
         assertEquals(2, player.getNbMeeples());
         zone.setMeeple(meeple);
         assertEquals(1, player.getNbMeeples());
         assertTrue(zone.hasMeeple());
         zone.giveBackMeeple();
         assertEquals(2, player.getNbMeeples());
+        assertFalse(zone.hasMeeple());
         
     }
 
@@ -105,6 +109,25 @@ public class ZoneTest {
         Meeple meeple = new Meeple(player,new Coordinates(0,0));
         assertThrows(WrongTopologyException.class, () -> {
             zone.setMeeple(meeple);
+        });
+    }
+
+    @Test
+    public void testSetMeepleOnZoneWithMeeple() throws WrongTopologyException, AlreadyHaveMeepleException{
+        Zone zone = new Zone(Topology.CITY);
+        Player player = new Player("Sam", 2);
+        Meeple meeple = new Meeple(player,new Coordinates(0,0));
+        zone.setMeeple(meeple);
+        assertThrows(AlreadyHaveMeepleException.class, () -> {
+            zone.setMeeple(meeple);
+        });
+    }
+
+    @Test
+    public void testGiveBackNoMeeple(){
+        Zone zone = new Zone(Topology.CITY);
+        assertThrows(NoMeepleException.class, () -> {
+            zone.giveBackMeeple();
         });
     }
 }
