@@ -64,4 +64,17 @@ public enum Orientation {
                 return "N";
         }
     }
+
+    public Orientation fromChar(Character c){
+        switch (c) {
+            case 'E':
+                return EAST;
+            case 'S':
+                return SOUTH;
+            case 'W':
+                return WEST;
+            default:
+                return NORTH;
+        }
+    }
 }
