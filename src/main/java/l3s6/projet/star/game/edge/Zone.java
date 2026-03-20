@@ -126,7 +126,11 @@ public class Zone {
     }
     
     public String toString(){
-        return this.topology.toString();
+        String res = this.topology.toString();
+        if (res.equals("c") && this.hasShield){
+            return "C";
+        }
+        return res;
     }
 
 }
