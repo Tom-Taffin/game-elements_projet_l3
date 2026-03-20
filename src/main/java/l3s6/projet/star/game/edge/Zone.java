@@ -74,6 +74,11 @@ public class Zone {
         zone.adjacentZone = this;
     }
 
+    public void removeAdjacentZone(Zone zone) {
+        this.adjacentZone = null;
+        zone.adjacentZone = null;
+    }
+
     public Topology getTopology() {
         return topology;
     }

@@ -83,6 +83,17 @@ public class Board {
     }
 
     /**
+     * remove the tile at the given coordinates.
+     */
+    public void removeTileAt(Coordinates coord){
+        Tile tile = this.getTileAt(coord);
+        for (Direction direction : Direction.values()){
+            this.removeAdjacentZones(tile, coord, direction);
+        }
+        this.tiles.remove(new Pair<>(coord.getX(), coord.getY()));
+    }
+
+    /**
      * set adjacent zone for all the zone at the direction edge of this tile located at coord
      */
     private void setAdjacentZones(Tile tile, Coordinates coord, Direction direction) {
@@ -91,6 +102,19 @@ public class Board {
             int nbZones = tile.getEdge(direction).getSize();
             for (int i = 0 ; i < nbZones ; i++){
                 tile.getZoneAt(direction, i).setAdjacentZone(otherTile.getZoneAt(direction.toOpposite(), nbZones-i-1));
+            }
+        }
+    }
+
+    /**
+     * remove adjacent zone for all the zone at the direction edge of this tile located at coord
+     */
+    private void removeAdjacentZones(Tile tile, Coordinates coord, Direction direction) {
+        if (this.hasTile(coord.getAdjacent(direction))){
+            Tile otherTile = this.getTileAt(coord.getAdjacent(direction));
+            int nbZones = tile.getEdge(direction).getSize();
+            for (int i = 0 ; i < nbZones ; i++){
+                tile.getZoneAt(direction, i).removeAdjacentZone(otherTile.getZoneAt(direction.toOpposite(), nbZones-i-1));
             }
         }
     }

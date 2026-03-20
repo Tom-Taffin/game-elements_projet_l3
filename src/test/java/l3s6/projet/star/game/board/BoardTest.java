@@ -96,4 +96,46 @@ public class BoardTest {
         assertSame(tile1.getZoneAt(Direction.TOP, 0), tile3.getZoneAt(Direction.BOTTOM, 1).getAdjacentZone());
         assertSame(tile2.getZoneAt(Direction.RIGHT, 0), tile3.getZoneAt(Direction.LEFT, 0).getAdjacentZone());
     }
+
+    @Test
+    public void testRemoveTileAt(){
+
+        board.putTileAt(tile, coordinates);
+        assertTrue(board.hasTile(coordinates));
+        assertEquals(tile, board.getTileAt(coordinates));
+
+        board.removeTileAt(coordinates);
+        assertFalse(board.hasTile(coordinates));
+    }
+
+    @Test
+    public void testAdjacentZoneRemoved(){
+
+        Tile tile1 = new Tile(new Edge(Topology.FIELD, Topology.CITY), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
+        Tile tile2 = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.FIELD));
+        Tile tile3 = new Tile(new Edge(Topology.FIELD), new Edge(Topology.FIELD), new Edge(Topology.CITY, Topology.FIELD), new Edge(Topology.FIELD));
+
+        board.putTileAt(tile1, new Coordinates(2, 2));
+        board.putTileAt(tile2, new Coordinates(1, 3));
+        board.putTileAt(tile3, new Coordinates(2, 3));
+        board.removeTileAt(new Coordinates(2, 3));
+
+        assertFalse(tile1.getZoneAt(Direction.TOP, 0).hasAdjacentZone());
+        assertFalse(tile1.getZoneAt(Direction.TOP, 1).hasAdjacentZone());
+        assertFalse(tile1.getZoneAt(Direction.RIGHT, 0).hasAdjacentZone());
+        assertFalse(tile1.getZoneAt(Direction.BOTTOM, 0).hasAdjacentZone());
+        assertFalse(tile1.getZoneAt(Direction.LEFT, 0).hasAdjacentZone());
+
+        assertFalse(tile2.getZoneAt(Direction.TOP, 0).hasAdjacentZone());
+        assertFalse(tile2.getZoneAt(Direction.RIGHT, 0).hasAdjacentZone());
+        assertFalse(tile2.getZoneAt(Direction.BOTTOM, 0).hasAdjacentZone());
+        assertFalse(tile2.getZoneAt(Direction.LEFT, 0).hasAdjacentZone());
+
+        assertFalse(tile3.getZoneAt(Direction.TOP, 0).hasAdjacentZone());
+        assertFalse(tile3.getZoneAt(Direction.RIGHT, 0).hasAdjacentZone());
+        assertFalse(tile3.getZoneAt(Direction.BOTTOM, 0).hasAdjacentZone());
+        assertFalse(tile3.getZoneAt(Direction.BOTTOM, 1).hasAdjacentZone());
+        assertFalse(tile3.getZoneAt(Direction.LEFT, 0).hasAdjacentZone());
+
+    }
 }
