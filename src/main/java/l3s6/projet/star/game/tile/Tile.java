@@ -67,7 +67,13 @@ public class Tile {
         return this.abbeyMeeple != null;
     }
     
-    public Meeple getAbbeyMeeple() {
+    public Meeple getAbbeyMeeple() throws NoAbbeyException, NoMeepleException {
+        if(!this.hasAbbey()){
+            throw new NoAbbeyException("there is no abbey");
+        }
+        if(!this.hasMeepleOnAbbey()){
+            throw new NoMeepleException("there is no meeple in abbey");
+        }
         return this.abbeyMeeple;
     }
 
