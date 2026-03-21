@@ -1,5 +1,7 @@
 # GameElements Library
 
+TODO: mettre à jours
+
 Bibliothèque Java pour créer des éléments de jeu Carcassonne.
 
 ## TileBuilder
