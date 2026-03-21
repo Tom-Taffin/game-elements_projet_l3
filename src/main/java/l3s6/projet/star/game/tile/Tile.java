@@ -237,6 +237,13 @@ public class Tile {
     }
 
     public Pair<Meeple, String> getMeeple(){
+        if (this.hasMeepleOnAbbey()){
+            try {
+                return new Pair<Meeple,String>(this.getAbbeyMeeple(), "A");
+            } catch (NoAbbeyException | NoMeepleException e) {
+                e.printStackTrace();
+            }
+        }
         for (Direction d : Direction.values()){
             Edge edge = this.getEdge(d);
             Pair<Meeple, String> edgeMeeple = edge.getMeeple();
