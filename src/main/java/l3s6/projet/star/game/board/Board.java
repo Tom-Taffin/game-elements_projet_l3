@@ -1,7 +1,6 @@
 package l3s6.projet.star.game.board;
 
 import l3s6.projet.star.game.tile.*;
-import org.javatuples.Pair;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ public class Board {
 
     private final static String FIRST_TILE = "Nc1-f2r3f4-f4-f4r3f2";
 
-    protected Map<Pair<Integer, Integer>, Tile> tiles;
+    protected Map<Coordinates, Tile> tiles;
     protected int minX;
     protected int maxX;
     protected int minY;
@@ -79,7 +78,7 @@ public class Board {
             this.setAdjacentZones(tile, coord, direction);
         }
 
-        this.tiles.put(new Pair<>(coord.getX(), coord.getY()), tile);
+        this.tiles.put(coord, tile);
     }
 
     /**
@@ -90,7 +89,7 @@ public class Board {
         for (Direction direction : Direction.values()){
             this.removeAdjacentZones(tile, coord, direction);
         }
-        this.tiles.remove(new Pair<>(coord.getX(), coord.getY()));
+        this.tiles.remove(coord);
     }
 
     /**
@@ -125,7 +124,7 @@ public class Board {
      * @return true if there is a tile at the given coordinates.
      */
     public boolean hasTile(Coordinates coord){
-        return this.tiles.containsKey(new Pair<>(coord.getX(), coord.getY()));
+        return this.tiles.containsKey(coord);
     }
 
     /**
@@ -134,7 +133,7 @@ public class Board {
      * @return
      */
     public Tile getTileAt(Coordinates coord){
-        return this.tiles.get(new Pair<>(coord.getX(), coord.getY()));
+        return this.tiles.get(coord);
     }
 
     /**
@@ -142,10 +141,10 @@ public class Board {
      */
     public Set<Coordinates> getOutsideFrontierTiles(){
         Set<Coordinates> res = new HashSet<>();
-        for (Pair<Integer, Integer> coordPair : this.tiles.keySet()){
-            for (Coordinates coord : new Coordinates(coordPair).getAdjacentCoordinates()){
-                if (!this.hasTile(coord)){
-                    res.add(coord);
+        for (Coordinates coord : this.tiles.keySet()){
+            for (Coordinates adjacentCoord : coord.getAdjacentCoordinates()){
+                if (!this.hasTile(adjacentCoord)){
+                    res.add(adjacentCoord);
                 }
             }
         }

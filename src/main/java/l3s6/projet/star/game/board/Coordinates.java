@@ -1,6 +1,9 @@
 package l3s6.projet.star.game.board;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.javatuples.Pair;
 
@@ -20,6 +23,14 @@ public class Coordinates {
 
     public Coordinates(Pair<Integer,Integer> pair){
         this(pair.getValue0(), pair.getValue1());
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
     }
 
     /**
@@ -50,6 +61,9 @@ public class Coordinates {
         return new Coordinates(this.x, this.y - 1);
     }
 
+    /**
+     * @return the adjacent coordinates at the direction
+     */
     public Coordinates getAdjacent(Direction direction){
         switch (direction) {
             case TOP:
@@ -64,10 +78,10 @@ public class Coordinates {
     }
 
     /**
-     * @return an ArrayList of all the coordinates that are adjacent
+     * @return an List of all the coordinates that are adjacent
      */
-    public ArrayList<Coordinates> getAdjacentCoordinates(){
-        ArrayList<Coordinates> res = new ArrayList<>();
+    public List<Coordinates> getAdjacentCoordinates(){
+        List<Coordinates> res = new ArrayList<>();
         res.add(this.upCoordinates());
         res.add(this.rightCoordinates());
         res.add(this.downCoordinates());
@@ -75,12 +89,18 @@ public class Coordinates {
         return res;
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public int getX() {
-        return x;
+    /**
+     * @return an Set of all the coordinates that are adjacent and at the corner
+     */
+    public Set<Coordinates> getAdjacentAndCornerCoordinates(){
+        Set<Coordinates> res = new HashSet<>();
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                if (dx == 0 && dy == 0) continue;
+                res.add(new Coordinates(this.x + dx, this.y + dy));
+            }
+        }
+        return res;
     }
 
     public boolean equals(Object o){
@@ -90,5 +110,14 @@ public class Coordinates {
         }
         Coordinates coordinates = (Coordinates) o;
         return (coordinates.getX() == this.x) && (coordinates.getY() == this.y);
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(x) + Integer.hashCode(y) * 31;
+    }
+
+    public String toString(){
+        return "(" + this.x + "," + this.y + ")";
     }
 }

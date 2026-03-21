@@ -8,6 +8,8 @@ import l3s6.projet.star.game.tile.WrongTileSyntaxException;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +35,30 @@ public class BoardTest {
         assertEquals(0, board.getMinY());
 
         assertTrue(board.hasTile(new Coordinates(0, 0)));
+    }
+
+    @Test
+    public void testGetOutsideFrontierTiles(){
+        Set<Coordinates> frontier = board.getOutsideFrontierTiles();
+        
+        assertEquals(4, frontier.size());
+        assertTrue(frontier.contains(new Coordinates(0, 1)));
+        assertTrue(frontier.contains(new Coordinates(1, 0)));
+        assertTrue(frontier.contains(new Coordinates(0, -1)));
+        assertTrue(frontier.contains(new Coordinates(-1, 0)));
+
+        board.putTileAt(tile, new Coordinates(1, 0));
+        Set<Coordinates> frontierAfter = board.getOutsideFrontierTiles();
+
+        assertEquals(6, frontierAfter.size());
+        assertTrue(frontier.contains(new Coordinates(0, 1)));
+        assertFalse(frontierAfter.contains(new Coordinates(1, 0)));
+        assertTrue(frontier.contains(new Coordinates(0, -1)));
+        assertTrue(frontier.contains(new Coordinates(-1, 0)));
+        assertTrue(frontierAfter.contains(new Coordinates(1, 1)));
+        assertTrue(frontierAfter.contains(new Coordinates(2, 0)));
+        assertTrue(frontierAfter.contains(new Coordinates(1, -1)));
+        assertFalse(frontierAfter.contains(new Coordinates(0, 0)));
     }
 
     @Test

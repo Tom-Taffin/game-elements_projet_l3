@@ -68,7 +68,7 @@ public class Tile {
     }
     
     public Meeple getAbbeyMeeple() {
-        return abbeyMeeple;
+        return this.abbeyMeeple;
     }
 
     /**
