@@ -308,7 +308,7 @@ public class TileTest {
     }
 
     @Test
-    public void testSetAbbeyMeepleOnMeeple() throws NoAbbeyException, AlreadyHaveMeepleException{
+    public void testSetAbbeyMeepleOnMeeple() throws NoAbbeyException, AlreadyHaveMeepleException, NoMeepleException{
         Tile tile = new Tile(new Edge(Topology.FIELD), 
                             new Edge(Topology.FIELD), 
                             new Edge(Topology.CITY), 

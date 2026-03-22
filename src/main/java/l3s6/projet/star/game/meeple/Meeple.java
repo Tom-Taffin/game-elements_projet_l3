@@ -24,7 +24,7 @@ public class Meeple {
         this.player.incrementMeepleCount();
     }
 
-    public void decrementPlayerMeeple() {
+    public void decrementPlayerMeeple() throws NoMeepleException {
         this.player.decrementMeepleCount();
     }
 }

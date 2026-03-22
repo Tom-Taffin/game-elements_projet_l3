@@ -1,5 +1,7 @@
 package l3s6.projet.star.game.player;
 
+import l3s6.projet.star.game.meeple.NoMeepleException;
+
 public class Player {
     private final String id;
     private int score;
@@ -37,11 +39,12 @@ public class Player {
         this.nbMeeples += 1;
     }
 
-    public void decrementMeepleCount(){
-        this.nbMeeples -= 1;
-        if (this.nbMeeples < 0) {
-            this.nbMeeples = 0;
+    public void decrementMeepleCount() throws NoMeepleException{
+        System.out.println("[DEBUG] " + this.id + " meeples: " + this.nbMeeples + " → " + (this.nbMeeples - 1));
+        if (this.nbMeeples <= 0) {
+            throw new NoMeepleException("Player has no meeples left");
         }
+        this.nbMeeples -= 1;
     }
 
     public int getNbMeeples() {

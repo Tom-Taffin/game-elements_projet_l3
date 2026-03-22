@@ -113,7 +113,7 @@ public class ZoneTest {
     }
 
     @Test
-    public void testSetMeepleOnZoneWithMeeple() throws WrongTopologyException, AlreadyHaveMeepleException{
+    public void testSetMeepleOnZoneWithMeeple() throws WrongTopologyException, AlreadyHaveMeepleException, NoMeepleException{
         Zone zone = new Zone(Topology.CITY);
         Player player = new Player("Sam", 2);
         Meeple meeple = new Meeple(player,new Coordinates(0,0));

@@ -80,7 +80,7 @@ public class Tile {
     /**
      * set meeple into the abbey and decrement amout of player's meeple
      */
-    public void setAbbeyMeeple(Meeple meeple) throws NoAbbeyException, AlreadyHaveMeepleException {
+    public void setAbbeyMeeple(Meeple meeple) throws NoAbbeyException, AlreadyHaveMeepleException, NoMeepleException {
         if(!this.hasAbbey()){
             throw new NoAbbeyException("This tile doesn't have an abbey");
         }
