@@ -40,7 +40,6 @@ public class Player {
     }
 
     public void decrementMeepleCount() throws NoMeepleException{
-        System.out.println("[DEBUG] " + this.id + " meeples: " + this.nbMeeples + " → " + (this.nbMeeples - 1));
         if (this.nbMeeples <= 0) {
             throw new NoMeepleException("Player has no meeples left");
         }
