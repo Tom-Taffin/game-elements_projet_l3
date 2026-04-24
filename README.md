@@ -1,4 +1,4 @@
-# GameElements Library
+# GameElements Library - Projet l3
 
 Bibliothèque Java pour créer et manipuler des éléments de jeu Carcassonne.
 
